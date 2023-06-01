@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lightest-grey: #CAC4D0;
+  --light-grey: #49454F;
+  --grey: #1C1B1F;
+  --slate: #E8DEF8;
+  --pink-slate: #F2B8B5;
+  --pink: #D0BCFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lightest-grey: #CAC4D0;
+    --light-grey: #49454F;
+    --grey: #1C1B1F;
+    --slate: #E8DEF8;
+    --pink-slate: #F2B8B5;
+    --pink: #D0BCFF;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--lightest-grey);
+  background: var(--grey);
+}
