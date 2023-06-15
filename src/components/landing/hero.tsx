@@ -2,6 +2,7 @@
 "use client";
 
 import initialResponse from "@/data/fake.data";
+import { useDebounce } from "@/hooks/useDebounce";
 import { SearchRes } from "@/types/searchRes.type";
 import React, { use, useEffect, useState } from "react";
 
@@ -9,30 +10,39 @@ export default function Hero() {
   const [search, setSearch] = useState("");
   const [data, setData] = useState<SearchRes | undefined>(undefined);
   const [isLoading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch("http://nightbloom.ai/api/search?page=1&query=")
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error! status: ${res.status}`);
-  //       }
-  //       console.log(res);
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setData(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was a problem with the fetch operation:", error);
-  //     });
-  // }, []);
+  const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
-    setData(initialResponse);
-    console.log(initialResponse);
-  }, []);
+    if (debouncedSearch !== undefined) {
+      setLoading(true);
+      fetch(`http://nightbloom.ai/api/search?page=1&query=${debouncedSearch}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          console.log(res);
+          return res.json();
+        })
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    } else {
+      setData(undefined);
+    }
+  }, [debouncedSearch]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  // useEffect(() => {
+  //   setData(initialResponse);
+  //   console.log(initialResponse);
+  // }, []);
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
@@ -43,7 +53,12 @@ export default function Hero() {
       <div className="flex flex-col justify-center items-center my-24 gap-y-8">
         <h1 className="text-4xl">NightBloom</h1>
         <h2>Discover your imagination - Midjourney search engine</h2>
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={handleSearchChange}
+        />
       </div>
 
       {/*  Image gallery */}
