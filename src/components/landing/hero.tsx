@@ -4,6 +4,7 @@
 import initialResponse from "@/data/fake.data";
 import { useDebounce } from "@/hooks/useDebounce";
 import { SearchRes } from "@/types/searchRes.type";
+import { SearchIcon } from "@/components/assets/icons";
 import React, { use, useEffect, useState } from "react";
 
 export default function Hero() {
@@ -39,6 +40,7 @@ export default function Hero() {
     setSearch(event.target.value);
   };
 
+  // For testing purposes
   // useEffect(() => {
   //   setData(initialResponse);
   //   console.log(initialResponse);
@@ -53,23 +55,27 @@ export default function Hero() {
       <div className="flex flex-col justify-center items-center my-24 gap-y-8">
         <h1 className="text-4xl">NightBloom</h1>
         <h2>Discover your imagination - Midjourney search engine</h2>
-        <input
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={handleSearchChange}
-        />
+        <div className="relative">
+          <SearchIcon />
+          <input
+            type="text"
+            placeholder="Keyword search"
+            value={search}
+            onChange={handleSearchChange}
+            className="w-full py-3 pl-12 pr-24 text-gray-500 border rounded-full outline-none bg-[var(--trans-grey)] focus:bg-[var(--slate)]"
+          />
+        </div>
       </div>
 
       {/*  Image gallery */}
-      <div className="grid gap-2 grid-col-1 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         {data.hits.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col justify-center items-center border-2"
+            className="flex flex-col justify-center items-center rounded-md overflow-hidden shadow-lg"
           >
             <img
-              className="h-64 w-64 object-cover"
+              className="object-cover h-full"
               src={`https://cdn.midjourney.com/${item.id}/0_0.png`}
               alt={item.id}
             />
