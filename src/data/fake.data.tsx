@@ -1,5 +1,6 @@
 import { SearchRes } from "@/types/searchRes.type";
 
+// This is a fake response object from the API
 const initialResponse: SearchRes = {
   hits: [
     {

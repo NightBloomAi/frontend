@@ -1,52 +1,24 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import initialResponse from "@/data/fake.data";
 import { useDebounce } from "@/hooks/useDebounce";
-import { SearchRes } from "@/types/searchRes.type";
 import { SearchIcon } from "@/components/assets/icons";
-import React, { use, useEffect, useState } from "react";
+import ImageGallery from "@/components/landing/imageGallery";
+import React, { useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import { searchEndpoint } from "@/config/globals";
 
 export default function Hero() {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState<SearchRes | undefined>(undefined);
-  const [isLoading, setLoading] = useState(false);
   const debouncedSearch = useDebounce(search, 500);
 
-  useEffect(() => {
-    if (debouncedSearch !== undefined) {
-      setLoading(true);
-      fetch(`http://nightbloom.ai/api/search?page=1&query=${debouncedSearch}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          console.log(res);
-          return res.json();
-        })
-        .then((data) => {
-          setData(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("There was a problem with the fetch operation:", error);
-        });
-    } else {
-      setData(undefined);
-    }
-  }, [debouncedSearch]);
+  const { data, loading, error } = useFetch(searchEndpoint(1, debouncedSearch));
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
-  // For testing purposes
-  // useEffect(() => {
-  //   setData(initialResponse);
-  //   console.log(initialResponse);
-  // }, []);
-
-  if (isLoading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
   if (!data) return <p>No profile data</p>;
 
   return (
@@ -68,21 +40,9 @@ export default function Hero() {
       </div>
 
       {/*  Image gallery */}
-      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-        {data.hits.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-col justify-center items-center rounded-md overflow-hidden shadow-lg"
-          >
-            <img
-              className="object-cover h-full"
-              src={`https://cdn.midjourney.com/${item.id}/0_0.png`}
-              alt={item.id}
-            />
-            {/* <p>{item.prompt}</p> */}
-          </div>
-        ))}
-      </div>
+      {data && <ImageGallery items={data.hits} />}
+
+      <div className="my-4"></div>
     </section>
   );
 }
