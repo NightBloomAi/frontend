@@ -31,7 +31,7 @@ function LoadingImage({ src, alt }: LoadingImageProps) {
 
 export default function ImageGallery({ items }: any) {
   return (
-    <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+    <div className="grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
       {items.map((item: SearchResItem) => (
         <div
           key={item.id}

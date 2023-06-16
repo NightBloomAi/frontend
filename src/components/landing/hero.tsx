@@ -23,18 +23,20 @@ export default function Hero() {
 
   return (
     <section className="flex flex-col justify-center items-center">
+      <div className="h-16"></div>
+
       {/* Search bar and hero */}
-      <div className="flex flex-col justify-center items-center my-24 gap-y-8">
+      <div className="flex flex-col justify-center items-center my-20 gap-y-4 md:my-32 md:gap-y-8">
         <h1 className="text-4xl">NightBloom</h1>
         <h2>Discover your imagination - Midjourney search engine</h2>
-        <div className="relative">
+        <div className="relative mt-4">
           <SearchIcon />
           <input
             type="text"
             placeholder="Keyword search"
             value={search}
             onChange={handleSearchChange}
-            className="w-full py-3 pl-12 pr-24 text-gray-500 border rounded-full outline-none bg-[var(--trans-grey)] focus:bg-[var(--slate)]"
+            className="w-full py-3 pl-12 pr-40 text-gray-500 border rounded-full outline-none bg-[var(--trans-grey)] focus:bg-[var(--slate)]"
           />
         </div>
       </div>
