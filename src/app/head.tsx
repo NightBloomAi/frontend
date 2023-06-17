@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import React from "react";
 
 export default function Head() {
@@ -25,6 +26,13 @@ export default function Head() {
       <link rel="icon" href="logo/logo.svg" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="logo/logo.png" />
       <meta name="theme-color" content="#DFD5EC" />
+
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=MuseoModerno&display=swap"
+        rel="stylesheet"
+      />
     </head>
   );
 }
