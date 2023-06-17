@@ -14,7 +14,7 @@ function searchEndpoint(
     page = page || 1;
     query = query || '';
 
-    const protocol = 'http';
+    const protocol = 'https';
     const host = 'nightbloom.ai';
     const path = 'api/search';
 
