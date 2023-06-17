@@ -52,3 +52,31 @@ body {
   transition: all 0.3s ease-in-out;
   transform: translateY(-2px);
 }
+
+.grad-bg-text {
+  background: linear-gradient(90deg,#a166ed,#5777ff);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+
+*:focus-visible {
+  outline: none;  
+  border: 2px dashed var(--pink);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--light-grey);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--grey);
+}

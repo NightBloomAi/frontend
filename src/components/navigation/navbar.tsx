@@ -1,61 +1,51 @@
 "use client";
 
-import { NavItem } from "@/types/nav.type";
-import React from "react";
-import { UserIcon } from "../assets/icons";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { NavItem } from "@/types/nav.type";
+import { UserIcon } from "../assets/icons";
 import { MenuButton } from "./menuButton";
+import Logo from "./logo";
+import LinkButton from "./linkButton";
 
-export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+const navItems: NavItem[] = [
+  {
+    name: "Home",
+    href: "/",
+  },
+  {
+    name: "Favorites",
+    href: "#",
+  },
+  {
+    name: "Style Guide",
+    href: "#",
+  },
+];
 
-  const navItems: NavItem[] = [
-    {
-      name: "Home",
-      href: "#",
-    },
-    {
-      name: "Favorites",
-      href: "#",
-    },
-    {
-      name: "Style Guide",
-      href: "#",
-    },
-  ];
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
+
+  const NavLinks = useMemo(
+    () =>
+      navItems.map((item: NavItem) => (
+        <LinkButton key={item.name} href={item.href} label={item.name} />
+      )),
+    []
+  );
 
   return (
     <div className="fixed z-30 bg-[var(--trans-grey)] h-16 w-screen flex items-center justify-center">
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base">
-        {/* Logo */}
-        <div className="flex-1 flex flex-row justify-start items-center">
-          <a href="#" className="text-white">
-            Night<span className="text-purple-500">Bloom</span>
-          </a>
-        </div>
-
-        {/* Nav Links */}
+        <Logo />
         <div className="flex-auto flex flex-row justify-center items-center gap-x-2">
-          {navItems.map((item: NavItem) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-white hover:text-gray-300 transition-colors duration-300 mr-4 text-hover"
-            >
-              {item.name}
-            </a>
-          ))}
+          {NavLinks}
         </div>
-
-        {/* User */}
         <div className="flex-1 flex flex-row justify-end items-center">
-          <a
-            href="#"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            <UserIcon />
-          </a>
+          <LinkButton href="#" label={<UserIcon />} />
         </div>
       </div>
 
@@ -63,7 +53,7 @@ export default function Navbar() {
       <div className="z-50 md:hidden flex flex-row justify-end px-4 container text-base">
         <MenuButton
           isOpen={isMenuOpen}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={toggleMenu}
           style={{ marginLeft: "2rem" }}
         />
       </div>
@@ -76,27 +66,14 @@ export default function Navbar() {
           transition={{ duration: 0.3 }}
           className="z-40 fixed top-0 left-0 md:hidden flex flex-col h-screen w-screen bg-[var(--grey)] justify-start p-4"
         >
-          {/* Logo */}
-          <div className="flex-1 flex flex-row justify-start items-start">
-            <a href="#" className="text-white">
-              Night<span className="text-purple-500">Bloom</span>
-            </a>
-          </div>
-
-          {/* Nav Links */}
+          <Logo />
           <div className="flex-auto flex flex-col justify-start items-start gap-y-4">
-            {navItems.map((item: NavItem) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-white hover:text-gray-300 transition-colors duration-300 mr-4 text-hover"
-              >
-                {item.name}
-              </a>
-            ))}
+            {NavLinks}
           </div>
         </motion.div>
       )}
     </div>
   );
-}
+};
+
+export default React.memo(Navbar);
