@@ -52,10 +52,9 @@ body {
 }
 
 .text-hover:hover {
-  /* color: var(--pink); */
+  color: var(--pink);
   transition: all 0.3s ease-in-out;
   transform: translateY(-2px);
-  @apply grad-bg-text;
 }
 
 .grad-bg-text {

@@ -6,6 +6,8 @@ import ImageGallery from "@/components/landing/imageGallery";
 import React, { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { searchEndpoint } from "@/config/globals";
+import Loading from "../misc/loading";
+import ErrorMsg from "../misc/error";
 
 export default function Hero() {
   const [search, setSearch] = useState("");
@@ -17,9 +19,8 @@ export default function Hero() {
     setSearch(event.target.value);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!data) return <p>No profile data</p>;
+  if (loading) return <Loading />;
+  if (error || !data) return <ErrorMsg error={error} />;
 
   return (
     <section className="flex flex-col justify-center items-center">
@@ -28,7 +29,9 @@ export default function Hero() {
       {/* Search bar and hero */}
       <div className="flex flex-col justify-center items-center my-16 gap-y-4 md:my-32 md:gap-y-8">
         <h1 className="text-4xl md:text-5xl font-museo">NightBloom</h1>
-        <h2 className="text-center">Discover your imagination - Midjourney search engine</h2>
+        <h2 className="text-center">
+          Discover your imagination - Midjourney search engine
+        </h2>
         <div className="relative mt-4">
           <SearchIcon />
           <input

@@ -15,11 +15,11 @@ const navItems: NavItem[] = [
   },
   {
     name: "Favorites",
-    href: "#",
+    href: "/favorites",
   },
   {
     name: "Style Guide",
-    href: "#",
+    href: "/style-guide",
   },
 ];
 
