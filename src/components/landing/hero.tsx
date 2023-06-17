@@ -39,7 +39,7 @@ export default function Hero() {
             placeholder="Keyword search"
             value={search}
             onChange={handleSearchChange}
-            className="w-full py-3 pl-12 pr-40 text-gray-500 rounded-full outline-none bg-[var(--trans-grey)] focus:rounded-full focus:outline-none border-2 border-transparent"
+            className="w-full py-3 pl-12 pr-40 text-[var(--pink)] rounded-full outline-none bg-[var(--trans-grey)] focus:rounded-full focus:outline-none border-2 border-transparent"
           />
         </div>
       </div>
