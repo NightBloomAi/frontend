@@ -25,6 +25,8 @@ const navItems: NavItem[] = [
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
@@ -36,8 +38,30 @@ const Navbar = () => {
     []
   );
 
+  const handleScroll = () => {
+    if (window.scrollY > 64) {
+      const currentScrollPos = window.scrollY;
+
+      if (currentScrollPos > prevScrollPos) {
+        setVisible(false);
+      }
+      setPrevScrollPos(currentScrollPos);
+    } else {
+      setVisible(true);
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   return (
-    <div className="fixed z-30 bg-[var(--trans-grey)] h-16 w-screen flex items-center justify-center">
+    <div
+      className={`fixed z-30 h-16 w-screen flex items-center justify-center ${
+        visible ? "bg-transparent" : "bg-[var(--trans-grey)]"
+      }`}
+    >
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base">
         <Logo />

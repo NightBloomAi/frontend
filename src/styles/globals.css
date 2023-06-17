@@ -6,12 +6,14 @@
   --lightest-grey: #CAC4D0;
   --light-grey: #49454F;
   --grey: #1C1B1F;
+  --trans-light-grey: rgba(208, 188, 255, 0.30);
   --trans-grey: rgba(208, 188, 255, 0.11);
   --nav-grey: rgba(208, 188, 255, 0.08);
   --slate: #E8DEF8;
   --pink-slate: #F2B8B5;
   --pink: #D0BCFF;
   --dark-green: rgba(28, 27, 31, 1);
+  --stripe: rgba(2, 40, 42, 0.979);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,12 +21,14 @@
     --lightest-grey: #CAC4D0;
     --light-grey: #49454F;
     --grey: #1C1B1F;
+    --trans-light-grey: rgba(208, 188, 255, 0.30);
     --trans-grey: rgba(208, 188, 255, 0.11);
     --nav-grey: rgba(208, 188, 255, 0.08);
     --slate: #E8DEF8;
     --pink-slate: #F2B8B5;
     --pink: #D0BCFF;
     --dark-green: rgba(28, 27, 31, 1);
+    --stripe: rgba(2, 40, 42, 0.979);
   }
 }
 
@@ -44,17 +48,19 @@ body {
 body {
   color: var(--lightest-grey);
   /* background: var(--grey); */
-  background: repeating-linear-gradient(90deg, var(--dark-green), var(--dark-green) 30px, var(--grey) 20px, var(--grey) 40px);
+  background: repeating-linear-gradient(90deg, var(--stripe), var(--stripe) 60px, var(--grey) 20px, var(--grey) 70px);
 }
 
 .text-hover:hover {
-  color: var(--pink);
+  /* color: var(--pink); */
   transition: all 0.3s ease-in-out;
   transform: translateY(-2px);
+  @apply grad-bg-text;
 }
 
 .grad-bg-text {
-  background: linear-gradient(90deg,#a166ed,#5777ff);
+  /* background: linear-gradient(90deg,#a166ed,#5777ff); */
+  background: linear-gradient(266.88deg, #FF2F22 0%, #E401A5 14.07%, #3B37FF 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -79,4 +85,13 @@ body {
 
 ::-webkit-scrollbar-track {
   background: var(--grey);
+}   
+
+.font-museo {
+  font-family: 'MuseoModerno', cursive;
+  /* font-family: 'Comfortaa', cursive; */
+}
+
+.font-comfortaa {
+  font-family: 'Comfortaa', cursive;
 }
