@@ -14,6 +14,7 @@
   --pink: #D0BCFF;
   --dark-green: rgba(28, 27, 31, 1);
   --stripe: rgba(2, 40, 42, 0.979);
+  --stripe-light: rgba(34, 72, 74, 0.8);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,7 +29,8 @@
     --pink-slate: #F2B8B5;
     --pink: #D0BCFF;
     --dark-green: rgba(28, 27, 31, 1);
-    --stripe: rgba(2, 40, 42, 0.979);
+    --stripe: rgb(1, 40, 42);
+    --stripe-light: rgba(34, 72, 74, 0.8);
   }
 }
 
@@ -48,7 +50,7 @@ body {
 body {
   color: var(--lightest-grey);
   /* background: var(--grey); */
-  background: repeating-linear-gradient(90deg, var(--stripe), var(--stripe) 60px, var(--grey) 20px, var(--grey) 70px);
+  background: repeating-linear-gradient(90deg, var(--stripe) 10px, var(--stripe) 60px, var(--grey) 20px, var(--grey) 80px);
 }
 
 .text-hover:hover {

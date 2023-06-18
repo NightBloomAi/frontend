@@ -88,7 +88,7 @@ const Navbar = () => {
           initial={{ opacity: 0, x: "-100%" }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
-          className="z-40 fixed top-0 left-0 md:hidden flex flex-col h-screen w-screen bg-[var(--grey)] justify-start p-4"
+          className="z-40 fixed top-0 left-0 md:hidden flex flex-col h-screen w-screen bg-[var(--grey)] justify-start items-start p-4"
         >
           <Logo />
           <div className="flex-auto flex flex-col justify-start items-start gap-y-4">
