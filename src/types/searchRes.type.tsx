@@ -1,13 +1,13 @@
 type SearchRes = {
-  hits: SearchResItem[];
+  hits: Hit[];
   page: number;
 };
 
-type SearchResItem = {
+type Hit = {
   id: string;
   prompt: string;
   full_command: string;
   height: number;
 };
 
-export type { SearchRes, SearchResItem };
+export type { SearchRes, Hit };

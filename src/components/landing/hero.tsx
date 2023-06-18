@@ -1,19 +1,50 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useDebounce } from "@/hooks/useDebounce";
 import { SearchIcon } from "@/components/assets/icons";
-import ImageGallery from "@/components/landing/imageGallery";
-import React, { useState } from "react";
-import useFetch from "@/hooks/useFetch";
-import { searchEndpoint } from "@/config/globals";
+import React, { useEffect, useRef, useState } from "react";
+import { imageEndpoint, searchEndpoint } from "@/config/endpoints";
 import Loading from "../misc/loading";
 import ErrorMsg from "../misc/error";
+import { Hit, SearchRes } from "@/types/searchRes.type";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Hero() {
   const [search, setSearch] = useState("");
+  const [data, setData] = useState<Hit[] | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const debouncedSearch = useDebounce(search, 500);
+  const pageRef = useRef(1);
 
-  const { data, loading, error } = useFetch(searchEndpoint(1, debouncedSearch));
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(searchEndpoint(1, debouncedSearch));
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        setData(data.hits);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [debouncedSearch]);
+
+  const fetchMoreData = async () => {
+    const res = await fetch(searchEndpoint(pageRef.current, debouncedSearch));
+    const searchRes: SearchRes = await res.json();
+    pageRef.current++;
+    setTimeout(() => {
+      setData(data!.concat(searchRes.hits));
+    }, 500);
+  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -44,8 +75,26 @@ export default function Hero() {
         </div>
       </div>
 
-      {/*  Image gallery */}
-      {data && <ImageGallery items={data.hits} />}
+      <div>
+        <InfiniteScroll
+          dataLength={data.length}
+          next={fetchMoreData}
+          hasMore={true}
+          loader={<p>Loading...</p>}
+          endMessage={<p>No more data to load.</p>}
+        >
+          <ul className="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {data.map((item) => (
+              <img
+                key={item.id}
+                src={imageEndpoint(item.id)}
+                alt={item.id}
+                className="object-cover h-full transition-opacity duration-500"
+              />
+            ))}
+          </ul>
+        </InfiniteScroll>
+      </div>
 
       <div className="my-4"></div>
     </section>
