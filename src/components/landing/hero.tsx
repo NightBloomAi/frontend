@@ -3,50 +3,77 @@
 
 import { useDebounce } from "@/hooks/useDebounce";
 import { SearchIcon } from "@/components/assets/icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { imageEndpoint, searchEndpoint } from "@/config/endpoints";
 import Loading from "../misc/loading";
 import ErrorMsg from "../misc/error";
 import { Hit, SearchRes } from "@/types/searchRes.type";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Hero() {
+type State = {
+  data: Hit[] | undefined;
+  loading: boolean;
+  error: string | null;
+};
+
+type Action =
+  | { type: "LOAD"; payload: Hit[] }
+  | { type: "ERROR"; payload: string }
+  | { type: "LOADING" };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "LOAD":
+      return { ...state, loading: false, data: action.payload };
+    case "ERROR":
+      return { ...state, loading: false, error: action.payload };
+    case "LOADING":
+      return { ...state, loading: true };
+    default:
+      return state;
+  }
+}
+
+export default function Hero(): JSX.Element {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState<Hit[] | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const debouncedSearch = useDebounce(search, 500);
   const pageRef = useRef(1);
+  const [state, dispatch] = useReducer(reducer, {
+    data: undefined,
+    loading: true,
+    error: null,
+  });
+  const { data, loading, error } = state;
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      dispatch({ type: "LOADING" });
       try {
-        const res = await fetch(searchEndpoint(1, debouncedSearch));
+        const res = await fetch(
+          searchEndpoint(pageRef.current, debouncedSearch)
+        );
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-        const data = await res.json();
-        setData(data.hits);
+        const resData = await res.json();
+        dispatch({ type: "LOAD", payload: resData.hits });
       } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        dispatch({ type: "ERROR", payload: error.message });
       }
     };
     fetchData();
   }, [debouncedSearch]);
 
   const fetchMoreData = async () => {
+    pageRef.current++;
     const res = await fetch(searchEndpoint(pageRef.current, debouncedSearch));
     const searchRes: SearchRes = await res.json();
-    pageRef.current++;
-    setTimeout(() => {
-      setData(data!.concat(searchRes.hits));
-    }, 500);
+    if (data) {
+      dispatch({ type: "LOAD", payload: data.concat(searchRes.hits) });
+    }
   };
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    pageRef.current = 1;
     setSearch(event.target.value);
   };
 
