@@ -63,7 +63,7 @@ const Navbar = () => {
       }`}
     >
       {/* Desktop view */}
-      <div className="hidden md:flex flex-row justify-between px-4 container text-base">
+      <div className="hidden md:flex flex-row justify-between px-4 container text-base max-w-screen-xl">
         <Logo />
         <div className="flex-auto flex flex-row justify-center items-center gap-x-2">
           {NavLinks}
