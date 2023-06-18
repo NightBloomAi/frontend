@@ -3,77 +3,23 @@
 
 import { useDebounce } from "@/hooks/useDebounce";
 import { SearchIcon } from "@/components/assets/icons";
-import React, { useEffect, useReducer, useRef, useState } from "react";
-import { imageEndpoint, searchEndpoint } from "@/config/endpoints";
+import React, { useState } from "react";
 import Loading from "../misc/loading";
 import ErrorMsg from "../misc/error";
-import { Hit, SearchRes } from "@/types/searchRes.type";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-type State = {
-  data: Hit[] | undefined;
-  loading: boolean;
-  error: string | null;
-};
-
-type Action =
-  | { type: "LOAD"; payload: Hit[] }
-  | { type: "ERROR"; payload: string }
-  | { type: "LOADING" };
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case "LOAD":
-      return { ...state, loading: false, data: action.payload };
-    case "ERROR":
-      return { ...state, loading: false, error: action.payload };
-    case "LOADING":
-      return { ...state, loading: true };
-    default:
-      return state;
-  }
-}
+import Gallery from "./gallery";
+import useSearch from "@/hooks/useSearch";
 
 export default function Hero(): JSX.Element {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
-  const pageRef = useRef(1);
-  const [state, dispatch] = useReducer(reducer, {
-    data: undefined,
-    loading: true,
-    error: null,
-  });
-  const { data, loading, error } = state;
+  const { data, loading, error, fetchMoreData, resetPage } = useSearch(
+    1,
+    debouncedSearch
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: "LOADING" });
-      try {
-        const res = await fetch(
-          searchEndpoint(pageRef.current, debouncedSearch)
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const resData = await res.json();
-        dispatch({ type: "LOAD", payload: resData.hits });
-      } catch (error: any) {
-        dispatch({ type: "ERROR", payload: error.message });
-      }
-    };
-    fetchData();
-  }, [debouncedSearch]);
-
-  const fetchMoreData = async () => {
-    pageRef.current++;
-    const res = await fetch(searchEndpoint(pageRef.current, debouncedSearch));
-    const searchRes: SearchRes = await res.json();
-    if (data) {
-      dispatch({ type: "LOAD", payload: data.concat(searchRes.hits) });
-    }
-  };
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    pageRef.current = 1;
+    resetPage();
     setSearch(event.target.value);
   };
 
@@ -110,16 +56,7 @@ export default function Hero(): JSX.Element {
           loader={<p>Loading...</p>}
           endMessage={<p>No more data to load.</p>}
         >
-          <ul className="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {data.map((item) => (
-              <img
-                key={item.id}
-                src={imageEndpoint(item.id)}
-                alt={item.id}
-                className="object-cover h-full transition-opacity duration-500"
-              />
-            ))}
-          </ul>
+          <Gallery data={data} />
         </InfiniteScroll>
       </div>
 
