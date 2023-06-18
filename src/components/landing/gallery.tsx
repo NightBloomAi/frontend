@@ -25,7 +25,6 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
     <div className="flex flex-col gap-y-4">
       {/* Filters bar */}
       <div className="flex flex-row justify-center items-center gap-x-4">
-        {/* Row */}
         <div className="flex flex-row justify-between w-full">
           <div></div>
           <div>
@@ -44,7 +43,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
         {data.map((item) => (
           <div
             key={item.id}
-            className="object-cover h-full w-full overflow-hidden cursor-pointer"
+            className="object-cover w-full overflow-hidden cursor-pointer"
             onClick={togglePopup(item)}
           >
             <img

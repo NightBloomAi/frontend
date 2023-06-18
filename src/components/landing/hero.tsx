@@ -64,17 +64,16 @@ export default function Hero(): JSX.Element {
         </div>
       </div>
 
-      <div>
-        <InfiniteScroll
-          dataLength={data.length}
-          next={fetchMoreData}
-          hasMore={true}
-          loader={<p>Loading...</p>}
-          endMessage={<p>No more data to load.</p>}
-        >
-          <Gallery data={data} />
-        </InfiniteScroll>
-      </div>
+      <InfiniteScroll
+        dataLength={data.length}
+        next={fetchMoreData}
+        hasMore={true}
+        loader={<p>Loading...</p>}
+        endMessage={<p>No more data to load.</p>}
+        style={{ height: "auto", overflow: "visible" }}
+      >
+        <Gallery data={data} />
+      </InfiniteScroll>
 
       <div className="my-4"></div>
     </section>
