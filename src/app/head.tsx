@@ -26,7 +26,7 @@ export default function Head() {
       <link rel="icon" href="logo/logo.svg" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="logo/logo.png" />
       <link rel="icon" type="image/x-icon" href="/logo/logo.png" />
-      <meta name="theme-color" content="#DFD5EC" />
+      <meta name="theme-color" content="#01282A" />
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
