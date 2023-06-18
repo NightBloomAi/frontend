@@ -33,7 +33,12 @@ const Navbar = () => {
   const NavLinks = useMemo(
     () =>
       navItems.map((item: NavItem) => (
-        <LinkButton key={item.name} href={item.href} label={item.name} />
+        <LinkButton
+          key={item.name}
+          href={item.href}
+          label={item.name}
+          className="mr-4"
+        />
       )),
     []
   );

@@ -29,7 +29,7 @@ export default function ImagePopup({
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="w-[30rem] h-auto bg-[var(--stripe-light)] p-6 flex flex-col z-50"
+          className="w-5/6 md:w-4/6 h-auto bg-[var(--stripe-light)] p-6 flex flex-col z-50"
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.7, opacity: 0 }}
