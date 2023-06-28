@@ -4,9 +4,10 @@
 
 :root {
   --lightest-grey: #CAC4D0;
-  --light-grey: #49454F;
-  --grey: #1C1B1F;
-  --trans-light-grey: rgba(208, 188, 255, 0.30);
+  --light-grey: hsl(255, 7%, 29%);
+  --lightish-grey: hsl(255, 7%, 16%);
+  --grey: hsl(255, 7%, 11%);
+  --trans-light-grey: rgba(208, 188, 255, 0.3);
   --trans-grey: rgba(208, 188, 255, 0.11);
   --nav-grey: rgba(208, 188, 255, 0.08);
   --slate: #E8DEF8;
@@ -15,6 +16,7 @@
   --dark-green: rgba(28, 27, 31, 1);
   --stripe: rgba(2, 40, 42, 0.979);
   --stripe-light: rgba(34, 72, 74, 0.8);
+  --onDark: #E6E1E5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,7 +24,7 @@
     --lightest-grey: #CAC4D0;
     --light-grey: #49454F;
     --grey: #1C1B1F;
-    --trans-light-grey: rgba(208, 188, 255, 0.30);
+    --trans-light-grey: rgba(208, 188, 255, 0.3);
     --trans-grey: rgba(208, 188, 255, 0.11);
     --nav-grey: rgba(208, 188, 255, 0.08);
     --slate: #E8DEF8;
@@ -50,7 +52,7 @@ body {
 body {
   color: var(--lightest-grey);
   /* background: var(--grey); */
-  background: repeating-linear-gradient(90deg, var(--stripe) 10px, var(--stripe) 60px, var(--grey) 20px, var(--grey) 80px);
+  background: var(--grey);
 }
 
 .text-hover:hover {
@@ -96,3 +98,9 @@ body {
 .font-comfortaa {
   font-family: 'Comfortaa', cursive;
 }
+
+.boxshadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
