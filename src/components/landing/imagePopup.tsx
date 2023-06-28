@@ -4,7 +4,8 @@ import { Hit } from "@/types/searchRes.type";
 import { motion } from "framer-motion";
 import React from "react";
 import { CopyIcon, LikeIcon, ExportIcon } from "../assets/icons";
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ImagePopupProps {
   closePopup: () => void;
@@ -15,7 +16,6 @@ export default function ImagePopup({
   closePopup,
   imageInfo,
 }: ImagePopupProps): JSX.Element {
-
   return (
     <>
       <div
@@ -40,21 +40,45 @@ export default function ImagePopup({
           <div className="flex flex-row relative gap-x-12 w-full">
             <div className="flex-1 w-1/2">
               <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5">
-                <p className=" break-words text-base text-[var(--onDark)]">{imageInfo.prompt}</p>
+                <p className=" break-words text-base text-[var(--onDark)]">
+                  {imageInfo.prompt}
+                </p>
                 <div className="flex items-center justify-between">
                   <a
-                    href={imageEndpoint(imageInfo.id)}
-                    className="px-4 py-2 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300"
-                    download
-                    target="blank"
+                    href=""
+                    className=" hover:-translate-y-[2px] px-4 py-2 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300"
                   >
                     Explore Style
                   </a>
                   <div className="flex items-center justify-center gap-x-4">
-                    <a href="" className="group"><CopyIcon className="group-hover:fill-[var(--pink)] duration-300"/></a>
-                    <a href="" className="group"><ExportIcon className="group-hover:fill-[var(--pink)] duration-300"/></a>
-                    <a href="" className="group"><LikeIcon className="group-hover:fill-[var(--pink)] duration-300"/></a>
-                    
+                    <a
+                      href=""
+                      className="group hover:-translate-y-[2px] duration-300"
+                    >
+                      <CopyIcon className="group-hover:fill-[var(--pink)] duration-300" />
+                    </a>
+                    <a
+                      href=""
+                      className="group hover:-translate-y-[2px] duration-300"
+                    >
+                      <ExportIcon className="group-hover:fill-[var(--pink)] duration-300" />
+                    </a>
+                    <a
+                      href={imageEndpoint(imageInfo.id)}
+                      download
+                      target="blank"
+                    >
+                      <FontAwesomeIcon
+                        icon={faCircleDown}
+                        className="hover:-translate-y-[2px] text-[var(--onDark)] h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
+                      />
+                    </a>
+                    <a
+                      href=""
+                      className="group hover:-translate-y-[2px] duration-300"
+                    >
+                      <LikeIcon className=" group-hover:fill-[var(--pink)] duration-300" />
+                    </a>
                   </div>
                 </div>
               </div>
