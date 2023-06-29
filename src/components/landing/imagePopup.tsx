@@ -7,6 +7,7 @@ import { CopyIcon, LikeIcon, ExportIcon } from "../assets/icons";
 import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 interface ImagePopupProps {
   closePopup: () => void;
@@ -21,7 +22,7 @@ export default function ImagePopup({
   const onCopy = React.useCallback(() => {
     setCopied(true);
   }, []);
-  const [showMore, setShowMore]= React.useState(false);
+  const [showMore, setShowMore] = React.useState(false);
 
   return (
     <>
@@ -42,27 +43,43 @@ export default function ImagePopup({
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="w-5/6 md:w-4/6 h-auto bg-[var(--lightish-grey)] rounded boxshadow p-12 flex flex-col z-50 max-h-[80%] overflow-y-scroll"
+          className="sm:w-11/12 w-full lg:w-4/6 md:w-5/6 sm:h-auto h-full bg-[var(--lightish-grey)] rounded boxshadow lg:p-12 p-9 flex flex-col z-50 sm:max-h-[80%] overflow-y-scroll"
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.7, opacity: 0 }}
         >
-          <div className="flex flex-row relative gap-x-12 w-full">
-            <div className="flex-1 w-1/2">
-              <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5">
+          <div className="flex sm:flex-row flex-col relative lg:gap-x-12 sm:gap-x-9 w-full items-center justify-center sm:items-start sm:gap-y-0 gap-y-9">
+            <a className="sm:hidden block -order-2 self-start pl-2 -my-4" onClick={()=> {
+              closePopup();
+              setCopied(false);
+            }}>
+              <ChevronLeftIcon />
+            </a>
+
+            <div className="flex-1 sm:w-1/2 w-11/12 sm:mb-0 mb-5">
+              <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5 order-1">
                 <p className=" break-words md:text-base text-[var(--onDark)] text-sm">
-                  {showMore ? imageInfo.prompt : `${imageInfo.prompt.substring(0,450)}`}
-                  <br/>
-                  <button className={`text-[var(--pink)] ${(imageInfo.prompt.length > 450) ? 'block': 'hidden'}`} onClick={()=> setShowMore(!showMore)}>{showMore? 'Show Less':'Show More'}</button>
+                  {showMore
+                    ? imageInfo.prompt
+                    : `${imageInfo.prompt.substring(0, 300)}`}
+                  <br />
+                  <button
+                    className={`text-[var(--pink)] ${
+                      imageInfo.prompt.length > 300 ? "block" : "hidden"
+                    }`}
+                    onClick={() => setShowMore(!showMore)}
+                  >
+                    {showMore ? "Show Less" : "Show More"}
+                  </button>
                 </p>
                 <div className="flex items-center justify-between">
                   <a
                     href=""
-                    className=" hover:-translate-y-[2px] lg:px-4 px-3 text-center py-2 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full lg:text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300 text-xs"
+                    className=" hover:-translate-y-[2px] xl:px-4 lg:px-3 md:px-2 px-1 text-center lg:py-2 py-1 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full md:text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300 text-xs"
                   >
                     Explore Style
                   </a>
-                  <div className="flex items-center justify-center lg:gap-x-4 gap-x-2">
+                  <div className="flex items-center justify-center xl:gap-x-4 gap-x-2">
                     <CopyToClipboard onCopy={onCopy} text={imageInfo.prompt}>
                       <motion.a
                         className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
@@ -80,7 +97,7 @@ export default function ImagePopup({
                         }}
                       >
                         <CopyIcon
-                          className={` ${
+                          className={`h-[0.9rem] ${
                             copied ? "fill-[var(--pink)]" : "fill-[--onDark]"
                           }`}
                         />
@@ -90,7 +107,7 @@ export default function ImagePopup({
                       href=""
                       className="group hover:-translate-y-[2px] duration-300"
                     >
-                      <ExportIcon className="group-hover:fill-[var(--pink)] duration-300" />
+                      <ExportIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
                     </a>
                     <a
                       href={imageEndpoint(imageInfo.id)}
@@ -99,21 +116,21 @@ export default function ImagePopup({
                     >
                       <FontAwesomeIcon
                         icon={faCircleDown}
-                        className="hover:-translate-y-[2px] text-[var(--onDark)] h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
+                        className="h-4 hover:-translate-y-[2px] text-[var(--onDark)] sm:h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
                       />
                     </a>
                     <a
                       href=""
                       className="group hover:-translate-y-[2px] duration-300"
                     >
-                      <LikeIcon className=" group-hover:fill-[var(--pink)] duration-300" />
+                      <LikeIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
                     </a>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="overflow-hidden flex-1 w-1/2 max-h-[30rem]">
+            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[30rem] sm:order-2 -order-1 w-11/12 flex items-center justify-center max-h-[35rem]">
               <img
                 src={imageEndpoint(imageInfo.id)}
                 alt={imageInfo.id}
