@@ -21,6 +21,7 @@ export default function ImagePopup({
   const onCopy = React.useCallback(() => {
     setCopied(true);
   }, []);
+  const [showMore, setShowMore]= React.useState(false);
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function ImagePopup({
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="w-5/6 md:w-4/6 h-auto bg-[var(--lightish-grey)] rounded boxshadow p-12 flex flex-col z-50"
+          className="w-5/6 md:w-4/6 h-auto bg-[var(--lightish-grey)] rounded boxshadow p-12 flex flex-col z-50 max-h-[80%] overflow-y-scroll"
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.7, opacity: 0 }}
@@ -50,7 +51,9 @@ export default function ImagePopup({
             <div className="flex-1 w-1/2">
               <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5">
                 <p className=" break-words md:text-base text-[var(--onDark)] text-sm">
-                  {imageInfo.prompt}
+                  {showMore ? imageInfo.prompt : `${imageInfo.prompt.substring(0,450)}`}
+                  <br/>
+                  <button className={`text-[var(--pink)] ${(imageInfo.prompt.length > 450) ? 'block': 'hidden'}`} onClick={()=> setShowMore(!showMore)}>{showMore? 'Show Less':'Show More'}</button>
                 </p>
                 <div className="flex items-center justify-between">
                   <a
@@ -66,7 +69,7 @@ export default function ImagePopup({
                           copied
                             ? 'before:content-["copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
                             : 'before:content-["copy_prompt?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
-                        } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.2rem] after:border-transparent hover:after:block after:hidden`}
+                        } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         transition={{
