@@ -62,14 +62,15 @@ export default function ImagePopup({
                   <div className="flex items-center justify-center lg:gap-x-4 gap-x-2">
                     <CopyToClipboard onCopy={onCopy} text={imageInfo.prompt}>
                       <motion.a
-                        className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:bg-[var(--pink)] before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
+                        className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
                           copied
-                            ? 'before:content-["copied!"]'
-                            : 'before:content-["copy_prompt?"]'
-                        } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.2rem] after:border-t-[var(--pink)] after:border-transparent hover:after:block after:hidden`}
+                            ? 'before:content-["copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
+                            : 'before:content-["copy_prompt?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
+                        } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.2rem] after:border-transparent hover:after:block after:hidden`}
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         transition={{
+                          duration: 0.1,
                           type: "spring",
                           stiffness: 400,
                           damping: 17,
