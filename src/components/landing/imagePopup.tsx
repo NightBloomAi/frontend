@@ -149,35 +149,10 @@ export default function ImagePopup({
                       src={alternateImages(imageInfo.id, item.number)}
                       onClick={() => setWhichImage(item.number)}
                       alt={imageInfo.id}
-                      className="object-contain h-auto w-1/4 rounded cursor-pointer"
+                      className={`${(whichImage == item.number) ? 'opacity-100':'opacity-30'} object-contain h-auto w-1/4 rounded cursor-pointer`}
                     />
                   );
                 })}
-
-                {/* <img
-                  src={alternateImages(imageInfo.id, 0)}
-                  onClick={() => setWhichImage(0)}
-                  alt={imageInfo.id}
-                  className="object-contain h-auto w-1/4 rounded cursor-pointer"
-                />
-                <img
-                  src={alternateImages(imageInfo.id, 1)}
-                  onClick={() => setWhichImage(1)}
-                  alt={imageInfo.id}
-                  className="object-contain h-auto w-1/4 rounded cursor-pointer"
-                />
-                <img
-                  src={alternateImages(imageInfo.id, 2)}
-                  onClick={() => setWhichImage(2)}
-                  alt={imageInfo.id}
-                  className="object-contain h-auto w-1/4 rounded cursor-pointer"
-                />
-                <img
-                  src={alternateImages(imageInfo.id, 3)}
-                  onClick={() => setWhichImage(3)}
-                  alt={imageInfo.id}
-                  className="object-contain h-auto w-1/4 rounded cursor-pointer"
-                /> */}
               </div>
             </div>
           </div>
