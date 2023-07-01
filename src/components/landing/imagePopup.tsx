@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { imageEndpoint } from "@/config/endpoints";
+import { alternateImages, imageEndpoint } from "@/config/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import { motion } from "framer-motion";
 import React from "react";
@@ -43,7 +43,7 @@ export default function ImagePopup({
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="sm:w-11/12 w-full lg:w-4/6 md:w-5/6 sm:h-auto h-full bg-[var(--lightish-grey)] rounded boxshadow lg:p-12 p-9 flex flex-col z-50 sm:max-h-[80%] overflow-y-scroll"
+          className="sm:w-11/12 w-full lg:w-4/6 md:w-5/6 sm:h-auto h-full bg-[var(--lightish-grey)] rounded boxshadow lg:p-12 p-9 flex flex-col z-50 sm:max-h-[85%] overflow-y-scroll"
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.7, opacity: 0 }}
@@ -130,12 +130,27 @@ export default function ImagePopup({
               </div>
             </div>
 
-            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[30rem] sm:order-2 -order-1 w-11/12 flex items-center justify-center max-h-[35rem]">
+            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[40rem] sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center max-h-[35rem] gap-y-5">
               <img
                 src={imageEndpoint(imageInfo.id)}
                 alt={imageInfo.id}
-                className="object-contain h-full w-full rounded"
+                className="object-contain w-5/6 rounded"
               />
+              <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
+                <img src={alternateImages(imageInfo.id, 0)}
+                alt={imageInfo.id}
+                className="object-contain h-auto w-1/4 rounded"/>
+                <img src={alternateImages(imageInfo.id, 1)}
+                alt={imageInfo.id}
+                className="object-contain h-auto w-1/4 rounded"/>
+                <img src={alternateImages(imageInfo.id, 2)}
+                alt={imageInfo.id}
+                className="object-contain h-auto w-1/4 rounded"/>
+                <img src={alternateImages(imageInfo.id, 3)}
+                alt={imageInfo.id}
+                className="object-contain h-auto w-1/4 rounded"/>
+                
+              </div>
             </div>
           </div>
         </motion.div>
@@ -143,3 +158,4 @@ export default function ImagePopup({
     </>
   );
 }
+
