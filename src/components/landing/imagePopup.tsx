@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { imageEndpoint } from "@/config/endpoints";
+import { alternateImages, imageEndpoint } from "@/config/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import { motion } from "framer-motion";
 import React from "react";
+import { useState } from "react";
 import { CopyIcon, LikeIcon, ExportIcon } from "../assets/icons";
 import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,11 +19,12 @@ export default function ImagePopup({
   closePopup,
   imageInfo,
 }: ImagePopupProps): JSX.Element {
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = useState(false);
   const onCopy = React.useCallback(() => {
     setCopied(true);
   }, []);
-  const [showMore, setShowMore] = React.useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [whichImage, setWhichImage] = useState(0);
 
   return (
     <>
@@ -43,16 +45,19 @@ export default function ImagePopup({
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="sm:w-11/12 w-full lg:w-4/6 md:w-5/6 sm:h-auto h-full bg-[var(--lightish-grey)] rounded boxshadow lg:p-12 p-9 flex flex-col z-50 sm:max-h-[80%] overflow-y-scroll"
+          className="sm:w-11/12 w-full lg:w-4/6 md:w-5/6 sm:h-auto h-full bg-[var(--lightish-grey)] rounded boxshadow lg:p-12 p-9 flex flex-col z-50 sm:max-h-[85%] overflow-y-scroll"
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.7, opacity: 0 }}
         >
           <div className="flex sm:flex-row flex-col relative lg:gap-x-12 sm:gap-x-9 w-full items-center justify-center sm:items-start sm:gap-y-0 gap-y-9">
-            <a className="sm:hidden block -order-2 self-start pl-2 -my-4" onClick={()=> {
-              closePopup();
-              setCopied(false);
-            }}>
+            <a
+              className="sm:hidden block -order-2 self-start pl-2 -my-4"
+              onClick={() => {
+                closePopup();
+                setCopied(false);
+              }}
+            >
               <ChevronLeftIcon />
             </a>
 
@@ -130,12 +135,25 @@ export default function ImagePopup({
               </div>
             </div>
 
-            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[30rem] sm:order-2 -order-1 w-11/12 flex items-center justify-center max-h-[35rem]">
+            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[40rem] sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center max-h-[35rem] gap-y-5">
               <img
-                src={imageEndpoint(imageInfo.id)}
+                src={alternateImages(imageInfo.id, whichImage)}
                 alt={imageInfo.id}
-                className="object-contain h-full w-full rounded"
+                className="object-contain w-5/6 rounded"
               />
+              <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
+                {alternatenumbers.map((item: alternateType) => {
+                  return (
+                    <img
+                      key={item.name}
+                      src={alternateImages(imageInfo.id, item.number)}
+                      onClick={() => setWhichImage(item.number)}
+                      alt={imageInfo.id}
+                      className={`${(whichImage == item.number) ? 'opacity-100':'opacity-30'} object-contain h-auto w-1/4 rounded cursor-pointer`}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </motion.div>
@@ -143,3 +161,27 @@ export default function ImagePopup({
     </>
   );
 }
+
+type alternateType = {
+  name: string;
+  number: number;
+};
+
+const alternatenumbers: alternateType[] = [
+  {
+    name: "0",
+    number: 0,
+  },
+  {
+    name: "1",
+    number: 1,
+  },
+  {
+    name: "2",
+    number: 2,
+  },
+  {
+    name: "3",
+    number: 3,
+  },
+];

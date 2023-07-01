@@ -33,4 +33,8 @@ function imageEndpoint(
     return `https://cdn.midjourney.com/${id}/0_0.png`
 }
 
-export { searchEndpoint, imageEndpoint };
+function alternateImages (id:string, ref:number) {
+    return `https://cdn.midjourney.com/${id}/0_${ref}.png`
+}
+
+export { searchEndpoint, imageEndpoint, alternateImages };
