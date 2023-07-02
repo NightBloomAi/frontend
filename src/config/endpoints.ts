@@ -37,4 +37,8 @@ function alternateImages (id:string, ref:number) {
     return `https://cdn.midjourney.com/${id}/0_${ref}.png`
 }
 
-export { searchEndpoint, imageEndpoint, alternateImages };
+function gridImage (id:string) {
+    return `https://cdn.midjourney.com/${id}/grid_0.webp`
+}
+
+export { searchEndpoint, imageEndpoint, alternateImages, gridImage };

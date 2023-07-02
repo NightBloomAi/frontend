@@ -19,6 +19,10 @@
   --onDark: #E6E1E5;
 }
 
+/* * {
+  border:#FF2F22 solid 2px;
+} */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --lightest-grey: #CAC4D0;

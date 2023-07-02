@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { alternateImages, imageEndpoint } from "@/config/endpoints";
+import { alternateImages, gridImage, imageEndpoint } from "@/config/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState } from "react";
-import { CopyIcon, LikeIcon, ExportIcon } from "../assets/icons";
+import { CopyIcon, LikeIcon, ExportIcon, FingerprintIcon } from "../assets/icons";
 import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -61,7 +61,7 @@ export default function ImagePopup({
               <ChevronLeftIcon />
             </a>
 
-            <div className="flex-1 sm:w-1/2 w-11/12 sm:mb-0 mb-5">
+            <div className="flex-1 sm:w-7/12 w-11/12 sm:mb-0 mb-5">
               <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5 order-1">
                 <p className=" break-words md:text-base text-[var(--onDark)] text-sm">
                   {showMore
@@ -133,13 +133,35 @@ export default function ImagePopup({
                   </div>
                 </div>
               </div>
+              <div className="text-base text-[var(--onDark)] pt-9 pb-3">
+                Image Details
+              </div>
+              <div className="flex flex-row w-1/2 justify-between items-start">
+                <div className="border-[var(--light-grey)] border-2 rounded-md h-40 w-40 flex flex-col items-center justify-center">
+                  <div className="text-[var(--onDark)] text-sm pb-1 flex flex-row items-center justify-center gap-x-[0.1rem]">
+                    <FingerprintIcon className="h-3"/>
+                    <p>Parent Image</p>
+                  </div>
+                  <a href={gridImage(imageInfo.id)} download target="blank">
+                    <img
+                      src={gridImage(imageInfo.id)}
+                      alt={imageInfo.id}
+                      className="object-contain h-28 rounded pb-1 px-1"
+                    />
+                  </a>
+                </div>
+
+                <div className="flex flex-col">
+
+                </div>
+              </div>
             </div>
 
-            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:max-h-[40rem] sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center max-h-[35rem] gap-y-5">
+            <div className="overflow-hidden sm:w-5/12 sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center gap-y-5">
               <img
                 src={alternateImages(imageInfo.id, whichImage)}
                 alt={imageInfo.id}
-                className="object-contain w-5/6 rounded"
+                className="object-contain w-full rounded sm:max-h-[35rem]"
               />
               <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
                 {alternatenumbers.map((item: alternateType) => {
@@ -149,7 +171,9 @@ export default function ImagePopup({
                       src={alternateImages(imageInfo.id, item.number)}
                       onClick={() => setWhichImage(item.number)}
                       alt={imageInfo.id}
-                      className={`${(whichImage == item.number) ? 'opacity-100':'opacity-30'} object-contain h-auto w-1/4 rounded cursor-pointer`}
+                      className={`${
+                        whichImage == item.number ? "opacity-100" : "opacity-30"
+                      } object-contain h-auto w-1/4 rounded cursor-pointer`}
                     />
                   );
                 })}
@@ -185,3 +209,33 @@ const alternatenumbers: alternateType[] = [
     number: 3,
   },
 ];
+
+type detailsType = {
+  name: string;
+  iconSRC: string;
+  text: string;
+}
+
+const imageDetails: detailsType[] = [
+  {
+    name:"",
+    iconSRC:"",
+    text:"",
+  },
+  {
+    name:"",
+    iconSRC:"",
+    text:"",
+  },
+  {
+    name:"",
+    iconSRC:"",
+    text:"",
+  },
+  {
+    name:"",
+    iconSRC:"",
+    text:"",
+  }
+
+]
