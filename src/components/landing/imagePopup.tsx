@@ -61,7 +61,7 @@ export default function ImagePopup({
               <ChevronLeftIcon />
             </a>
 
-            <div className="flex-1 sm:w-1/2 w-11/12 sm:mb-0 mb-5">
+            <div className="flex-1 sm:w-7/12 w-11/12 sm:mb-0 mb-5">
               <div className="bg-[var(--light-grey)] flex flex-col rounded min-h-[50%] justify-between p-5 gap-y-5 order-1">
                 <p className=" break-words md:text-base text-[var(--onDark)] text-sm">
                   {showMore
@@ -156,11 +156,11 @@ export default function ImagePopup({
               </div>
             </div>
 
-            <div className="overflow-hidden sm:flex-1 sm:w-1/2 sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center gap-y-5">
+            <div className="overflow-hidden sm:w-5/12 sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center gap-y-5">
               <img
                 src={alternateImages(imageInfo.id, whichImage)}
                 alt={imageInfo.id}
-                className="object-contain w-5/6 rounded sm:max-h-[35rem]"
+                className="object-contain w-full rounded sm:max-h-[35rem]"
               />
               <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
                 {alternatenumbers.map((item: alternateType) => {
