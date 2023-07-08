@@ -7,32 +7,32 @@ import SearchBar from "./searchBar";
 import SearchResults from "./searchResults";
 
 export default function Hero(): JSX.Element {
-  const [search, setSearch] = useState("");
-  const { data, loading, error, fetchMoreData, resetPage } = useSearch(
-    1,
-    search
-  );
+    const [search, setSearch] = useState("");
+    const { data, loading, error, fetchMoreData, resetPage } = useSearch(
+        1,
+        search
+    );
 
-  return (
-    <section className="flex flex-col justify-center items-center">
-      <div className="h-16"></div>
+    return (
+        <section className="flex flex-col justify-center items-center">
+            <div className="h-16"></div>
 
-      <div className="flex flex-col justify-center items-center my-16 gap-y-4 md:my-32 md:gap-y-8">
-        <h1 className="text-4xl md:text-5xl font-museo">NightBloom</h1>
-        <h2 className="text-center">
-          Discover your imagination - Midjourney search engine
-        </h2>
-        <SearchBar onSearch={setSearch} onSearchChange={resetPage} />
-      </div>
+            <div className="flex flex-col justify-center items-center my-16 gap-y-4 md:my-32 md:gap-y-8">
+                <h1 className="text-4xl md:text-5xl font-museo">NightBloom</h1>
+                <h2 className="text-center">
+                    Discover your imagination - Midjourney search engine
+                </h2>
+                <SearchBar onSearch={setSearch} onSearchChange={resetPage} />
+            </div>
 
-      <SearchResults
-        data={data}
-        loading={loading}
-        error={error}
-        fetchMoreData={fetchMoreData}
-      />
+            <SearchResults
+                data={data}
+                loading={loading}
+                error={error}
+                fetchMoreData={fetchMoreData}
+            />
 
-      <div className="my-4"></div>
-    </section>
-  );
+            <div className="my-4"></div>
+        </section>
+    );
 }

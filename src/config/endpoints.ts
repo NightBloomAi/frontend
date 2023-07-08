@@ -33,11 +33,15 @@ function imageEndpoint(
     return `https://cdn.midjourney.com/${id}/0_0.png`
 }
 
-function alternateImages (id:string, ref:number) {
+
+
+function alternateImages(id: string, ref: number) {
     return `https://cdn.midjourney.com/${id}/0_${ref}.png`
 }
 
-function gridImage (id:string) {
+
+
+function gridImage(id: string) {
     return `https://cdn.midjourney.com/${id}/grid_0.webp`
 }
 
