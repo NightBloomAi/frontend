@@ -4,7 +4,12 @@ import { Hit } from "@/types/searchRes.type";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState } from "react";
-import { CopyIcon, LikeIcon, ExportIcon, FingerprintIcon } from "../assets/icons";
+import {
+  CopyIcon,
+  LikeIcon,
+  ExportIcon,
+  FingerprintIcon,
+} from "../assets/icons";
 import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -137,23 +142,24 @@ export default function ImagePopup({
                 Image Details
               </div>
               <div className="flex flex-row w-1/2 justify-between items-start">
-                <div className="border-[var(--light-grey)] border-2 rounded-md h-40 w-40 flex flex-col items-center justify-center">
+                <a
+                  href={gridImage(imageInfo.id)}
+                  download
+                  target="blank"
+                  className="border-[var(--light-grey)] border-2 rounded-md h-40 w-40 flex flex-col items-center justify-center"
+                >
                   <div className="text-[var(--onDark)] text-sm pb-1 flex flex-row items-center justify-center gap-x-[0.1rem]">
-                    <FingerprintIcon className="h-3"/>
+                    <FingerprintIcon className="h-3" />
                     <p>Parent Image</p>
                   </div>
-                  <a href={gridImage(imageInfo.id)} download target="blank">
-                    <img
-                      src={gridImage(imageInfo.id)}
-                      alt={imageInfo.id}
-                      className="object-contain h-28 rounded pb-1 px-1"
-                    />
-                  </a>
-                </div>
+                  <img
+                    src={gridImage(imageInfo.id)}
+                    alt={imageInfo.id}
+                    className="object-contain h-28 rounded pb-1 px-1"
+                  />
+                </a>
 
-                <div className="flex flex-col">
-
-                </div>
+                <div className="flex flex-col"></div>
               </div>
             </div>
 
@@ -214,28 +220,27 @@ type detailsType = {
   name: string;
   iconSRC: string;
   text: string;
-}
+};
 
 const imageDetails: detailsType[] = [
   {
-    name:"",
-    iconSRC:"",
-    text:"",
+    name: "",
+    iconSRC: "",
+    text: "",
   },
   {
-    name:"",
-    iconSRC:"",
-    text:"",
+    name: "",
+    iconSRC: "",
+    text: "",
   },
   {
-    name:"",
-    iconSRC:"",
-    text:"",
+    name: "",
+    iconSRC: "",
+    text: "",
   },
   {
-    name:"",
-    iconSRC:"",
-    text:"",
-  }
-
-]
+    name: "",
+    iconSRC: "",
+    text: "",
+  },
+];
