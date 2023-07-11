@@ -30,8 +30,8 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
           <div>
             <select className="bg-transparent border-2 border-[var(--trans-grey)] rounded-lg p-1">
               {filter.map((item) => (
-                <option key={item} value={item} className="">
-                  {item}
+                <option key={item.displayName} value={item.name} className="">
+                  {item.displayName}
                 </option>
               ))}
             </select>
@@ -42,13 +42,13 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
       <ul className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {data.map((item) => (
           <div
-            key={item.id}
+            key={item.reference_job_id}
             className="object-cover w-full overflow-hidden cursor-pointer"
             onClick={togglePopup(item)}
           >
             <img
-              src={imageEndpoint(item.id)}
-              alt={item.id}
+              src={imageEndpoint(item.reference_job_id)}
+              alt={item.reference_job_id}
               className="object-cover h-full w-full duration-500 hover:scale-110"
             />
           </div>
@@ -61,4 +61,22 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
   );
 }
 
-const filter = ["All", "Abstract"];
+type filterType = {
+  name: string,
+  displayName: string,
+}
+
+const filter: filterType[] = [
+  {
+    name: "",
+    displayName: "all"
+  },
+  {
+    name: "isometric_anime",
+    displayName: "isometric anime"
+  },
+  {
+    name: "analytic_drawing",
+    displayName: "analytic drawing"
+  }
+  ];

@@ -4,7 +4,7 @@ type SearchRes = {
 };
 
 type Hit = {
-  id: string;
+  reference_job_id: string;
   prompt: string;
   full_command: string;
   height: number;
