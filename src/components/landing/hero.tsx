@@ -1,17 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSearch from "@/hooks/useSearch";
 import SearchBar from "./searchBar";
 import SearchResults from "./searchResults";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function Hero(): JSX.Element {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
   const { data, loading, error, fetchMoreData, resetPage } = useSearch(
     1,
-    search
+    search, category
   );
+
+  function changeCategory(e: React.ChangeEvent<HTMLSelectElement>) {
+    resetPage();
+    setCategory(e.target.value);
+    
+
+  }
+
+
+    const debouncedCategory = useDebounce(category, 500);
+
+  useEffect(() => {
+    setCategory(debouncedCategory);
+    console.log('u suck')
+  }, [debouncedCategory, setCategory]);
 
   return (
     <section className="flex flex-col justify-center items-center">
@@ -29,6 +46,8 @@ export default function Hero(): JSX.Element {
         data={data}
         loading={loading}
         error={error}
+        category={category}
+        setCategory={changeCategory}
         fetchMoreData={fetchMoreData}
       />
 

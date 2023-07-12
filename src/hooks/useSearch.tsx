@@ -26,7 +26,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-const useSearch = (initialPage: number, search: string) => {
+const useSearch = (initialPage: number, search: string, category: string) => {
   const [state, dispatch] = useReducer(reducer, {
     data: undefined,
     loading: true,
@@ -40,7 +40,7 @@ const useSearch = (initialPage: number, search: string) => {
     const fetchData = async () => {
       dispatch({ type: "LOADING" });
       try {
-        const res = await fetch(searchEndpoint(pageRef.current, search));
+        const res = await fetch(searchEndpoint(pageRef.current, search, category));
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -51,11 +51,11 @@ const useSearch = (initialPage: number, search: string) => {
       }
     };
     fetchData();
-  }, [search]);
+  }, [search, category]);
 
   const fetchMoreData = async () => {
     pageRef.current++;
-    const res = await fetch(searchEndpoint(pageRef.current, search));
+    const res = await fetch(searchEndpoint(pageRef.current, search, category));
     const searchRes: SearchRes = await res.json();
     if (data) {
       dispatch({ type: "LOAD", payload: data.concat(searchRes.hits) });

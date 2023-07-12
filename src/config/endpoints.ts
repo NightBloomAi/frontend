@@ -10,15 +10,19 @@ Constructs a search endpoint URL based on the specified page number and query.
 function searchEndpoint(
     page: number,
     query: string,
+    category: string,
 ) {
     page = page || 1;
     query = query || '';
+    category = category || '' ;
 
     const protocol = 'http';
     const host = '49.13.9.134';
     const path = 'search/assets';
 
-    return `${protocol}://${host}/${path}?page=${page}&query=${query}`;
+    console.log(`${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`)
+
+    return `${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`;
 }
 
 
