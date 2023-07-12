@@ -54,7 +54,7 @@ const styles: StylesType[] = [
   {
     name: "pixel_art",
     displayName: "Pixel Art",
-    imgsrc: "https://cdn.midjourney.com/b777d798-8f11-42a6-9200-b2af27ee5fb1/0_0.png",
+    imgsrc: "https://cdn.midjourney.com/5727ecaf-856b-40f7-b8ef-27e125f064e9/0_0.png",
     descript:
       "Popularized in the early days of video games and is still used today as a form of nostalgia.",
   },
