@@ -19,7 +19,7 @@ const navItems: NavItem[] = [
   },
   {
     name: "Style Guide",
-    href: "/style-guide",
+    href: "./style-guide",
   },
 ];
 

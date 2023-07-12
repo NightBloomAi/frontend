@@ -130,7 +130,9 @@ export default function ImagePopup({
                                             <ExportIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
                                         </a>
                                         <a
-                                            href={imageEndpoint(imageInfo.id)}
+                                            href={imageEndpoint(
+                                                imageInfo.reference_job_id
+                                            )}
                                             download
                                             target="blank"
                                         >
@@ -152,23 +154,24 @@ export default function ImagePopup({
                                 Image Details
                             </div>
                             <div className="flex flex-row w-1/2 justify-between items-start">
-                                <div className="border-[var(--light-grey)] border-2 rounded-md h-40 w-40 flex flex-col items-center justify-center">
+                                <a
+                                    href={gridImage(imageInfo.reference_job_id)}
+                                    download
+                                    target="blank"
+                                    className="border-[var(--light-grey)] border-2 rounded-md h-40 w-40 flex flex-col items-center justify-center"
+                                >
                                     <div className="text-[var(--onDark)] text-sm pb-1 flex flex-row items-center justify-center gap-x-[0.1rem]">
                                         <FingerprintIcon className="h-3" />
                                         <p>Parent Image</p>
                                     </div>
-                                    <a
-                                        href={gridImage(imageInfo.id)}
-                                        download
-                                        target="blank"
-                                    >
-                                        <img
-                                            src={gridImage(imageInfo.id)}
-                                            alt={imageInfo.id}
-                                            className="object-contain h-28 rounded pb-1 px-1"
-                                        />
-                                    </a>
-                                </div>
+                                    <img
+                                        src={gridImage(
+                                            imageInfo.reference_job_id
+                                        )}
+                                        alt={imageInfo.reference_job_id}
+                                        className="object-contain h-28 rounded pb-1 px-1"
+                                    />
+                                </a>
 
                                 <div className="flex flex-col"></div>
                             </div>
@@ -176,8 +179,11 @@ export default function ImagePopup({
 
                         <div className="overflow-hidden sm:w-5/12 sm:order-2 -order-1 w-11/12 flex flex-col items-center justify-center gap-y-5">
                             <img
-                                src={alternateImages(imageInfo.id, whichImage)}
-                                alt={imageInfo.id}
+                                src={alternateImages(
+                                    imageInfo.reference_job_id,
+                                    whichImage
+                                )}
+                                alt={imageInfo.reference_job_id}
                                 className="object-contain w-full rounded sm:max-h-[35rem]"
                             />
                             <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
@@ -186,13 +192,13 @@ export default function ImagePopup({
                                         <img
                                             key={item.name}
                                             src={alternateImages(
-                                                imageInfo.id,
+                                                imageInfo.reference_job_id,
                                                 item.number
                                             )}
                                             onClick={() =>
                                                 setWhichImage(item.number)
                                             }
-                                            alt={imageInfo.id}
+                                            alt={imageInfo.reference_job_id}
                                             className={`${
                                                 whichImage == item.number
                                                     ? "opacity-100"

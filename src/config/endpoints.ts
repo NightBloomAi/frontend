@@ -9,17 +9,23 @@ Constructs a search endpoint URL based on the specified page number and query.
 */
 function searchEndpoint(
     page: number,
-    query: string
+    query: string,
+    category: string,
 ) {
     page = page || 1;
     query = query || '';
+    category = category || '';
 
-    const protocol = 'https';
-    const host = 'nightbloom.ai';
-    const path = 'api/search';
+    const protocol = 'http';
+    const host = '49.13.9.134';
+    const path = 'search/assets';
 
-    return `${protocol}://${host}/${path}?page=${page}&query=${query}`;
+    console.log(`${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`)
+
+    return `${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`;
 }
+
+
 
 
 /**
@@ -28,21 +34,17 @@ Constructs an image endpoint URL based on the specified ID.
 @returns {string} The constructed image endpoint URL.
 */
 function imageEndpoint(
-    id: string
+    reference_job_id: string
 ) {
-    return `https://cdn.midjourney.com/${id}/0_0.png`
+    return `https://cdn.midjourney.com/${reference_job_id}/0_0.png`
 }
 
-
-
-function alternateImages(id: string, ref: number) {
-    return `https://cdn.midjourney.com/${id}/0_${ref}.png`
+function alternateImages(reference_job_id: string, ref: number) {
+    return `https://cdn.midjourney.com/${reference_job_id}/0_${ref}.png`
 }
 
-
-
-function gridImage(id: string) {
-    return `https://cdn.midjourney.com/${id}/grid_0.webp`
+function gridImage(reference_job_id: string) {
+    return `https://cdn.midjourney.com/${reference_job_id}/grid_0.webp`
 }
 
 export { searchEndpoint, imageEndpoint, alternateImages, gridImage };

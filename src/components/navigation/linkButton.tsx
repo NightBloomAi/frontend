@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 type LinkButtonProps = {
@@ -7,12 +8,12 @@ type LinkButtonProps = {
 };
 
 const LinkButton = ({ href, label, className }: LinkButtonProps) => (
-  <a
+  <Link
     href={href}
     className={`text-[var(--lightest-grey)] transition-colors duration-300 text-hover text-lg ${className}`}
   >
     {label}
-  </a>
+  </Link>
 );
 
 export default LinkButton;
