@@ -61,7 +61,7 @@ export default function Gallery({
                 {data.map((item) => (
                     <div
                         key={item.reference_job_id}
-                        className="object-cover w-full overflow-hidden cursor-pointer"
+                        className="object-cover w-full overflow-hidden cursor-pointer rounded"
                         onClick={togglePopup(item)}
                     >
                         <img
