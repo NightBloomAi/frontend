@@ -14,7 +14,7 @@ function searchEndpoint(
 ) {
     page = page || 1;
     query = query || '';
-    category = category || '' ;
+    category = category || '';
 
     const protocol = 'http';
     const host = '49.13.9.134';
@@ -39,11 +39,11 @@ function imageEndpoint(
     return `https://cdn.midjourney.com/${reference_job_id}/0_0.png`
 }
 
-function alternateImages (reference_job_id:string, ref:number) {
+function alternateImages(reference_job_id: string, ref: number) {
     return `https://cdn.midjourney.com/${reference_job_id}/0_${ref}.png`
 }
 
-function gridImage (reference_job_id:string) {
+function gridImage(reference_job_id: string) {
     return `https://cdn.midjourney.com/${reference_job_id}/grid_0.webp`
 }
 
