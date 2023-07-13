@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
 import React from "react";
 
 export default function StyleGuide() {
@@ -31,9 +32,9 @@ export default function StyleGuide() {
                                 {item.descript}
                             </div>
                             <div className="w-full flex mt-auto items-center justify-end">
-                                <div className="rounded-full h-10 w-24 border-2 border-[var(--onDark)] flex items-center justify-center my-5 mx-4 cursor-pointer hover:bg-[var(--onDark)] text-[var(--onDark)] hover:text-[var(--lightish-grey)] hover:-translate-y-1 duration-300">
+                                <Link href={`/style-guide/${item.name}`} className="rounded-full h-10 w-24 border-2 border-[var(--onDark)] flex items-center justify-center my-5 mx-4 cursor-pointer hover:bg-[var(--onDark)] text-[var(--onDark)] hover:text-[var(--lightish-grey)] hover:-translate-y-1 duration-300">
                                     Explore
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     );
@@ -44,14 +45,14 @@ export default function StyleGuide() {
     );
 }
 
-type StylesType = {
+export type StylesType = {
     name: string;
     displayName: string;
     imgsrc: string;
     descript: string;
 };
 
-const styles: StylesType[] = [
+export const styles: StylesType[] = [
     {
         name: "isometric_anime",
         displayName: "Isometric Anime",

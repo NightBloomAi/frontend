@@ -16,13 +16,13 @@ function searchEndpoint(
     query = query || '';
     category = category || '';
 
-    const protocol = 'http';
-    const host = '49.13.9.134';
+    const protocol = 'https';
+    const host = 'nightbloom-search.net';
     const path = 'search/assets';
 
-    console.log(`${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`)
+    console.log(`${protocol}://${host}/${path}?page=${page}&category=${category}&query=${query}`)
 
-    return `${protocol}://${host}/${path}?page=${page}&query=${query}&category=${category}`;
+    return `${protocol}://${host}/${path}?page=${page}&category=${category}&query=${query}`;
 }
 
 

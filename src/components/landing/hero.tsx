@@ -25,7 +25,6 @@ export default function Hero(): JSX.Element {
 
     useEffect(() => {
         setCategory(debouncedCategory);
-        console.log("u suck");
     }, [debouncedCategory, setCategory]);
 
     return (
