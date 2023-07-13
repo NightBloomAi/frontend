@@ -7,22 +7,24 @@ import StyleSearchResults from "./styleSearchResults";
 
 interface UniqueStyleGalleryProps {
   item: StylesType | undefined;
+  category: string | undefined
 }
 
-export default function UniqueStyleGallery({ item }: UniqueStyleGalleryProps) {
+export default function UniqueStyleGallery({ item, category }: UniqueStyleGalleryProps,) {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
+  // const [category, setCategory] = useState("");
 
-  useEffect(() => {
-    if (item) {
-      const category = setCategory(item.name);
-    }
-    if (!item) {
-      const category = setCategory("");
-    }
-  });
+  
+    // if (item) {
+    //   const category = setCategory(item.name);
+    // }
+    
 
   if (!item) {
+    return null;
+  }
+
+  if (!category) {
     return null;
   }
 
@@ -43,10 +45,10 @@ export default function UniqueStyleGallery({ item }: UniqueStyleGalleryProps) {
       </div>
 
       <StyleSearchResults
+        category={category}
         data={data}
         loading={loading}
         error={error}
-        category={category}
         fetchMoreData={fetchMoreData}
       />
 

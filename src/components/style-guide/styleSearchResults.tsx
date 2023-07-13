@@ -3,7 +3,7 @@ import React from "react";
 import LoadingSkeleton from "../misc/loadingSkeleton";
 import ErrorMsg from "../misc/error";
 import InfiniteScroll from "react-infinite-scroll-component";
-import StyleGalleryResults from "./styleGallery";
+import StyleGalleryResults from "./styleGalleryResults";
 
 export default function StyleSearchResults({
   data,
