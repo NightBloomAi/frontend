@@ -7,11 +7,17 @@ import StyleSearchResults from "./styleSearchResults";
 
 interface UniqueStyleGalleryProps {
   item: StylesType | undefined;
-  category: string | undefined
+  category: string;
 }
 
 export default function UniqueStyleGallery({ item, category }: UniqueStyleGalleryProps,) {
   const [search, setSearch] = useState("");
+  
+  const { data, loading, error, fetchMoreData, resetPage } = useSearch(
+    1,
+    search,
+    category
+  );
   // const [category, setCategory] = useState("");
 
   
@@ -24,15 +30,6 @@ export default function UniqueStyleGallery({ item, category }: UniqueStyleGaller
     return null;
   }
 
-  if (!category) {
-    return null;
-  }
-
-  const { data, loading, error, fetchMoreData, resetPage } = useSearch(
-    1,
-    search,
-    category
-  );
 
   return (
     <section className="flex flex-col justify-center items-center">
