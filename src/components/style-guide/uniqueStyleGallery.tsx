@@ -7,7 +7,7 @@ import StyleSearchResults from "./styleSearchResults";
 
 interface UniqueStyleGalleryProps {
   item: StylesType | undefined;
-  category:  any;
+  category:  string;
 }
 
 export default function UniqueStyleGallery({ item, category }: UniqueStyleGalleryProps,) {

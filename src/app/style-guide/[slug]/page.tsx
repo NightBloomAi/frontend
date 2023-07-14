@@ -13,7 +13,7 @@ export default function StyleGallery({params}: {params: {slug: string}}) {
 
     return(
         <main className="container mx-auto px-4 max-w-screen-xl">
-            <UniqueStyleGallery item={item} category={category}/>
+            <UniqueStyleGallery item={item} category={category as string}/>
         </main>
     )
 }
