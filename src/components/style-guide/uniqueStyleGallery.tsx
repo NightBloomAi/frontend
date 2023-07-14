@@ -7,12 +7,12 @@ import StyleSearchResults from "./styleSearchResults";
 
 interface UniqueStyleGalleryProps {
   item: StylesType | undefined;
-  category: string;
+  category:  any;
 }
 
 export default function UniqueStyleGallery({ item, category }: UniqueStyleGalleryProps,) {
   const [search, setSearch] = useState("");
-  
+
   const { data, loading, error, fetchMoreData, resetPage } = useSearch(
     1,
     search,
