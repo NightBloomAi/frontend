@@ -58,7 +58,7 @@ export const styles: StylesType[] = [
         displayName: "Isometric Anime",
         imgsrc: "https://cdn.midjourney.com/86169245-149b-43ce-ac4c-0b6ea7af2850/0_0.png",
         descript:
-            "Often seen in video games and futuristic-themed anime, this stye provides a unique visual experience.",
+            "Often seen in video games and futuristic-themed anime, this style provides a unique visual experience.",
     },
     {
         name: "2d_illustration",
