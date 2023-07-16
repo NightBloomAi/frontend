@@ -5,6 +5,7 @@ import Gallery from "./gallery";
 import { Hit } from "@/types/searchRes.type";
 import { ChangeEvent } from "react";
 import LoadingSkeleton from "../misc/loadingSkeleton";
+import { SelectChangeEvent } from "@mui/material";
 
 function SearchResults({
     data,
@@ -18,7 +19,7 @@ function SearchResults({
     loading: boolean;
     error: any;
     category: string;
-    setCategory: (e: ChangeEvent<HTMLSelectElement>) => void;
+    setCategory: (event: SelectChangeEvent<string>) => void;
     fetchMoreData: () => void;
 }): JSX.Element {
     if (loading) return <LoadingSkeleton />;

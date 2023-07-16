@@ -37,7 +37,7 @@ export default function UniqueStyleGallery({ item, category }: UniqueStyleGaller
 
       <div className="flex flex-col justify-center items-center my-16 gap-y-4 md:my-32 md:gap-y-8">
         <h1 className="text-4xl md:text-5xl font-museo">{item.displayName}</h1>
-        <h2 className="text-center w-[30rem]">{item.descript}</h2>
+        <h2 className="text-center max-w-[30rem] mx-3">{item.descript}</h2>
         <SearchBar onSearch={setSearch} onSearchChange={resetPage} />
       </div>
 
