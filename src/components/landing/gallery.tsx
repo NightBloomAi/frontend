@@ -48,7 +48,7 @@ export default function Gallery({
         <div className="flex flex-row justify-between w-full">
           <div></div>
           <div className=" w-36 focus:rounded-full focus-visible:!border-0 h-auto ">
-            <FormControl fullWidth size="small " >
+            <FormControl fullWidth size="small" >
               <Select
              sx={{
                 '& svg': {
