@@ -6,6 +6,7 @@ import useSearch from "@/hooks/useSearch";
 import SearchBar from "./searchBar";
 import SearchResults from "./searchResults";
 import { useDebounce } from "@/hooks/useDebounce";
+import { SelectChangeEvent } from "@mui/material";
 
 export default function Hero(): JSX.Element {
     const [search, setSearch] = useState("");
@@ -16,9 +17,9 @@ export default function Hero(): JSX.Element {
         category
     );
 
-    function changeCategory(e: React.ChangeEvent<HTMLSelectElement>) {
+    function changeCategory(event: SelectChangeEvent<string>) {
         resetPage();
-        setCategory(e.target.value);
+        setCategory(event.target.value);
     }
 
     const debouncedCategory = useDebounce(category, 500);

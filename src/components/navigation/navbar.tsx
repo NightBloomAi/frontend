@@ -19,7 +19,7 @@ const navItems: NavItem[] = [
   },
   {
     name: "Style Guide",
-    href: "./style-guide",
+    href: "/style-guide",
   },
 ];
 
@@ -37,6 +37,7 @@ const Navbar = () => {
           key={item.name}
           href={item.href}
           label={item.name}
+          onClick={toggleMenu}
           className="mr-4"
         />
       )),
@@ -74,7 +75,7 @@ const Navbar = () => {
           {NavLinks}
         </div>
         <div className="flex-1 flex flex-row justify-end items-center">
-          <LinkButton href="#" label={<UserIcon />} />
+          <LinkButton onClick={toggleMenu} href="#" label={<UserIcon />} />
         </div>
       </div>
 
