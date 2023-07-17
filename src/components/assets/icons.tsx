@@ -117,4 +117,13 @@ function FingerprintIcon({ className }: { className?: string }) {
   );
 }
 
-export { SearchIcon, UserIcon, CopyIcon, LikeIcon, ExportIcon, FingerprintIcon };
+
+
+export {
+  SearchIcon,
+  UserIcon,
+  CopyIcon,
+  LikeIcon,
+  ExportIcon,
+  FingerprintIcon,
+};

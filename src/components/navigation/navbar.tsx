@@ -8,7 +8,7 @@ import { MenuButton } from "./menuButton";
 import Logo from "./logo";
 import LinkButton from "./linkButton";
 import Link from "next/link";
-import SignInPopup from "../sign-in/sign-in-popup";
+import SignInPopup from "../sign-in/signInPopup";
 
 const navItems: NavItem[] = [
   {
@@ -103,7 +103,7 @@ const Navbar = () => {
       }`}
     >
       {popUpVisible && (
-      <SignInPopup closePopup={closePopup} />
+      <SignInPopup closePopup={closePopup} signUp={signUp} login={login}/>
       )}
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base max-w-screen-xl">
