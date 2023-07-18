@@ -80,7 +80,7 @@ export default function Gallery({
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
                 variant="standard"
-                className="text-base  bg-[var(--opaque-trans-grey)] rounded-lg text-[var(--lightest-grey)] focus-visible:!border-0 p-1 px-2 m-0 after:border-0 hover:before:border-0 hover:before:w-0 before:border-0"
+                className="text-base  bg-[var(--opaque-trans-grey)] rounded-lg !text-[var(--lightest-grey)] focus-visible:!border-0 p-1 px-2 m-0 after:border-0 hover:before:border-0 hover:before:w-0 before:border-0"
               >
                 {filter.map((item) => (
                   <MenuItem value={item.name} key={item.displayName} className="text-base focus-visible:!border-0 bg-[var(--opaque-trans-grey)] hover:bg-[var(--light-grey)] duration-300 focus-visible:bg-[var(--light-grey)] p-2 m-0 bg-cover mt-0 text-[var(--lightest-grey)] scroll-m-0 ">
