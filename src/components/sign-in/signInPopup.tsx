@@ -67,15 +67,24 @@ export default function SignInPopup({
           >
             <div className="text-4xl font-museo pt-5">NightBloom</div>
 
-            <input
-              className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
-              placeholder="Email Address"
-            ></input>
+            <div className="flex flex-col items-center justify-center gap-y-6">
+              <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
+                <Google />
+                <div className="pl-2">Sign In With Google</div>
+              </div>
 
-            <input
-              className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
-              placeholder="Password"
-            ></input>
+              <div className="text-base">or continue with email</div>
+
+              <input
+                className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
+                placeholder="Email Address"
+              ></input>
+
+              <input
+                className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
+                placeholder="Password"
+              ></input>
+            </div>
 
             <button
               type="submit"
