@@ -36,7 +36,7 @@ export default function SignInPopup({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.7, opacity: 0 }}
           >
-            <div className="text-4xl font-museo pt-5">NightBloom</div>
+            <div className="text-4xl font-museo pt-5">Sign Up</div>
             <div className="flex flex-col items-center justify-center gap-y-6">
               <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
                 <Google />
@@ -45,7 +45,11 @@ export default function SignInPopup({
               <div className="text-base">or continue with email</div>
               <input
                 className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
-                placeholder="Email Address"
+                placeholder="Enter an email address"
+              ></input>
+              <input
+                className="rounded-full px-8 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-start items-center  placeholder:text-[var(--lightest-grey)] text-[var(--pink)] focus:rounded-full"
+                placeholder="Create a password"
               ></input>
             </div>
             <button
@@ -65,7 +69,7 @@ export default function SignInPopup({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.7, opacity: 0 }}
           >
-            <div className="text-4xl font-museo pt-5">NightBloom</div>
+            <div className="text-4xl font-museo pt-5">Log In</div>
 
             <div className="flex flex-col items-center justify-center gap-y-6">
               <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
