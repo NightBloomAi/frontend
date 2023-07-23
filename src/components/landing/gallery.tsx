@@ -61,6 +61,7 @@ export default function Gallery({
 
                 '& .Mui-selected': {
                     backgroundColor: 'var(--opaque-trans-grey)',
+                    border: 'none',
                   },
                   '& .MuiListItem-root.Mui-selected': {
                     backgroundColor: 'var(--light-grey)',
