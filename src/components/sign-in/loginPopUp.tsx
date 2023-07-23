@@ -1,12 +1,31 @@
 import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function LoginPopUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let regobj = { email, password };
+    console.log(regobj);
+    fetch("https://nightbloom-search.net/account/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(regobj),
+    }).then((res) => {
+      res.json();
+      if (res.status === 200) {
+        toast.success("Logged In Successfully");
+      } else {
+        toast.error("Please Enter a valid email and password");
+      }
+    });
+  };
+  const validate = () => {
+    let result = true;
+    return result;
   };
 
   return (

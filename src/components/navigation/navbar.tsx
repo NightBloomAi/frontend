@@ -13,7 +13,7 @@ import SignInPopup from "../sign-in/signInPopup";
 const navItems: NavItem[] = [
   {
     name: "Home",
-    href: "/frontend",
+    href: "/",
   },
   {
     name: "Favorites",
