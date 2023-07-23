@@ -18,6 +18,10 @@ interface GalleryProps {
   setCategory: (event: SelectChangeEvent<string>) => void;
 }
 
+const style={
+
+}
+
 export default function Gallery({
   data,
   category,
@@ -72,6 +76,7 @@ export default function Gallery({
                 PaperProps: {
                   style: {
                     backgroundColor: 'var(--opaque-trans-grey)',
+                    color: 'var(--lightest-grey)'
                   },
                 },
               }}
