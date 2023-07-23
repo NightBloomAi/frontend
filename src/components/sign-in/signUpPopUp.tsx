@@ -26,12 +26,11 @@ export default function SignUpPopUp() {
 
         if (data.error_message === undefined) {
           toast.success("Registered Successfully");
+          setVerify(true);
         } else {
           toast.error(`${data.error_message}`);
         }
       })
-
-    setVerify(true);
   };
 
   return (
