@@ -30,10 +30,6 @@ export default function SignUpPopUp() {
           toast.error(`${data.error_message}`);
         }
       })
-      .catch((error_message) => {
-        console.log(error_message + "hi");
-        // toast.error(`Failed: ${err.error_message}`);
-      });
 
     setVerify(true);
   };
