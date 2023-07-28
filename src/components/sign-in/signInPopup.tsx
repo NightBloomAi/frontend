@@ -36,7 +36,7 @@ export default function SignInPopup({
         )}
 
         {login && (
-          <LoginPopUp/>
+          <LoginPopUp closePopup={closePopup}/>
         )}
       </motion.div>
     </>

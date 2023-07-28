@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { NavItem } from "@/types/nav.type";
 import { UserIcon } from "../assets/icons";
@@ -9,6 +9,8 @@ import Logo from "./logo";
 import LinkButton from "./linkButton";
 import Link from "next/link";
 import SignInPopup from "../sign-in/signInPopup";
+import { UserContext } from "@/app/layout";
+import UserButton from "./userButton";
 
 const navItems: NavItem[] = [
   {
@@ -30,13 +32,15 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [whichPage, setWhichPage] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const {loggedIn} = useContext(UserContext);
+  const {setLoggedIn} = useContext(UserContext);
   const [signInClicked, setSignInClicked] = useState(false);
   const [popUpVisible, setPopupVisible] = useState(false);
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
 
   const togglePopupVisible = () => setPopupVisible(!popUpVisible);
   const toggleSignInButton = () => setSignInClicked(!signInClicked);
@@ -60,6 +64,7 @@ const Navbar = () => {
   }, [signInClicked]);
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
+  const toggleUserMenu = () => setUserMenu(!userMenu);
 
   const NavLinks = useMemo(
     () =>
@@ -72,7 +77,7 @@ const Navbar = () => {
             toggleMenu;
             setWhichPage(item.name);
           }}
-          className="mr-4"
+          className="mr-4 text-lg"
         />
       )),
     []
@@ -113,7 +118,7 @@ const Navbar = () => {
         </div>
         <div className="flex-1 flex flex-row justify-end items-center">
           {loggedIn ? (
-            <LinkButton onClick={toggleMenu} href="/" label={<UserIcon />} />
+            <UserButton toggleUserMenu={toggleUserMenu} userMenu={userMenu} setUserMenu={setUserMenu}/>
           ) : signUpVisible ? (
             <motion.div
               animate={{ x: 0 }}
@@ -189,7 +194,7 @@ const Navbar = () => {
                   toggleMenu();
                   setWhichPage(item.name);
                 }}
-                className={`mr-4 px-4 py-3 w-full ${
+                className={`mr-4 px-4 py-3 w-full text-lg ${
                   whichPage == item.name
                     ? "w-full bg-[var(--trans-grey)] rounded-full"
                     : ""

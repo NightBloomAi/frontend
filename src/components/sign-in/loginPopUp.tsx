@@ -1,23 +1,55 @@
 import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import { UserContext } from "@/app/layout";
 
-export default function LoginPopUp() {
+interface LoginProps {
+  closePopup: () => void;
+}
+
+export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
+  const { setUsername } = useContext(UserContext);
+  const { setLoggedIn } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     let regobj = { email, password };
+    setUsername(email);
     console.log(regobj);
     fetch("https://nightbloom-search.net/account/login", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(regobj),
     }).then((res) => {
       res.json();
       if (res.status === 200) {
         toast.success("Logged In Successfully");
+        setLoggedIn(true);
+        closePopup();
+        console.log(res);
+        console.log(res.headers.get('set-cookie'))
+
+        fetch("https://nightbloom-search.net/account/current_user", {
+          method: "GET",
+          credentials: "include",
+        })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error occurred:", error);
+        });
       } else {
         toast.error("Please Enter a valid email and password");
       }
