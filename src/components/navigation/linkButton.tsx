@@ -11,7 +11,7 @@ type LinkButtonProps = {
 const LinkButton = ({ href, label, className, onClick }: LinkButtonProps) => (
   <Link
     href={href}
-    className={`text-[var(--lightest-grey)] transition-colors duration-300 text-hover text-lg ${className}`}
+    className={`text-[var(--lightest-grey)] transition-colors duration-300 text-hover ${className}`}
     onClick={onClick}
   >
     {label}

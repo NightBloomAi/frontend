@@ -19,7 +19,7 @@ function SearchIcon({ className }: { className?: string }) {
   );
 }
 
-function UserIcon({ className }: { className?: string }) {
+function UserIcon({ className, onClick }: { className?: string, onClick?:()=>void }) {
   return (
     <svg
       width="56"
@@ -28,6 +28,7 @@ function UserIcon({ className }: { className?: string }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      onClick={onClick}
     >
       <g clipPath="url(#clip0_53617_20029)">
         <path
