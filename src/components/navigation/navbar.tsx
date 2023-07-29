@@ -11,6 +11,7 @@ import Link from "next/link";
 import SignInPopup from "../sign-in/signInPopup";
 import { UserContext } from "@/app/layout";
 import UserButton from "./userButton";
+import SignInButton from "./SignInButton";
 
 const navItems: NavItem[] = [
   {
@@ -32,39 +33,10 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [whichPage, setWhichPage] = useState("");
-  const {loggedIn} = useContext(UserContext);
-  const {setLoggedIn} = useContext(UserContext);
-  const [signInClicked, setSignInClicked] = useState(false);
-  const [popUpVisible, setPopupVisible] = useState(false);
-  const [signUpVisible, setSignUpVisible] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [login, setLogin] = useState(false);
-  const [userMenu, setUserMenu] = useState(false);
 
-  const togglePopupVisible = () => setPopupVisible(!popUpVisible);
-  const toggleSignInButton = () => setSignInClicked(!signInClicked);
-
-  const closePopup = () => {
-    setPopupVisible(false);
-    setSignUp(false);
-    setLogin(false);
-  };
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (hasMounted) {
-      setTimeout(() => {
-        setSignUpVisible(!signUpVisible);
-      }, 300);
-    }
-  }, [signInClicked]);
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
-  const toggleUserMenu = () => setUserMenu(!userMenu);
+  
 
   const NavLinks = useMemo(
     () =>
@@ -107,63 +79,14 @@ const Navbar = () => {
         visible ? "bg-transparent" : "bg-[var(--trans-grey)]"
       }`}
     >
-      {popUpVisible && (
-      <SignInPopup closePopup={closePopup} signUp={signUp} login={login}/>
-      )}
+      
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base max-w-screen-xl">
         <Logo />
         <div className="flex-auto flex flex-row justify-center items-center gap-x-2">
           {NavLinks}
         </div>
-        <div className="flex-1 flex flex-row justify-end items-center">
-          {loggedIn ? (
-            <UserButton toggleUserMenu={toggleUserMenu} userMenu={userMenu} setUserMenu={setUserMenu}/>
-          ) : signUpVisible ? (
-            <motion.div
-              animate={{ x: 0 }}
-              initial={{ x: 100 }}
-              className="flex items-center justify-center text-[var(--lightest-grey)] text-base"
-            >
-              <div
-                onClick={() => {
-                  togglePopupVisible();
-                  setSignUp(true);
-                  setLogin(false);
-                }}
-                className={`${
-                  signUp ? "text-[var(--pink)]" : "text-[var(--lightest-grey)]"
-                } hover:text-[var(--pink)] cursor-pointer hover:-translate-y-1 duration-300`}
-              >
-                Sign Up &nbsp;
-              </div>
-              <div>| &nbsp;</div>
-              <div
-                onClick={() => {
-                  togglePopupVisible();
-                  setLogin(true);
-                  setSignUp(false);
-                }}
-                className={`${
-                  login ? "text-[var(--pink)]" : "text-[var(--lightest-grey)]"
-                } hover:text-[var(--pink)] cursor-pointer hover:-translate-y-1 duration-300`}
-              >
-                Login
-              </div>
-            </motion.div>
-          ) : (
-            <div
-              onClick={toggleSignInButton}
-              className={`${
-                signInClicked
-                  ? "opacity-0 duration-300 translate-x-36"
-                  : "block duration-300"
-              } cursor-pointer px-3 py-1 border-2 border-[var(--pink)] rounded-full text-[var(--pink)] text-[1rem] hover:text-[var(--grey)] hover:bg-[var(--pink)] duration-300 hover:translate-y-0`}
-            >
-              Sign In
-            </div>
-          )}
-        </div>
+        <SignInButton/>
       </div>
 
       {/* Mobile view */}

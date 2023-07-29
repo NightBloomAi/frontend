@@ -16,7 +16,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     let regobj = { email, password };
-    setUsername(email);
+    // setUsername(email);
     console.log(regobj);
     fetch("https://nightbloom-search.net/account/login", {
       method: "POST",
@@ -29,16 +29,18 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
       res.json();
       if (res.status === 200) {
         toast.success("Logged In Successfully");
-        setLoggedIn(true);
-        closePopup();
+        // setLoggedIn(true);
+        // closePopup();
         console.log(res);
-        console.log(res.headers.get('set-cookie'))
 
         fetch("https://nightbloom-search.net/account/current_user", {
           method: "GET",
           credentials: "include",
         })
         .then((res) => {
+          if (res.status === 500) {
+            setLoggedIn(false);
+          }
           if (!res.ok) {
             throw new Error("Network response was not ok");
           }
@@ -46,6 +48,9 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
         })
         .then((data) => {
           console.log(data);
+          setUsername(data.email);
+          setLoggedIn(true);
+          closePopup();
         })
         .catch((error) => {
           console.error("Error occurred:", error);

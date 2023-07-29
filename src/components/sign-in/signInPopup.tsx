@@ -6,14 +6,12 @@ import LoginPopUp from "./loginPopUp";
 
 interface SignInPopupProps {
   closePopup: () => void;
-  signUp: boolean;
-  login: boolean;
+  loginNotSignUp: boolean;
 }
 
 export default function SignInPopup({
   closePopup,
-  signUp,
-  login,
+  loginNotSignUp,
 }: SignInPopupProps): JSX.Element {
 
   return (
@@ -31,13 +29,9 @@ export default function SignInPopup({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {signUp && (
-          <SignUpPopUp/>
-        )}
 
-        {login && (
-          <LoginPopUp closePopup={closePopup}/>
-        )}
+        {loginNotSignUp ? (<LoginPopUp closePopup={closePopup}/>): (<SignUpPopUp/>)}
+
       </motion.div>
     </>
   );

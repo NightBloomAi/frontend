@@ -1,14 +1,16 @@
 import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Verify from "./verify";
 import toast, { Toaster } from "react-hot-toast";
 import { STATUS_CODES } from "http";
+import { UserContext } from "@/app/layout";
 
 export default function SignUpPopUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verify, setVerify] = useState(false);
+  const {setLoginNotSignUp} = useContext(UserContext);
 
   const handleSignUp = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,10 +29,12 @@ export default function SignUpPopUp() {
         if (data.error_message === undefined) {
           toast.success("Registered Successfully");
           setVerify(true);
+          setLoginNotSignUp(true);
         } else {
           toast.error(`${data.error_message}`);
         }
       })
+      
   };
 
   return (

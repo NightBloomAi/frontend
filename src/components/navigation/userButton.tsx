@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { UserIcon } from "../assets/icons";
-import LinkButton from "./linkButton";
 import { UserContext } from "@/app/layout";
-import { Menu } from "@mui/material";
 import { motion } from "framer-motion";
 
 interface UserButtonProps {
@@ -33,9 +31,9 @@ export default function UserButton({
         exit={{ opacity: 0 }}
       >
         <div
-          className={`absolute right-10 duration-300 ${
+          className={`absolute xl:right-10 right-5 duration-300 ${
             userMenu
-              ? "top-0 flex flex-col items-center justify-start text-base bg-[var(--opaque-trans-grey)] boxshadow w-56 rounded-b-lg "
+              ? "top-0 flex flex-col items-center justify-start text-base bg-[var(--opaque-trans-grey)] boxshadow p-2 rounded-b-lg "
               : "-top-60"
           } `}
         >
