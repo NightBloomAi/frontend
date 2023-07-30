@@ -9,7 +9,6 @@ import Logo from "./logo";
 import LinkButton from "./linkButton";
 import Link from "next/link";
 import SignInPopup from "../sign-in/signInPopup";
-import { UserContext } from "@/app/layout";
 import UserButton from "./userButton";
 import SignInButton from "./SignInButton";
 
@@ -34,9 +33,7 @@ const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [whichPage, setWhichPage] = useState("");
 
-
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
-  
 
   const NavLinks = useMemo(
     () =>
@@ -79,14 +76,13 @@ const Navbar = () => {
         visible ? "bg-transparent" : "bg-[var(--trans-grey)]"
       }`}
     >
-      
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base max-w-screen-xl">
         <Logo />
         <div className="flex-auto flex flex-row justify-center items-center gap-x-2">
           {NavLinks}
         </div>
-        <SignInButton/>
+        <SignInButton />
       </div>
 
       {/* Mobile view */}

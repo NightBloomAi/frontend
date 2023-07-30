@@ -1,20 +1,21 @@
-import { UserContext } from "@/app/layout";
+
 import React, { useContext, useEffect, useState } from "react";
 import UserButton from "./userButton";
 import { motion } from "framer-motion";
 import SignInPopup from "../sign-in/signInPopup";
+import { AuthContext } from "../contexts/authcontext";
 
 export default function SignInButton() {
-  const { loggedIn } = useContext(UserContext);
-  const { setLoggedIn } = useContext(UserContext);
-  const { signInPopUpVisible } = useContext(UserContext);
-  const { setSignInPopUpVisible } = useContext(UserContext);
+  const { loggedIn } = useContext(AuthContext);
+  const { setLoggedIn } = useContext(AuthContext);
+  const { signInPopUpVisible } = useContext(AuthContext);
+  const { setSignInPopUpVisible } = useContext(AuthContext);
   const [userMenu, setUserMenu] = useState(false);
   const [signUpOrLoginVisible, setSignUpButtonVisible] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [signInClicked, setSignInClicked] = useState(false);
-  const { loginNotSignUp } = useContext(UserContext);
-  const { setLoginNotSignUp } = useContext(UserContext);
+  const { loginNotSignUp } = useContext(AuthContext);
+  const { setLoginNotSignUp } = useContext(AuthContext);
   const toggleUserMenu = () => setUserMenu(!userMenu);
   const toggleSignInButton = () => setSignInClicked(!signInClicked);
   const togglePopupVisible = () => setSignInPopUpVisible(!signInPopUpVisible);

@@ -4,13 +4,14 @@ import React, { useContext, useState } from "react";
 import Verify from "./verify";
 import toast, { Toaster } from "react-hot-toast";
 import { STATUS_CODES } from "http";
-import { UserContext } from "@/app/layout";
+import { AuthContext } from "../contexts/authcontext";
+
 
 export default function SignUpPopUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verify, setVerify] = useState(false);
-  const {setLoginNotSignUp} = useContext(UserContext);
+  const {setLoginNotSignUp} = useContext(AuthContext);
 
   const handleSignUp = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ export default function SignUpPopUp() {
           <div className="flex flex-col items-center justify-center gap-y-6">
             <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
               <Google />
-              <div className="pl-2">Continue With Google</div>
+              <div className="pl-2 continueline">Continue With Google</div>
             </div>
             <div className="text-base">or continue with email</div>
             <input

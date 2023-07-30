@@ -1,12 +1,12 @@
 "use client";
+import { AuthContext } from "@/components/contexts/authcontext";
 import React, { useContext } from "react";
-import { UserContext } from "../layout";
 
 export default function FavouritesPage() {
-  const { loggedIn } = useContext(UserContext);
-  const { signInPopUpVisible } = useContext(UserContext);
-  const { setSignInPopUpVisible } = useContext(UserContext);
-  const { setLoginNotSignUp } = useContext(UserContext);
+  const { loggedIn } = useContext(AuthContext);
+  const { signInPopUpVisible } = useContext(AuthContext);
+  const { setSignInPopUpVisible } = useContext(AuthContext);
+  const { setLoginNotSignUp } = useContext(AuthContext);
   return (
     <main className="container mx-auto px-4 max-w-screen-xl">
       {loggedIn ? (

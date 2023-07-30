@@ -2,15 +2,16 @@ import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import { UserContext } from "@/app/layout";
+import { AuthContext } from "../contexts/authcontext";
+
 
 interface LoginProps {
   closePopup: () => void;
 }
 
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
-  const { setUsername } = useContext(UserContext);
-  const { setLoggedIn } = useContext(UserContext);
+  const { setUsername } = useContext(AuthContext);
+  const { setLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -85,7 +86,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             <div className="pl-2">Sign In With Google</div>
           </div>
 
-          <div className="text-base">or continue with email</div>
+          <div className="text-base continueline">or continue with email</div>
 
           <input
             value={email}
@@ -105,7 +106,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
 
         <button
           type="submit"
-          className="duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] mb-5 rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
+          className="mb-5 duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
         >
           Continue
         </button>
