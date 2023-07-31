@@ -144,11 +144,30 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* .continueline::before {
+.continueline::before {
   position:absolute;
- height: 0.25rem;
- width: 3rem;
+  content:"";
+ height: 0.15rem;
+ width: 6.2rem;
+ top: 0.675rem;
+ right: 100%;
+ margin-right: 0.5rem;
+ opacity: 50%;
+ border-radius: 9999px;
  background-color: var(--lightest-grey);
-} */
+}
+
+.continueline::after {
+  position:absolute;
+  content:"";
+ height: 0.15rem;
+ width: 6.2rem;
+ top: 0.675rem;
+ left: 100%;
+ margin-left: 0.5rem;
+ opacity: 50%;
+ border-radius: 9999px;
+ background-color: var(--lightest-grey);
+}
 
 

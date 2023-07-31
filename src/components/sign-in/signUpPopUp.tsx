@@ -6,12 +6,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { STATUS_CODES } from "http";
 import { AuthContext } from "../contexts/authcontext";
 
-
 export default function SignUpPopUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verify, setVerify] = useState(false);
-  const {setLoginNotSignUp} = useContext(AuthContext);
+  const { setLoginNotSignUp } = useContext(AuthContext);
 
   const handleSignUp = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,8 +33,7 @@ export default function SignUpPopUp() {
         } else {
           toast.error(`${data.error_message}`);
         }
-      })
-      
+      });
   };
 
   return (
@@ -54,12 +52,14 @@ export default function SignUpPopUp() {
           className="w-full h-auto flex flex-col items-center justify-center lg:p-12 p-9 gap-y-9"
         >
           <div className="text-4xl font-museo pt-5">Sign Up</div>
-          <div className="flex flex-col items-center justify-center gap-y-6">
+          <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
             <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
               <Google />
-              <div className="pl-2 continueline">Continue With Google</div>
+              <div className="pl-2">
+                Continue With Google
+              </div>
             </div>
-            <div className="text-base">or continue with email</div>
+            <div className="text-base continueline relative">or continue with email</div>
             <input
               required
               value={email}
@@ -75,13 +75,19 @@ export default function SignUpPopUp() {
               type="password"
               placeholder="Create a password"
             ></input>
+            <button
+              type="submit"
+              className="duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
+            >
+              Continue
+            </button>
+            <div className="text-base">
+              <span className="opacity-50">Already have an account? </span>
+              <span className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300" onClick={()=>{setLoginNotSignUp(true)}}>
+                Log in
+              </span>
+            </div>
           </div>
-          <button
-            type="submit"
-            className="duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] mb-5 rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
-          >
-            Continue
-          </button>
         </form>
       )}
     </motion.div>
