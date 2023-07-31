@@ -2,26 +2,27 @@ import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import { UserContext } from "@/app/layout";
+import { AuthContext } from "../contexts/authcontext";
 
 interface LoginProps {
   closePopup: () => void;
 }
 
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
-  const { setUsername } = useContext(UserContext);
-  const { setLoggedIn } = useContext(UserContext);
+  const { setUsername } = useContext(AuthContext);
+  const { setLoggedIn } = useContext(AuthContext);
+  const {setLoginNotSignUp} = useContext(AuthContext)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     let regobj = { email, password };
-    setUsername(email);
+    // setUsername(email);
     console.log(regobj);
     fetch("https://nightbloom-search.net/account/login", {
       method: "POST",
       headers: {
-        "accept": "application/json",
+        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(regobj),
@@ -29,27 +30,32 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
       res.json();
       if (res.status === 200) {
         toast.success("Logged In Successfully");
-        setLoggedIn(true);
-        closePopup();
+        // setLoggedIn(true);
+        // closePopup();
         console.log(res);
-        console.log(res.headers.get('set-cookie'))
 
         fetch("https://nightbloom-search.net/account/current_user", {
           method: "GET",
           credentials: "include",
         })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Error occurred:", error);
-        });
+          .then((res) => {
+            if (res.status === 500) {
+              setLoggedIn(false);
+            }
+            if (!res.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setUsername(data.email);
+            setLoggedIn(true);
+            closePopup();
+          })
+          .catch((error) => {
+            console.error("Error occurred:", error);
+          });
       } else {
         toast.error("Please Enter a valid email and password");
       }
@@ -74,13 +80,15 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
       >
         <div className="text-4xl font-museo pt-5">Log In</div>
 
-        <div className="flex flex-col items-center justify-center gap-y-6">
+        <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
           <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-96 flex justify-center items-center">
             <Google />
             <div className="pl-2">Sign In With Google</div>
           </div>
 
-          <div className="text-base">or continue with email</div>
+          <div className="text-base continueline relative">
+            or continue with email
+          </div>
 
           <input
             value={email}
@@ -96,14 +104,18 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             type="password"
             placeholder="Password"
           ></input>
-        </div>
 
-        <button
-          type="submit"
-          className="duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] mb-5 rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
-        >
-          Continue
-        </button>
+          <button
+            type="submit"
+            className=" duration-300 hover:text-[var(--opaque-trans-grey)] hover:bg-[var(--pink)] rounded-full px-5 py-[10px] text-base text-[var(--pink)] border-2 border-[var(--pink)] w-96 flex justify-center items-center"
+          >
+            Continue
+          </button>
+          <div className="text-base">
+            <span className="opacity-50">Don't have an account?{" "}</span>
+            <span className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300" onClick={()=>{setLoginNotSignUp(false)}}>Sign up</span>
+          </div>
+        </div>
       </form>
     </motion.div>
   );
