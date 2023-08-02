@@ -5,8 +5,9 @@ import Head from "@/app/head";
 import Navbar from "@/components/navigation/navbar";
 import toast, { Toaster } from "react-hot-toast";
 import { useState, createContext, useEffect, useContext } from "react";
-import AuthContextProvider, { AuthContext } from "@/components/contexts/authcontext";
-
+import AuthContextProvider, {
+  AuthContext,
+} from "@/components/contexts/authcontext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +16,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const {loggedIn, setLoggedIn} = useContext(AuthContext);
-  const {username, setUsername} = useContext(AuthContext);
-  const {signInPopUpVisible, setSignInPopUpVisible} = useContext(AuthContext);
-  const {loginNotSignUp, setLoginNotSignUp} = useContext(AuthContext);
+  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { username, setUsername } = useContext(AuthContext);
+  const { signInPopUpVisible, setSignInPopUpVisible } = useContext(AuthContext);
+  const { loginNotSignUp, setLoginNotSignUp } = useContext(AuthContext);
 
   useEffect(() => {
     fetch("https://nightbloom-search.net/account/current_user", {
@@ -38,6 +39,9 @@ export default function RootLayout({
       .then((data) => {
         setUsername(data.email);
         setLoggedIn(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -50,8 +54,7 @@ export default function RootLayout({
           <Toaster />
           {children}
         </body>
-        </AuthContextProvider>
-      
+      </AuthContextProvider>
     </html>
   );
 }

@@ -3,27 +3,33 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { NavItem } from "@/types/nav.type";
-import { UserIcon } from "../assets/icons";
+import { FavIcon, UserIcon, HomeIcon, SignOutIcon, SignInIcon } from "../assets/icons";
 import { MenuButton } from "./menuButton";
 import Logo from "./logo";
 import LinkButton from "./linkButton";
-import Link from "next/link";
-import SignInPopup from "../sign-in/signInPopup";
-import UserButton from "./userButton";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import StyleIcon from '@mui/icons-material/Style';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import SignInButton from "./SignInButton";
+import { AuthContext } from "../contexts/authcontext";
 
 const navItems: NavItem[] = [
   {
     name: "Home",
     href: "/",
+    icon: <HomeOutlinedIcon className="w-7 h-7" />,
   },
   {
     name: "Favorites",
     href: "/favorites",
+    icon: <FavoriteIcon className="w-7 h-7"/>,
   },
   {
     name: "Style Guide",
     href: "/style-guide",
+    icon: <StyleIcon className="w-7 h-7"/>,
   },
 ];
 
@@ -32,6 +38,30 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [whichPage, setWhichPage] = useState("");
+  const { loggedIn } = useContext(AuthContext);
+
+  const mobileNavItems: NavItem[] = [
+    {
+      name: "Home",
+      href: "/",
+      icon: <HomeOutlinedIcon className="h-7 w-7"/>,
+    },
+    {
+      name: "Favorites",
+      href: "/favorites",
+      icon: <FavoriteIcon className="h-7 w-7"/>,
+    },
+    {
+      name: "Style Guide",
+      href: "/style-guide",
+      icon: <StyleIcon className="h-7 w-7"/>,
+    },
+    {
+      name: loggedIn ? "Sign Out" : "Sign In",
+      href: loggedIn ? "/sign-out" : "/sign-in",
+      icon: loggedIn ? <LogoutIcon className="h-7 w-7" /> : <AccountCircleRoundedIcon className="h-7 w-7" />,
+    },
+  ];
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
@@ -76,6 +106,7 @@ const Navbar = () => {
         visible ? "bg-transparent" : "bg-[var(--trans-grey)]"
       }`}
     >
+      
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between px-4 container text-base max-w-screen-xl">
         <Logo />
@@ -104,21 +135,27 @@ const Navbar = () => {
         >
           <Logo />
           <div className="flex-auto flex flex-col justify-start items-start gap-y-4 w-full">
-            {navItems.map((item: NavItem) => (
-              <LinkButton
-                key={item.name}
-                href={item.href}
-                label={item.name}
-                onClick={() => {
-                  toggleMenu();
-                  setWhichPage(item.name);
-                }}
-                className={`mr-4 px-4 py-3 w-full text-lg ${
+            {mobileNavItems.map((item: NavItem) => (
+              <div
+                className={`mr-4 px-5 py-3 w-full text-lg flex items-center justify-start gap-x-3 ${
                   whichPage == item.name
                     ? "w-full bg-[var(--trans-grey)] rounded-full"
                     : ""
                 }`}
-              />
+              >
+                {item.icon}
+                <LinkButton
+                  key={item.name}
+                  href={item.href}
+                  label={item.name}
+                  onClick={() => {
+                    toggleMenu();
+                    setWhichPage(item.name);
+                  }}
+                />
+                
+              </div>
+              
             ))}
           </div>
         </motion.div>
