@@ -89,7 +89,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
             >
               Continue
             </button>
-            <div className="z-50 text-base w-80 md:w-96  text-center"><span className="opacity-50">By signing up, I agree to the </span><Link href={"/terms-of-service"} onClick={()=>{closePopup()}} className="opacity-50 hover:opacity-100 underline underline-offset-2 duration-300">Terms of Service</Link><span className="opacity-50"> and </span><Link href={""} className="opacity-50 hover:opacity-100 underline underline-offset-2  duration-300 ">Privacy Policy</Link></div>
+            <div className="z-50 text-base w-80 md:w-96  text-center"><span className="opacity-50">By signing up, I agree to the </span><Link href={"/terms-of-service"} onClick={()=>{closePopup()}} className="opacity-50 hover:opacity-100 underline underline-offset-2 duration-300">Terms of Service</Link><span className="opacity-50"> and </span><Link href={"/privacy-policy"} className="opacity-50 hover:opacity-100 underline underline-offset-2  duration-300 ">Privacy Policy</Link></div>
             
             <div className="text-base mb-5">
               <span className="opacity-50">Already have an account? </span>
