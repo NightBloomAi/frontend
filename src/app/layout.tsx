@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import Head from "@/app/head";
 import Navbar from "@/components/navigation/navbar";
 import toast, { Toaster } from "react-hot-toast";
-import { useState, createContext, useEffect, useContext } from "react";
+import { createContext, useEffect, useContext } from "react";
 import AuthContextProvider, {
   AuthContext,
 } from "@/components/contexts/authcontext";
@@ -24,7 +24,7 @@ export default function RootLayout({
   useEffect(() => {
     fetch("https://nightbloom-search.net/account/current_user", {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
     })
       .then((res) => {
         if (res.status === 500) {

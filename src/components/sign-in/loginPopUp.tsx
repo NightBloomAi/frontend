@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../contexts/authcontext";
+import Link from "next/link";
 
 interface LoginProps {
   closePopup: () => void;
@@ -116,7 +117,9 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             <span className="opacity-50">Don't have an account?{" "}</span>
             <span className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300" onClick={()=>{setLoginNotSignUp(false)}}>Sign up</span>
           </div>
+          
         </div>
+        
       </form>
     </motion.div>
   );
