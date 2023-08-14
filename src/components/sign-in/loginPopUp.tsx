@@ -114,7 +114,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             Continue
           </button>
           <div className="text-base">
-            <span className="opacity-50">Don't have an account?{" "}</span>
+            <span className="opacity-50">Don&apos;t have an account?{" "}</span>
             <span className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300" onClick={()=>{setLoginNotSignUp(false)}}>Sign up</span>
           </div>
           
