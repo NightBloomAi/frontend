@@ -119,7 +119,7 @@ export default function PrivacyPage() {
             </div>
           </div>
           <div className="flex flex-col gap-y-3 text-base">
-            <div className="text-[var(--pink)] text-xl">Children's Privacy</div>
+            <div className="text-[var(--pink)] text-xl">Children&apos;s Privacy</div>
             <div className="text-base">
               Our service is not intended for individuals under 18. We do not
               knowingly collect personally identifiable information from
