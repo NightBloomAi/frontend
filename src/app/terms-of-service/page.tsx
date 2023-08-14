@@ -12,7 +12,7 @@ export default function TermsPage() {
             <div className="text-[var(--pink)] text-xl">1. Introduction</div>
             <div className="text-base">
               Welcome to NightBloom. Please read these Terms of Service
-              ("Terms") carefully as they govern your access to and use of our
+              &#40;&quot;Terms&quot;	&#41; carefully as they govern your access to and use of our
               services, including our web application, content, and
               functionality.
             </div>
@@ -65,7 +65,7 @@ const termsOfService: termType[] = [
       {
         name: "2.3.",
         content:
-          "NightBloom is a platform to facilitate the search for images in MidJourney’s public database. We don't host or store these images but provide users a gateway to access them.",
+          "NightBloom is a platform to facilitate the search for images in MidJourney\u0027s public database. We don\u0027t host or store these images but provide users a gateway to access them.",
       },
       {
         name: "2.4.",
@@ -100,7 +100,7 @@ const termsOfService: termType[] = [
       {
         name: "4.1.",
         content:
-          'NightBloom provides services "as is." Users agree to use the service lawfully and in good faith.',
+          'NightBloom provides services \u0022as is.\u0022 Users agree to use the service lawfully and in good faith.',
       },
       {
         name: "4.2.",
