@@ -34,7 +34,7 @@ export default function SignInPage() {
       {loginNotSignUp ? (
         <LoginPopUp closePopup={closePopup} />
       ) : (
-        <SignUpPopUp />
+        <SignUpPopUp closePopup={closePopup}/>
       )}
     </div>
   );
