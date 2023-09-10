@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { imageEndpoint } from "@/config/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import React, { useState } from "react";

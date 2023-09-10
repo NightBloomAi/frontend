@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { UserIcon } from "../assets/icons";
 import { motion } from "framer-motion";
-import { AuthContext } from "../../contexts/authContext";
+import { useAuthContext } from "../../contexts/authContext";
 
 interface UserButtonProps {
   toggleUserMenu: () => void;
@@ -15,7 +15,7 @@ export default function UserButton({
   userMenu,
   setUserMenu,
 }: UserButtonProps) {
-  const { username } = useContext(AuthContext);
+  const { username } = useAuthContext();
   return (
     <div
       className={` cursor-pointer text-[var(--lightest-grey)] transition-colors duration-300`}
