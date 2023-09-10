@@ -1,34 +1,4 @@
 /**
-Constructs a search endpoint URL based on the specified page number and query.
-
-@param {number} page - The page number to retrieve results from. Defaults to 1 if not provided.
-
-@param {string} query - The search query string. Defaults to an empty string if not provided.
-
-@returns {string} The constructed search endpoint URL.
-*/
-function searchEndpoint(
-    page: number,
-    query: string,
-    category: string,
-) {
-    page = page || 1;
-    query = query || '';
-    category = category || '';
-
-    const protocol = 'https';
-    const host = 'nightbloom-search.net';
-    const path = 'search/assets';
-
-    console.log(`${protocol}://${host}/${path}?page=${page}&category=${category}&query=${query}`)
-
-    return `${protocol}://${host}/${path}?page=${page}&category=${category}&query=${query}`;
-}
-
-
-
-
-/**
 Constructs an image endpoint URL based on the specified ID.
 @param {string} id - The ID of the image.
 @returns {string} The constructed image endpoint URL.
@@ -47,4 +17,6 @@ function gridImage(reference_job_id: string) {
     return `https://cdn.midjourney.com/${reference_job_id}/grid_0.webp`
 }
 
-export { searchEndpoint, imageEndpoint, alternateImages, gridImage };
+export { imageEndpoint, alternateImages, gridImage };
+
+

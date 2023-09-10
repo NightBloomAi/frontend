@@ -1,72 +1,79 @@
-import { searchEndpoint } from "@/config/endpoints";
-import { Hit, SearchRes } from "@/types/searchRes.type";
+import { searchEndpoint } from "@/api/nightbloomApi";
+import { Hit } from "@/types/searchRes.type";
 import { useReducer, useRef, useEffect } from "react";
 
 type State = {
-  data: Hit[] | undefined;
-  loading: boolean;
-  error: string | null;
+    data: Hit[] | undefined;
+    loading: boolean;
+    error: string | null;
 };
 
 type Action =
-  | { type: "LOAD"; payload: Hit[] }
-  | { type: "ERROR"; payload: string }
-  | { type: "LOADING" };
+    | { type: "LOAD"; payload: Hit[] }
+    | { type: "ERROR"; payload: string }
+    | { type: "LOADING" };
 
 function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case "LOAD":
-      return { ...state, loading: false, data: action.payload };
-    case "ERROR":
-      return { ...state, loading: false, error: action.payload };
-    case "LOADING":
-      return { ...state, loading: true };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case "LOAD":
+            return { ...state, loading: false, data: action.payload };
+        case "ERROR":
+            return { ...state, loading: false, error: action.payload };
+        case "LOADING":
+            return { ...state, loading: true };
+        default:
+            return state;
+    }
 }
 
 const useSearch = (initialPage: number, search: string, category: string) => {
-  const [state, dispatch] = useReducer(reducer, {
-    data: undefined,
-    loading: true,
-    error: null,
-  });
+    const [state, dispatch] = useReducer(reducer, {
+        data: undefined,
+        loading: true,
+        error: null,
+    });
 
-  const { data, loading, error } = state;
-  const pageRef = useRef(initialPage);
+    const { data, loading, error } = state;
+    const pageRef = useRef(initialPage);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: "LOADING" });
-      try {
-        const res = await fetch(searchEndpoint(pageRef.current, search, category));
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatch({ type: "LOADING" });
+            try {
+                const res = await searchEndpoint({
+                    page: pageRef.current,
+                    query: search,
+                    category,
+                });
+                dispatch({ type: "LOAD", payload: res.hits });
+            } catch (error: any) {
+                dispatch({ type: "ERROR", payload: error.message });
+            }
+        };
+        fetchData();
+    }, [search, category]);
+
+    const fetchMoreData = async () => {
+        pageRef.current++;
+        try {
+            const res = await searchEndpoint({
+                page: pageRef.current,
+                query: search,
+                category,
+            });
+            if (data) {
+                dispatch({ type: "LOAD", payload: data.concat(res.hits) });
+            }
+        } catch (error: any) {
+            dispatch({ type: "ERROR", payload: error.message });
         }
-        const resData = await res.json();
-        dispatch({ type: "LOAD", payload: resData.hits });
-      } catch (error: any) {
-        dispatch({ type: "ERROR", payload: error.message });
-      }
     };
-    fetchData();
-  }, [search, category]);
 
-  const fetchMoreData = async () => {
-    pageRef.current++;
-    const res = await fetch(searchEndpoint(pageRef.current, search, category));
-    const searchRes: SearchRes = await res.json();
-    if (data) {
-      dispatch({ type: "LOAD", payload: data.concat(searchRes.hits) });
-    }
-  };
+    const resetPage = () => {
+        pageRef.current = 1;
+    };
 
-  const resetPage = () => {
-    pageRef.current = 1;
-  };
-
-  return { data, loading, error, fetchMoreData, resetPage };
+    return { data, loading, error, fetchMoreData, resetPage };
 };
 
 export default useSearch;

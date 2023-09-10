@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { UserIcon } from "../assets/icons";
 import { motion } from "framer-motion";
-import { AuthContext } from "../contexts/authcontext";
+import { AuthContext } from "../../contexts/authContext";
 
 interface UserButtonProps {
   toggleUserMenu: () => void;

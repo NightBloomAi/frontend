@@ -19,7 +19,7 @@ import StyleIcon from "@mui/icons-material/Style";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import SignInButton from "./SignInButton";
-import { AuthContext } from "../contexts/authcontext";
+import { useAuthContext } from "@/contexts/authContext";
 
 const navItems: NavItem[] = [
   {
@@ -44,7 +44,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [whichPage, setWhichPage] = useState("");
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn } = useAuthContext();
 
   const mobileNavItems: NavItem[] = [
     {

@@ -1,60 +1,38 @@
 "use client";
+
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
+import AuthContextProvider from "@/contexts/authContext";
+import React from "react";
 import Head from "@/app/head";
 import Navbar from "@/components/navigation/navbar";
-import toast, { Toaster } from "react-hot-toast";
-import { createContext, useEffect, useContext } from "react";
-import AuthContextProvider, {
-  AuthContext,
-} from "@/components/contexts/authcontext";
+import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { StageProvider } from "@/contexts/stageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const { loggedIn, setLoggedIn } = useContext(AuthContext);
-  const { username, setUsername } = useContext(AuthContext);
-  const { signInPopUpVisible, setSignInPopUpVisible } = useContext(AuthContext);
-  const { loginNotSignUp, setLoginNotSignUp } = useContext(AuthContext);
+    const queryClient = new QueryClient();
 
-  useEffect(() => {
-    fetch("https://nightbloom-search.net/account/current_user", {
-      method: "GET",
-      // credentials: "include",
-    })
-      .then((res) => {
-        if (res.status === 500) {
-          setLoggedIn(false);
-          console.log(res);
-        }
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setUsername(data.email);
-        setLoggedIn(true);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
-  return (
-    <html lang="en">
-      <Head />
-      <AuthContextProvider>
-        <body className={inter.className}>
-          <Navbar />
-          <Toaster />
-          {children}
-        </body>
-      </AuthContextProvider>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <Head />
+            <body className={inter.className}>
+                <StageProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <AuthContextProvider>
+                            <Navbar />
+                            <Toaster />
+                            {children}
+                        </AuthContextProvider>
+                    </QueryClientProvider>
+                </StageProvider>
+            </body>
+        </html>
+    );
 }

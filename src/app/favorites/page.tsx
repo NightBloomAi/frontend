@@ -1,5 +1,5 @@
 "use client";
-import { AuthContext } from "@/components/contexts/authcontext";
+import { AuthContext } from "@/contexts/authContext";
 import React, { useContext } from "react";
 
 export default function FavouritesPage() {

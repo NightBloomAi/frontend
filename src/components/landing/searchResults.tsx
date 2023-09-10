@@ -5,7 +5,7 @@ import Gallery from "./gallery";
 import { Hit } from "@/types/searchRes.type";
 import { ChangeEvent } from "react";
 import LoadingSkeleton from "../misc/loadingSkeleton";
-import { SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 
 function SearchResults({
     data,
@@ -30,7 +30,7 @@ function SearchResults({
             dataLength={data.length}
             next={fetchMoreData}
             hasMore={true}
-            loader={<></>}
+            loader={<Loading />}
             endMessage={<p>No more data to load.</p>}
             style={{ height: "auto", overflow: "visible" }}
         >
