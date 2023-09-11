@@ -7,8 +7,7 @@ import { useAuthContext } from "@/contexts/authContext";
 
 export default function SignInButton() {
     const {
-        loggedIn,
-        setLoggedIn,
+        session,
         signInPopUpVisible,
         setSignInPopUpVisible,
         loginNotSignUp,
@@ -38,10 +37,6 @@ export default function SignInButton() {
         setSignInPopUpVisible(false);
     };
 
-    useEffect(() => {
-        console.log("rerendered");
-    }, [signInPopUpVisible]);
-
     return (
         <div className="flex-1 flex flex-row justify-end items-center">
             {signInPopUpVisible && (
@@ -50,7 +45,7 @@ export default function SignInButton() {
                     loginNotSignUp={loginNotSignUp}
                 />
             )}
-            {loggedIn ? (
+            {session?.signedIn ? (
                 <UserButton
                     toggleUserMenu={toggleUserMenu}
                     userMenu={userMenu}

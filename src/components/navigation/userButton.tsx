@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction, useContext } from "react";
 import { UserIcon } from "../assets/icons";
 import { motion } from "framer-motion";
 import { useAuthContext } from "../../contexts/authContext";
+import { Button } from "@mui/material";
 
 interface UserButtonProps {
   toggleUserMenu: () => void;
@@ -15,7 +16,7 @@ export default function UserButton({
   userMenu,
   setUserMenu,
 }: UserButtonProps) {
-  const { username } = useAuthContext();
+  const { session, logout } = useAuthContext();
   return (
     <div
       className={` cursor-pointer text-[var(--lightest-grey)] transition-colors duration-300`}
@@ -38,12 +39,12 @@ export default function UserButton({
           } `}
         >
           <div className="text-[var(--onDark)] p-2 py-4 text-base" onClick={toggleUserMenu}>
-            {username}
+            {session?.username}
           </div>
           <Link href="/" className="text-hover p-2 py-4 text-base">
             Account settings
           </Link>
-          <Link href="/" className="text-hover p-2 py-4 text-base">
+          <Link className="text-hover p-2 py-4 text-base" onClick={() => logout()} href={""}>
             Sign out
           </Link>
         </div>

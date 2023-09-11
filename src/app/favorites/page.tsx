@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 
 export default function FavouritesPage() {
     const {
-        loggedIn,
+        session,
         signInPopUpVisible,
         setSignInPopUpVisible,
         setLoginNotSignUp,
@@ -12,7 +12,7 @@ export default function FavouritesPage() {
 
     return (
         <main className="container mx-auto px-4 max-w-screen-xl">
-            {loggedIn ? (
+            {session?.signedIn ? (
                 <div>favorites</div>
             ) : (
                 <div className="flex h-screen w-full items-center justify-center text-center text-base">

@@ -9,6 +9,8 @@ import Navbar from "@/components/navigation/navbar";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { StageProvider } from "@/contexts/stageContext";
+import { themeLight } from "@/styles/theme";
+import { ThemeProvider } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,9 +28,11 @@ export default function RootLayout({
                 <StageProvider>
                     <QueryClientProvider client={queryClient}>
                         <AuthContextProvider>
-                            <Navbar />
-                            <Toaster />
-                            {children}
+                            <ThemeProvider theme={themeLight}>
+                                <Navbar />
+                                <Toaster />
+                                {children}
+                            </ThemeProvider>
                         </AuthContextProvider>
                     </QueryClientProvider>
                 </StageProvider>

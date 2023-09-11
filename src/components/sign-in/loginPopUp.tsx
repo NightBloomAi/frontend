@@ -7,9 +7,10 @@ import { useMutation, useQueryClient } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { currentUserEndpoint, loginEndpoint } from "@/api/nightbloomApi";
 import { useStageContext } from "@/contexts/stageContext";
-import { ICurrentUserResponse, ILoginResponse } from "@/types/login.type";
+import { ICurrentUserResponse, ILoginResponse } from "@/types/auth.type";
 import { Snackbar } from "@mui/base";
 import Cookies from "js-cookie";
+import LoadingSnackbar from "../misc/loadingSnackbar";
 
 interface LoginProps {
     closePopup: () => void;
@@ -23,7 +24,7 @@ interface InputProps {
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
     const queryClient = useQueryClient();
     const { isDevMode } = useStageContext();
-    const { setLoginNotSignUp, setLoggedIn, setUsername } = useAuthContext();
+    const { setLoginNotSignUp, session, setSession } = useAuthContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -38,33 +39,37 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             onSuccess: async (response: ILoginResponse) => {
                 try {
                     if (isDevMode) {
-                        localStorage.setItem("jwt", response.access_token);
                         Cookies.set("logged_in", "true");
                         Cookies.set("access_token", `${response.access_token}`);
                         Cookies.set(
                             "refresh_token",
                             `${response.access_token}`
                         );
-                    }
-                    const currentUserData = await queryClient.fetchQuery({
-                        queryKey: ["currentUserEndpoint"],
-                        queryFn: async () => {
-                            const {
-                                data,
-                            }: AxiosResponse<ICurrentUserResponse> =
-                                await currentUserEndpoint();
-                            return data;
-                        },
-                    });
-                    if (!currentUserData.error_message) {
-                        if (isDevMode) {
-                            localStorage.setItem(
-                                "jwt",
-                                currentUserData.id ?? response.access_token
-                            );
+                        setSession({
+                            id: response.access_token,
+                            signedIn: true,
+                            jwt: response.access_token,
+                            email: response.access_token,
+                        });
+                    } else {
+                        const currentUserData = await queryClient.fetchQuery({
+                            queryKey: ["currentUserEndpoint"],
+                            queryFn: async () => {
+                                const {
+                                    data,
+                                }: AxiosResponse<ICurrentUserResponse> =
+                                    await currentUserEndpoint();
+                                return data;
+                            },
+                        });
+                        if (!currentUserData.error_message) {
+                            setSession({
+                                id: currentUserData.id,
+                                signedIn: true,
+                                jwt: response.access_token,
+                                email: currentUserData.email,
+                            });
                         }
-                        setLoggedIn(true);
-                        setUsername(currentUserData.email ?? "ERROR");
                     }
                     closePopup();
                 } catch (error) {
@@ -103,7 +108,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                 onSubmit={handleLogin}
                 className="w-full h-auto flex flex-col items-center justify-center lg:p-12 p-9 gap-y-9"
             >
-                {loading && <Snackbar />}
+                {loading && <LoadingSnackbar />}
                 <div className="text-4xl font-museo pt-5">Log In</div>
 
                 <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
