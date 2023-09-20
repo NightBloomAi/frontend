@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { imageEndpoint } from "@/config/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import React, { useState } from "react";
 import ImagePopup from "./imagePopup";
@@ -9,6 +8,7 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
+import { imageEndpointURL } from "@/api/midjourneyApi";
 
 interface GalleryProps {
     data: Hit[];
@@ -122,7 +122,7 @@ export default function Gallery({
                         onClick={togglePopup(item)}
                     >
                         <img
-                            src={imageEndpoint(item.reference_job_id)}
+                            src={imageEndpointURL({reference_job_id: item.reference_job_id})}
                             alt={item.reference_job_id}
                             className="object-cover h-full w-full duration-500 hover:scale-110"
                         />
