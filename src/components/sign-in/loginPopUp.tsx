@@ -42,6 +42,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             onSuccess: async (response: ILoginResponse) => {
                 try {
                     if (isDevMode) {
+                        console.log("hi");
                         Cookies.set("logged_in", "true");
                         Cookies.set("access_token", `${response.access_token}`);
                         Cookies.set(
@@ -64,6 +65,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                                     await currentUserEndpoint({
                                         jwt: response.access_token,
                                     });
+                                    console.log("hi");
                                 return data;
                             },
                         });
@@ -78,8 +80,9 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                     }
                     closePopup();
                 } catch (error) {
-                    console.log("Error logging in");
+                    console.log("Error logging in:"+ error);
                     toast.error("Error has occurred while trying to login");
+                    return error;
                 }
             },
             onError: (error: AxiosError) => {
