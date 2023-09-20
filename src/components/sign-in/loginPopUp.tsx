@@ -31,7 +31,10 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
 
     const mutation = useMutation(
         (props: InputProps) => {
-            return loginEndpoint(props);
+            return loginEndpoint({
+                email: props.email,
+                password: props.password,
+            });
         },
         {
             onMutate: () => setLoading(true),
@@ -58,7 +61,9 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                                 const {
                                     data,
                                 }: AxiosResponse<ICurrentUserResponse> =
-                                    await currentUserEndpoint();
+                                    await currentUserEndpoint({
+                                        jwt: response.access_token,
+                                    });
                                 return data;
                             },
                         });

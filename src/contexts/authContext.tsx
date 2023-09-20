@@ -1,8 +1,4 @@
-import {
-    currentUserEndpoint,
-    logoutEndpoint,
-    refreshTokenEndpoint,
-} from "@/api/nightbloomApi";
+import { logoutEndpoint, refreshTokenEndpoint } from "@/api/nightbloomApi";
 import {
     ICurrentUserResponse,
     IJwtDecode,
@@ -18,11 +14,10 @@ import React, {
     useEffect,
     useState,
 } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { useStageContext } from "./stageContext";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
-import { access } from "fs";
 
 interface AuthContextType {
     session?: ISession;
@@ -66,19 +61,19 @@ export default function AuthContextProvider({
     const tryRefreshToken = useCallback(async () => {
         const res = await queryClient.fetchQuery({
             queryKey: ["currentUserEndpoint"],
-            queryFn: async () => {
-                const { data }: AxiosResponse<ILoginResponse> =
-                    await refreshTokenEndpoint();
-                return data;
-            },
+            queryFn: async () =>
+                (await refreshTokenEndpoint({
+                    jwt: session?.jwt,
+                })) as ILoginResponse,
         });
+
         if (res.success) {
             setSession({
                 signedIn: true,
                 jwt: res.access_token,
             });
         }
-    }, [queryClient]);
+    }, [queryClient, session?.jwt]);
 
     /**
      * Function to check if JWT token is expired
@@ -114,27 +109,24 @@ export default function AuthContextProvider({
      */
     const logout = async () => {
         setLoading(true);
-        if (isDevMode) {
-            Cookies.remove("access_token");
-            Cookies.remove("refresh_token");
-            Cookies.remove("logged_in");
-            setSession(undefined);
-        } else {
-            const res = await queryClient.fetchQuery({
+        try {
+            await queryClient.fetchQuery({
                 queryKey: ["logoutEndpoint"],
                 queryFn: async () => {
                     const { data }: AxiosResponse<ILogoutResponse> =
-                        await logoutEndpoint();
+                        await logoutEndpoint({
+                            jwt: session?.jwt,
+                        });
                     return data;
                 },
             });
-            if (res.success) {
-                Cookies.remove("access_token");
-                Cookies.remove("refresh_token");
-                Cookies.remove("logged_in");
-                setSession(undefined);
-            }
+        } catch (error) {
+            console.error("Error logging out:", error);
         }
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        Cookies.remove("logged_in");
+        setSession(undefined);
         setLoading(false);
     };
 
