@@ -5,7 +5,7 @@
 :root {
   --lightest-grey: #CAC4D0;
   --light-grey: hsl(255, 7%, 29%);
-  --lightish-grey: hsl(255, 7%, 16%);
+  --lightish-grey: #27262c;
   --grey: rgb(27, 26, 30);
   --opaque-trans-grey: rgb(49.88, 46.68, 58.05);
   --trans-light-grey: rgba(208, 188, 255, 0.3);
