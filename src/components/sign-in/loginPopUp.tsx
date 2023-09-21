@@ -59,15 +59,13 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                         const currentUserData = await queryClient.fetchQuery({
                             queryKey: ["currentUserEndpoint"],
                             queryFn: async () => {
-                                const {
-                                    data,
-                                }: AxiosResponse<ICurrentUserResponse> =
+                                const res = 
                                     await currentUserEndpoint({
                                         jwt: response.access_token,
                                     });
                                     console.log("why");
-                                    console.log(data);
-                                return data;
+                                    console.log(res);
+                                return res;
                             },
                         });
                         console.log(currentUserData);
