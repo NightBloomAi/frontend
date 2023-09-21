@@ -68,7 +68,7 @@ const StyledMenu = styled((props: MenuProps) => (
       padding: "4px 0",
     },
     "& .MuiMenuItem-root": {
-      fontSize: 15,
+      fontSize: '1rem',
       "& .MuiSvgIcon-root": {
         fontSize: 18,
         color: "var(--lightest-grey)",
