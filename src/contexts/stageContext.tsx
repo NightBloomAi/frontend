@@ -18,7 +18,7 @@ const StageContext = createContext<IStageContext>({
     PROVIDER
 *******************************************************************************/
 const StageProvider = ({ children }: { children: ReactNode }) => {
-    const isDevMode = true;
+    const isDevMode = false;
 
     return (
         <StageContext.Provider value={{ isDevMode }}>
