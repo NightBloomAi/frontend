@@ -65,7 +65,8 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                                     await currentUserEndpoint({
                                         jwt: response.access_token,
                                     });
-                                    console.log("hi");
+                                    console.log("why");
+                                    console.log(data);
                                 return data;
                             },
                         });
@@ -99,6 +100,11 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
         });
     };
 
+    const handleGoogle = () => {
+        
+
+    }
+
     const validate = () => {
         let result = true;
         return result;
@@ -120,7 +126,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                 <div className="text-4xl font-museo pt-5">Log In</div>
 
                 <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
-                    <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] md:w-96 w-80 flex justify-center items-center">
+                    <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] md:w-96 w-80 flex justify-center items-center" onClick={handleGoogle}>
                         <Google />
                         <div className="pl-2">Sign In With Google</div>
                     </div>
