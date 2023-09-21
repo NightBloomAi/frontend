@@ -70,7 +70,10 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                                 return data;
                             },
                         });
+                        console.log(currentUserData);
                         if (!currentUserData.error_message) {
+                            console.log("here");
+                            console.log(currentUserData);
                             setSession({
                                 id: currentUserData.id,
                                 signedIn: true,
