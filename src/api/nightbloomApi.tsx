@@ -64,6 +64,7 @@ export const loginEndpoint = async ({
 export const logoutEndpoint = async ({ jwt }: { jwt?: string }) => {
   const headers = {
     Authorization: `Bearer ${jwt}`,
+    Refresh: `Bearer ${jwt}`,
   };
   if (!jwt) {
     try {
