@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import UserButton from "./userButton";
 import SignInPopup from "../sign-in/signInPopup";
 import { motion } from "framer-motion";
 import { useAuthContext } from "@/contexts/authContext";
+import UserMenu from "./userMenu";
 
 export default function SignInButton() {
     const {
@@ -46,10 +46,10 @@ export default function SignInButton() {
                 />
             )}
             {session?.signedIn ? (
-                <UserButton
-                    toggleUserMenu={toggleUserMenu}
-                    userMenu={userMenu}
-                    setUserMenu={setUserMenu}
+                <UserMenu
+                    // toggleUserMenu={toggleUserMenu}
+                    // userMenu={userMenu}
+                    // setUserMenu={setUserMenu}
                 />
             ) : signUpOrLoginVisible ? (
                 <motion.div
