@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { imageEndpoint } from "@/config/endpoints";
+
+import { imageEndpointURL } from "@/api/midjourneyApi";
 import { Hit } from "@/types/searchRes.type";
-import React, { useState } from "react";
+import { useState } from "react";
 import ImagePopup from "../landing/imagePopup";
 
 interface GalleryProps {
@@ -24,7 +25,7 @@ export default function StyleGalleryResults({
     const closePopup = () => {
         setIsPopupVisible(false);
     };
-    return(
+    return (
         <div className="flex flex-col gap-y-4">
             <ul className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {data.map((item) => (
@@ -34,7 +35,9 @@ export default function StyleGalleryResults({
                         onClick={togglePopup(item)}
                     >
                         <img
-                            src={imageEndpoint(item.reference_job_id)}
+                            src={imageEndpointURL({
+                                reference_job_id: item.reference_job_id,
+                            })}
                             alt={item.reference_job_id}
                             className="object-cover h-full w-full duration-500 hover:scale-110"
                         />
@@ -45,6 +48,5 @@ export default function StyleGalleryResults({
                 <ImagePopup closePopup={closePopup} imageInfo={selectedImage} />
             )}
         </div>
-
-    )
+    );
 }

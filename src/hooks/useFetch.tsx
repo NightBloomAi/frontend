@@ -1,4 +1,3 @@
-import initialResponse from "@/data/fake.data";
 import { SearchRes } from "@/types/searchRes.type";
 import { useState, useEffect } from "react";
 
@@ -30,13 +29,6 @@ function useFetch(url: string) {
     };
     fetchData();
   }, [url]);
-
-  // For testing purposes
-  // useEffect(() => {
-  //   setData(initialResponse);
-  //   console.log(initialResponse);
-  //   setLoading(false);
-  // }, []);
 
   return { data, loading, error };
 }

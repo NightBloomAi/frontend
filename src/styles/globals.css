@@ -5,7 +5,7 @@
 :root {
   --lightest-grey: #CAC4D0;
   --light-grey: hsl(255, 7%, 29%);
-  --lightish-grey: hsl(255, 7%, 16%);
+  --lightish-grey: #27262c;
   --grey: rgb(27, 26, 30);
   --opaque-trans-grey: rgb(49.88, 46.68, 58.05);
   --trans-light-grey: rgba(208, 188, 255, 0.3);
@@ -49,19 +49,26 @@
   margin: 0;
 }
 
+html {
+  width: 100vw;
+}
+
 html,
 body {
-  max-width: 100vw;
+  width: 100vw;
   overflow-x: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
   color: var(--lightest-grey);
-  /* background: var(--grey); */
   background: var(--grey);
-  
+}
+
+main {
+  width: 100vw;
 }
 
 .text-hover:hover {
@@ -116,8 +123,6 @@ body {
   border-radius: 0;
 }
 
-
-
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -133,7 +138,6 @@ body {
 
 .font-museo {
   font-family: 'MuseoModerno', cursive;
-  /* font-family: 'Comfortaa', cursive; */
 }
 
 .font-comfortaa {
@@ -148,41 +152,41 @@ body {
   .continueline::before {
     position:absolute;
     content:"";
-   height: 0.15rem;
-   width: 6.2rem;
-   top: 0.675rem;
-   right: 100%;
-   margin-right: 0.5rem;
-   opacity: 50%;
-   border-radius: 9999px;
-   background-color: var(--lightest-grey);
+    height: 0.15rem;
+    width: 6.2rem;
+    top: 0.675rem;
+    right: 100%;
+    margin-right: 0.5rem;
+    opacity: 50%;
+    border-radius: 9999px;
+    background-color: var(--lightest-grey);
   }
   
   .continueline::after {
     position:absolute;
     content:"";
-   height: 0.15rem;
-   width: 6.2rem;
-   top: 0.675rem;
-   left: 100%;
-   margin-left: 0.5rem;
-   opacity: 50%;
-   border-radius: 9999px;
-   background-color: var(--lightest-grey);
+    height: 0.15rem;
+    width: 6.2rem;
+    top: 0.675rem;
+    left: 100%;
+    margin-left: 0.5rem;
+    opacity: 50%;
+    border-radius: 9999px;
+    background-color: var(--lightest-grey);
   }
 }
 
 .continueline::before {
   position:absolute;
   content:"";
- height: 0.15rem;
- width: 4.35rem;
- top: 0.675rem;
- right: 100%;
- margin-right: 0.5rem;
- opacity: 50%;
- border-radius: 9999px;
- background-color: var(--lightest-grey);
+  height: 0.15rem;
+  width: 4.35rem;
+  top: 0.675rem;
+  right: 100%;
+  margin-right: 0.5rem;
+  opacity: 50%;
+  border-radius: 9999px;
+  background-color: var(--lightest-grey);
 }
 
 .continueline::after {
