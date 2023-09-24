@@ -3,13 +3,6 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { NavItem } from "@/types/nav.type";
-import {
-    FavIcon,
-    UserIcon,
-    HomeIcon,
-    SignOutIcon,
-    SignInIcon,
-} from "../assets/icons";
 import { MenuButton } from "./menuButton";
 import Logo from "./logo";
 import LinkButton from "./linkButton";
@@ -20,7 +13,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import SignInButton from "./SignInButton";
 import { useAuthContext } from "@/contexts/authContext";
-import { Snackbar } from "@mui/base";
 import LoadingSnackbar from "../misc/loadingSnackbar";
 
 const navItems: NavItem[] = [
@@ -42,11 +34,11 @@ const navItems: NavItem[] = [
 ];
 
 const Navbar = () => {
+    const { session, loading } = useAuthContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [visible, setVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [whichPage, setWhichPage] = useState("");
-    const { session, loading } = useAuthContext();
 
     const mobileNavItems: NavItem[] = [
         {

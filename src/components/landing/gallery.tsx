@@ -16,8 +16,6 @@ interface GalleryProps {
     setCategory: (event: SelectChangeEvent<string>) => void;
 }
 
-const style = {};
-
 export default function Gallery({
     data,
     category,
@@ -39,7 +37,6 @@ export default function Gallery({
         setCategory;
     };
 
-    console.log(category);
     return (
         <div className="flex flex-col gap-y-4">
             {/* Filters bar */}
@@ -122,7 +119,9 @@ export default function Gallery({
                         onClick={togglePopup(item)}
                     >
                         <img
-                            src={imageEndpointURL({reference_job_id: item.reference_job_id})}
+                            src={imageEndpointURL({
+                                reference_job_id: item.reference_job_id,
+                            })}
                             alt={item.reference_job_id}
                             className="object-cover h-full w-full duration-500 hover:scale-110"
                         />
