@@ -44,7 +44,7 @@ function FavouritesPage() {
      */
     return (
         <div className="flex flex-col justify-center w-full">
-            <p className="text-center text-xl">Favourites</p>
+            <p className="text-center text-4xl md:text-5xl font-museo my-16 md:my-32">Favourites</p>
 
             <div className="my-4">
                 {favQuery?.isLoading && <LoadingSnackbar />}

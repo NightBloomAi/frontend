@@ -18,6 +18,7 @@ import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { useUserFavContext } from "@/contexts/userFavContext";
 
 interface ImagePopupProps {
     closePopup: () => void;
@@ -34,6 +35,7 @@ export default function ImagePopup({
     }, []);
     const [showMore, setShowMore] = useState(false);
     const [whichImage, setWhichImage] = useState(0);
+    const {createFavourite} = useUserFavContext();
 
     return (
         <>
@@ -148,7 +150,7 @@ export default function ImagePopup({
                                         </a>
                                         <div
                                             className="group hover:-translate-y-[2px] duration-300"
-                                            onClick={() => {}}
+                                            onClick={() => {createFavourite({imageIDs:[imageInfo.reference_job_id]})}}
                                         >
                                             <LikeIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
                                         </div>
