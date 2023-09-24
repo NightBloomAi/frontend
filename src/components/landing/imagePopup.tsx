@@ -14,11 +14,17 @@ import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { QueryClient, useQueryClient } from "react-query";
+import { AxiosResponse } from "axios";
+import { createFavouriteEndpoint } from "@/api/nightbloomApi";
+import Cookies from "js-cookie";
+import { useFavouritesContext } from "@/contexts/favouritesContext";
 
 interface ImagePopupProps {
     closePopup: () => void;
     imageInfo: Hit;
 }
+
 
 export default function ImagePopup({
     closePopup,
@@ -30,6 +36,8 @@ export default function ImagePopup({
     }, []);
     const [showMore, setShowMore] = useState(false);
     const [whichImage, setWhichImage] = useState(0);
+    const {createFavourite} = useFavouritesContext();
+    
 
     return (
         <>
@@ -141,12 +149,16 @@ export default function ImagePopup({
                                                 className="h-4 hover:-translate-y-[2px] text-[var(--onDark)] sm:h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
                                             />
                                         </a>
-                                        <a
-                                            href=""
+                                        <div
+                                            
+                                            onClick={()=>{
+                                                
+                                                createFavourite({imageIDs:[imageInfo.reference_job_id]})
+                                            }}
                                             className="group hover:-translate-y-[2px] duration-300"
                                         >
                                             <LikeIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

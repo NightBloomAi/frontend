@@ -1,4 +1,4 @@
-import { logoutEndpoint, refreshTokenEndpoint } from "@/api/nightbloomApi";
+import { currentUserEndpoint, logoutEndpoint, refreshTokenEndpoint } from "@/api/nightbloomApi";
 import {
     ICurrentUserResponse,
     IJwtDecode,
@@ -12,6 +12,7 @@ import React, {
     useCallback,
     useContext,
     useEffect,
+    useLayoutEffect,
     useState,
 } from "react";
 import { useQueryClient } from "react-query";
@@ -58,6 +59,45 @@ export default function AuthContextProvider({
     /**
      * Function to use refresh token to get another access token
      */
+
+    useLayoutEffect(()=>{
+        async function fetchData() {
+            try {
+                const token = Cookies.get('access_token')
+              const currentUserData = await queryClient.fetchQuery({
+                queryKey: ["currentUserEndpoint"],
+                queryFn: async () => {
+                  const res = await currentUserEndpoint({
+                    jwt: token,
+                  });
+                  console.log("why");
+                  console.log(res);
+                  return res;
+                },
+              });
+        
+              console.log(currentUserData);
+        
+              if (token && !currentUserData.error_message) {
+                console.log("here");
+                console.log(currentUserData);
+                setSession({
+                  id: currentUserData.id,
+                  signedIn: true,
+                  jwt: token,
+                  email: currentUserData.email,
+                });
+                console.log(session);
+              }
+            } catch (error) {
+                console.log(error);
+              console.error("Error fetching user data:", error);
+            }
+          }
+        
+          fetchData();
+    }, [])
+
     const tryRefreshToken = useCallback(async () => {
         const res = await queryClient.fetchQuery({
             queryKey: ["currentUserEndpoint"],

@@ -68,7 +68,7 @@ const StyledMenu = styled((props: MenuProps) => (
       padding: "4px 0",
     },
     "& .MuiMenuItem-root": {
-      fontSize: '1rem',
+      fontSize: "1rem",
       "& .MuiSvgIcon-root": {
         fontSize: 18,
         color: "var(--lightest-grey)",
@@ -134,7 +134,13 @@ export default function UserMenu() {
           {session?.email}
         </MenuItem> */}
 
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={() => {
+            router.push("/user-profile");
+            handleClose();
+          }}
+          disableRipple
+        >
           <AccountCircleIcon
             className="text-[var(--lightest-grey)]"
             sx={{ color: "#CAC4D0" }}

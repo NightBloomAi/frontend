@@ -27,7 +27,7 @@ export const currentUserEndpoint = async ({ jwt }: { jwt?: string }) => {
   };
   if (!jwt) {
     const response = await base.get(`/account/current_user`);
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   } else {
     const response = await base.get(`/account/current_user`, {
@@ -135,3 +135,38 @@ export const registerEndpoint = async ({
     }
   }
 };
+
+export const userFavouritesEndpoint = async ({ jwt }: { jwt?: string }) => {
+  const headers = {
+    Authorization: `Bearer ${jwt}`,
+  };
+  try {
+    const response = await base.get(`/user_favourites/favourites`, { headers });
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.error("Error getting user favourites:", error);
+    return error;
+  }
+};
+
+export const createFavouriteEndpoint = async ({ids, jwt}:{ids:string[], jwt?:string}) => {
+    const payload = {
+        "ids": ids,
+    };
+    const headers = {
+        Authorization: `Bearer ${jwt}`,
+      };
+      try {
+        const response = await base.post(`/user_favourites/favourites`, payload, {headers});
+        console.log(response.data);
+        return response.data;
+      } catch(error) {
+        console.error("Error adding to favourites", error);
+        return error;
+      }
+};
+
+export const removeFavouriteEndpoint = async () => {};
+
+export const checkFavouriteEndpoint = async () => {};
