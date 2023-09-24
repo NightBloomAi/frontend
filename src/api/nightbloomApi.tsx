@@ -146,9 +146,11 @@ export const userFavouritesEndpoint = async ({ jwt }: { jwt?: string }) => {
     const response = await base.get(`/user_favourites/favourites`);
     return response.data;
   } else {
+    
     const response = await base.get(`/user_favourites/favourites`, {
       headers,
     });
+    console.log(response.data.assets)
     return response.data;
   }
 };

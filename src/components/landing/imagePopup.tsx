@@ -19,15 +19,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useUserFavContext } from "@/contexts/userFavContext";
+import { useMutation, useQueryClient } from "react-query";
 
 interface ImagePopupProps {
     closePopup: () => void;
     imageInfo: Hit;
+    isFavourite: boolean;
+    setIsFavourite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function ImagePopup({
     closePopup,
     imageInfo,
+    isFavourite,
+    setIsFavourite,
 }: ImagePopupProps): JSX.Element {
     const [copied, setCopied] = useState(false);
     const onCopy = React.useCallback(() => {
@@ -35,7 +40,24 @@ export default function ImagePopup({
     }, []);
     const [showMore, setShowMore] = useState(false);
     const [whichImage, setWhichImage] = useState(0);
-    const {createFavourite} = useUserFavContext();
+    const {createFavourite, checkFavourite} = useUserFavContext();
+    
+
+    const queryClient = useQueryClient();
+
+    const handleFavourite = () => {
+        createFavourite({imageIDs:[imageInfo.reference_job_id]});
+        queryClient.invalidateQueries({queryKey:['favourites']});
+        if (checkFavourite({reference_job_id:imageInfo.reference_job_id}) == true) {
+            setIsFavourite(true)
+        } else {
+            setIsFavourite(false)
+        }
+
+
+    }
+
+
 
     return (
         <>
@@ -150,9 +172,9 @@ export default function ImagePopup({
                                         </a>
                                         <div
                                             className="group hover:-translate-y-[2px] duration-300"
-                                            onClick={() => {createFavourite({imageIDs:[imageInfo.reference_job_id]})}}
+                                            onClick={handleFavourite}
                                         >
-                                            <LikeIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
+                                            <LikeIcon className={`h-[0.9rem] group-hover:fill-[var(--pink)] duration-300 ${isFavourite? 'fill-[var(--pink)]':'fill-[var(--onDark)]'}`} />
                                         </div>
                                     </div>
                                 </div>
