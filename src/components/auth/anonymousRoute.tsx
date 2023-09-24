@@ -1,6 +1,6 @@
 import React, { useEffect, ComponentType, ComponentProps } from "react";
-import { useRouter } from "next/router";
 import { useAuthContext } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
 import Loading from "../misc/loading";
 
 /**

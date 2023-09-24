@@ -2,15 +2,15 @@
 
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
-import AuthContextProvider from "@/contexts/authContext";
 import React from "react";
 import Head from "@/app/head";
 import Navbar from "@/components/navigation/navbar";
-import { Toaster } from "react-hot-toast";
+import AuthContextProvider from "@/contexts/authContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { StageProvider } from "@/contexts/stageContext";
-import { themeLight } from "@/styles/theme";
 import { ThemeProvider } from "@mui/material";
+import { themeLight } from "@/styles/theme";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,14 +24,17 @@ export default function RootLayout({
     return (
         <html lang="en">
             <Head />
-            <body className={inter.className}>
+            <body className={`${inter.className} overflow-x-hidden`}>
                 <StageProvider>
                     <QueryClientProvider client={queryClient}>
                         <AuthContextProvider>
                             <ThemeProvider theme={themeLight}>
                                 <Navbar />
                                 <Toaster />
-                                {children}
+                                <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
+                                    <div className="h-16"></div>
+                                    {children}
+                                </main>
                             </ThemeProvider>
                         </AuthContextProvider>
                     </QueryClientProvider>
