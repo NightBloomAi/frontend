@@ -23,9 +23,9 @@ export default function RootLayout({
     const queryClient = new QueryClient();
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <Head />
-            <body className={`${inter.className} overflow-x-hidden`}>
+            <body className={inter.className}>
                 <StageProvider>
                     <QueryClientProvider client={queryClient}>
                         <AuthContextProvider>

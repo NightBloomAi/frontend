@@ -12,8 +12,6 @@ export default function SignInPage() {
     const router = useRouter();
     const isTablet = useMediaQuery("(max-width: 768px)");
 
-    console.log(isTablet);
-
     useEffect(() => {
         if (!isTablet) {
             router.push("/");
