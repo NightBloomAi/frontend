@@ -134,7 +134,13 @@ export default function UserMenu() {
           {session?.email}
         </MenuItem> */}
 
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={() => {
+            router.push("/user-profile");
+            handleClose();
+          }}
+          disableRipple
+        >
           <AccountCircleIcon
             className="text-[var(--lightest-grey)]"
             sx={{ color: "#CAC4D0" }}
