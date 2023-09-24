@@ -57,12 +57,10 @@ export default function Gallery({
                                         border: "none",
                                     },
                                     "& .MuiListItem-root.Mui-selected": {
-                                        backgroundColor: "var(--light-grey)",
+                                        backgroundColor: "var(--trans-grey)",
                                     },
 
-                                    "& .MenuItem.Mui-selected": {
-                                        color: "var(--light-grey)",
-                                    },
+                                    
                                 }}
                                 MenuProps={{
                                     PaperProps: {
@@ -84,7 +82,7 @@ export default function Gallery({
                                     <MenuItem
                                         value={item.name}
                                         key={item.displayName}
-                                        className="text-base focus-visible:!border-0 bg-[var(--opaque-trans-grey)] hover:bg-[var(--light-grey)] duration-300 focus-visible:bg-[var(--light-grey)] p-2 m-0 bg-cover mt-0 text-[var(--lightest-grey)] scroll-m-0 "
+                                        className="text-base focus-visible:!border-0 bg-[var(--opaque-trans-grey)] hover:bg-[var(--trans-grey)] duration-300 focus-visible:bg-[var(--light-grey)] p-2 m-0 bg-cover mt-0 text-[var(--lightest-grey)] scroll-m-0 "
                                     >
                                         {item.displayName}
                                     </MenuItem>
