@@ -5,11 +5,13 @@ import { SearchIcon } from "../assets/icons";
 function SearchBar({
     onSearch,
     onSearchChange,
+    initialSearch,
 }: {
     onSearch: (search: string) => void;
     onSearchChange: () => void;
+    initialSearch?: string;
 }): JSX.Element {
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(initialSearch ?? "");
     const debouncedSearch = useDebounce(search, 500);
     const searchRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +43,7 @@ function SearchBar({
             <input
                 ref={searchRef}
                 type="text"
-                placeholder="Type '/' to search"
+                placeholder="Type to search"
                 value={search}
                 onChange={handleSearchChange}
                 className="w-full py-3 pl-12 pr-40 text-[var(--pink)] rounded-full outline-none bg-[var(--trans-grey)] focus:rounded-full focus:outline-none border-2 border-transparent"
