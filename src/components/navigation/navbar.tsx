@@ -1,32 +1,36 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useContext } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { NavItem } from "@/types/nav.type";
 import { MenuButton } from "./menuButton";
-import Logo from "./logo";
-import LinkButton from "./linkButton";
+import { useAuthContext } from "@/contexts/authContext";
+import { useNavContext } from "@/contexts/navContext";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StyleIcon from "@mui/icons-material/Style";
-import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import SignInButton from "./SignInButton";
-import { useAuthContext } from "@/contexts/authContext";
 import LoadingSnackbar from "../misc/loadingSnackbar";
+import LogoutIcon from "@mui/icons-material/Logout";
+import StyleIcon from "@mui/icons-material/Style";
+import SignInButton from "./SignInButton";
+import LinkButton from "./linkButton";
+import Logo from "./logo";
 
 const navItems: NavItem[] = [
     {
+        id: "home",
         name: "Home",
         href: "/",
         icon: <HomeOutlinedIcon className="w-7 h-7" />,
     },
     {
+        id: "favourites",
         name: "Favorites",
         href: "/favorites",
         icon: <FavoriteIcon className="w-7 h-7" />,
     },
     {
+        id: "style-guide",
         name: "Style Guide",
         href: "/style-guide",
         icon: <StyleIcon className="w-7 h-7" />,
@@ -35,6 +39,7 @@ const navItems: NavItem[] = [
 
 const Navbar = () => {
     const { session, loading } = useAuthContext();
+    const { activeNav } = useNavContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [visible, setVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -80,10 +85,14 @@ const Navbar = () => {
                         toggleMenu;
                         setWhichPage(item.name);
                     }}
-                    className="mr-4 text-lg"
+                    className={
+                        activeNav === item.id
+                            ? `mr-4 text-lg text-[var(--pink)]`
+                            : `mr-4 text-lg`
+                    }
                 />
             )),
-        []
+        [activeNav]
     );
 
     const handleScroll = () => {
@@ -99,7 +108,7 @@ const Navbar = () => {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     });

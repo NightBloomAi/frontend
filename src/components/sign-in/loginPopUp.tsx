@@ -42,7 +42,6 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             onSuccess: async (response: ILoginResponse) => {
                 try {
                     if (isDevMode) {
-                        console.log("hi");
                         Cookies.set("logged_in", "true");
                         Cookies.set("access_token", `${response.access_token}`);
                         Cookies.set(
@@ -59,19 +58,13 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                         const currentUserData = await queryClient.fetchQuery({
                             queryKey: ["currentUserEndpoint"],
                             queryFn: async () => {
-                                const res = 
-                                    await currentUserEndpoint({
-                                        jwt: response.access_token,
-                                    });
-                                    console.log("why");
-                                    console.log(res);
+                                const res = await currentUserEndpoint({
+                                    jwt: response.access_token,
+                                });
                                 return res;
                             },
                         });
-                        console.log(currentUserData);
                         if (!currentUserData.error_message) {
-                            console.log("here");
-                            console.log(currentUserData);
                             setSession({
                                 id: currentUserData.id,
                                 signedIn: true,
@@ -82,7 +75,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                     }
                     closePopup();
                 } catch (error) {
-                    console.log("Error logging in:"+ error);
+                    console.log("Error logging in:" + error);
                     toast.error("Error has occurred while trying to login");
                     return error;
                 }
@@ -101,10 +94,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
         });
     };
 
-    const handleGoogle = () => {
-        
-
-    }
+    const handleGoogle = () => {};
 
     const validate = () => {
         let result = true;
@@ -127,7 +117,10 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                 <div className="text-4xl font-museo pt-5">Log In</div>
 
                 <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
-                    <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] md:w-96 w-80 flex justify-center items-center" onClick={handleGoogle}>
+                    <div
+                        className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] md:w-96 w-80 flex justify-center items-center"
+                        onClick={handleGoogle}
+                    >
                         <Google />
                         <div className="pl-2">Sign In With Google</div>
                     </div>
