@@ -11,6 +11,7 @@ import { StageProvider } from "@/contexts/stageContext";
 import { ThemeProvider } from "@mui/material";
 import { themeLight } from "@/styles/theme";
 import { Toaster } from "react-hot-toast";
+import { UserFavProvider } from "@/contexts/userFavContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,14 +29,16 @@ export default function RootLayout({
                 <StageProvider>
                     <QueryClientProvider client={queryClient}>
                         <AuthContextProvider>
-                            <ThemeProvider theme={themeLight}>
-                                <Navbar />
-                                <Toaster />
-                                <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
-                                    <div className="h-16"></div>
-                                    {children}
-                                </main>
-                            </ThemeProvider>
+                            <UserFavProvider>
+                                <ThemeProvider theme={themeLight}>
+                                    <Navbar />
+                                    <Toaster />
+                                    <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
+                                        <div className="h-16"></div>
+                                        {children}
+                                    </main>
+                                </ThemeProvider>
+                            </UserFavProvider>
                         </AuthContextProvider>
                     </QueryClientProvider>
                 </StageProvider>

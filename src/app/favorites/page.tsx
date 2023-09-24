@@ -2,34 +2,15 @@
 "use client";
 
 import { imageEndpointURL } from "@/api/midjourneyApi";
-import { userFavouritesEndpoint } from "@/api/nightbloomApi";
 import ImagePopup from "@/components/landing/imagePopup";
 import LoadingSnackbar from "@/components/misc/loadingSnackbar";
 import { useAuthContext } from "@/contexts/authContext";
+import { useUserFavContext } from "@/contexts/userFavContext";
 import { Hit } from "@/types/searchRes.type";
-import { useState } from "react";
-import { useQuery } from "react-query";
 
 function FavouritesPage() {
-    const [selectedImage, setSelectedImage] = useState<Hit | undefined>(
-        undefined
-    );
-    const {
-        session,
-        signInPopUpVisible,
-        setSignInPopUpVisible,
-        setLoginNotSignUp,
-    } = useAuthContext();
-
-    const { data, isLoading, isError, error } = useQuery(
-        "favorites",
-        () => userFavouritesEndpoint({ jwt: session?.jwt }),
-        {
-            enabled: session?.signedIn === true,
-            retry: false,
-            refetchOnWindowFocus: false,
-        }
-    );
+    const { favQuery, selectedImage, setSelectedImage } = useUserFavContext();
+    const { setSignInPopUpVisible, setLoginNotSignUp } = useAuthContext();
 
     const togglePopup = (image: Hit | undefined) => () => {
         setSelectedImage(image);
@@ -38,7 +19,7 @@ function FavouritesPage() {
     /**
      * If the user is not signed in, show a message telling them to sign in
      */
-    if (session?.signedIn === false) {
+    if (favQuery?.data?.session && favQuery?.data.session?.signedIn === false) {
         return (
             <div className="flex flex-col justify-center align-middle w-full h-full">
                 <p className="text-center">
@@ -66,13 +47,15 @@ function FavouritesPage() {
             <p className="text-center text-xl">Favourites</p>
 
             <div className="my-4">
-                {isLoading && <LoadingSnackbar />}
-                {isError && (
-                    <p className="mx-auto">Error: {JSON.stringify(error)}</p>
+                {favQuery?.isLoading && <LoadingSnackbar />}
+                {favQuery?.isError && (
+                    <p className="mx-auto">
+                        Error: {JSON.stringify(favQuery?.error)}
+                    </p>
                 )}
-                {data && (
+                {favQuery?.data && (
                     <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                        {data.assets.map((asset: any) => (
+                        {favQuery?.data.assets.map((asset: any) => (
                             <div
                                 key={asset.reference_job_id}
                                 className="object-cover w-full overflow-hidden cursor-pointer rounded"
