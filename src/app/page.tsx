@@ -11,8 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function Home() {
     const router = useRouter();
     const params = useSearchParams();
-    const searchParam = params.get("searchQuery");
-
+    const searchParam = params.get("search");
     const [search, setSearch] = useState(searchParam ?? "");
     const [category, setCategory] = useState("");
     const { data, loading, error, fetchMoreData, resetPage } = useSearch(
@@ -21,10 +20,10 @@ export default function Home() {
         category
     );
 
-    function changeCategory(event: SelectChangeEvent<string>) {
+    const changeCategory = (event: SelectChangeEvent<string>) => {
         resetPage();
         setCategory(event.target.value);
-    }
+    };
 
     const debouncedCategory = useDebounce(category, 500);
 
@@ -35,9 +34,9 @@ export default function Home() {
     useEffect(() => {
         const url = new URL(window.location.href);
         if (search === "") {
-            url.searchParams.delete("searchQuery");
+            url.searchParams.delete("search");
         } else {
-            url.searchParams.set("searchQuery", search);
+            url.searchParams.set("search", search);
         }
         router.push(url.toString());
     }, [router, search]);

@@ -27,7 +27,6 @@ export const currentUserEndpoint = async ({ jwt }: { jwt?: string }) => {
     };
     if (!jwt) {
         const response = await base.get(`/account/current_user`);
-        console.log(response.data);
         return response.data;
     } else {
         const response = await base.get(`/account/current_user`, {

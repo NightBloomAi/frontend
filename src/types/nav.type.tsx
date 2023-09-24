@@ -1,7 +1,10 @@
+import { INavItem } from "@/contexts/navContext";
+
 type NavItem = {
-  name: string;
-  href: string;
-  icon: React.ReactElement;
+    id?: INavItem;
+    name: string;
+    href: string;
+    icon: React.ReactElement;
 };
 
 export type { NavItem };

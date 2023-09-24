@@ -12,6 +12,7 @@ import { ThemeProvider } from "@mui/material";
 import { themeLight } from "@/styles/theme";
 import { Toaster } from "react-hot-toast";
 import { UserFavProvider } from "@/contexts/userFavContext";
+import { NavProvider } from "@/contexts/navContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,20 +24,22 @@ export default function RootLayout({
     const queryClient = new QueryClient();
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <Head />
-            <body className={`${inter.className} overflow-x-hidden`}>
+            <body className={inter.className}>
                 <StageProvider>
                     <QueryClientProvider client={queryClient}>
                         <AuthContextProvider>
                             <UserFavProvider>
                                 <ThemeProvider theme={themeLight}>
-                                    <Navbar />
-                                    <Toaster />
-                                    <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
-                                        <div className="h-16"></div>
-                                        {children}
-                                    </main>
+                                    <NavProvider>
+                                        <Navbar />
+                                        <Toaster />
+                                        <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
+                                            <div className="h-16"></div>
+                                            {children}
+                                        </main>
+                                    </NavProvider>
                                 </ThemeProvider>
                             </UserFavProvider>
                         </AuthContextProvider>
