@@ -197,7 +197,7 @@ export default function ImagePopup({
                                 className="object-contain w-full rounded sm:max-h-[35rem]"
                             />
                             <div className="flex flex-row gap-x-2 w-1/2 items-center justify-center">
-                                {alternatenumbers.map((item: alternateType) => {
+                                {alternatenumbers?.map((item: alternateType) => {
                                     return (
                                         <img
                                             key={item.name}

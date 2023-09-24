@@ -28,7 +28,7 @@ export default function StyleGalleryResults({
     return (
         <div className="flex flex-col gap-y-4">
             <ul className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {data.map((item) => (
+                {data?.map((item) => (
                     <div
                         key={item.reference_job_id}
                         className="object-cover w-full overflow-hidden cursor-pointer rounded"

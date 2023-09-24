@@ -76,7 +76,7 @@ const Navbar = () => {
 
     const NavLinks = useMemo(
         () =>
-            navItems.map((item: NavItem) => (
+            navItems?.map((item: NavItem) => (
                 <LinkButton
                     key={item.name}
                     href={item.href}
@@ -149,7 +149,7 @@ const Navbar = () => {
                     >
                         <Logo />
                         <div className="flex-auto flex flex-col justify-start items-start gap-y-4 w-full">
-                            {mobileNavItems.map((item: NavItem) => (
+                            {mobileNavItems?.map((item: NavItem) => (
                                 <div
                                     key={item.name}
                                     className={`mr-4 px-5 py-3 w-full text-lg flex items-center justify-start gap-x-3 ${

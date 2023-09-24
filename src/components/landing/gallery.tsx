@@ -78,7 +78,7 @@ export default function Gallery({
                                 variant="standard"
                                 className="text-base  bg-[var(--opaque-trans-grey)] rounded-lg !text-[var(--lightest-grey)] focus-visible:!border-0 p-1 px-2 m-0 after:border-0 hover:before:border-0 hover:before:w-0 before:border-0"
                             >
-                                {filter.map((item) => (
+                                {filter?.map((item) => (
                                     <MenuItem
                                         value={item.name}
                                         key={item.displayName}
@@ -110,7 +110,7 @@ export default function Gallery({
             </div>
 
             <ul className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {data.map((item) => (
+                {data?.map((item) => (
                     <div
                         key={item.reference_job_id}
                         className="object-cover w-full overflow-hidden cursor-pointer rounded"
