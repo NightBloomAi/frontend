@@ -34,7 +34,11 @@ export default function Home() {
 
     useEffect(() => {
         const url = new URL(window.location.href);
-        url.searchParams.set("searchQuery", search);
+        if (search === "") {
+            url.searchParams.delete("searchQuery");
+        } else {
+            url.searchParams.set("searchQuery", search);
+        }
         router.push(url.toString());
     }, [router, search]);
 
