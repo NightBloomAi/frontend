@@ -12,6 +12,7 @@ import { ThemeProvider } from "@mui/material";
 import { themeLight } from "@/styles/theme";
 import { Toaster } from "react-hot-toast";
 import { UserFavProvider } from "@/contexts/userFavContext";
+import { NavProvider } from "@/contexts/navContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,12 +32,14 @@ export default function RootLayout({
                         <AuthContextProvider>
                             <UserFavProvider>
                                 <ThemeProvider theme={themeLight}>
-                                    <Navbar />
-                                    <Toaster />
-                                    <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
-                                        <div className="h-16"></div>
-                                        {children}
-                                    </main>
+                                    <NavProvider>
+                                        <Navbar />
+                                        <Toaster />
+                                        <main className="mx-auto px-4 max-w-screen-xl h-[calc(100%-4rem)]">
+                                            <div className="h-16"></div>
+                                            {children}
+                                        </main>
+                                    </NavProvider>
                                 </ThemeProvider>
                             </UserFavProvider>
                         </AuthContextProvider>
