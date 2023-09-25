@@ -15,11 +15,12 @@ function FavouritesPage() {
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
 
-  const togglePopup = (image: Hit | undefined) => () => {
+  const togglePopup = (image: Hit | undefined) => async () => {
     setSelectedImage(image);
     if (selectedImage) {
+      const isitaFavourite = await checkFavourite({ reference_job_id: selectedImage.reference_job_id });
       if (
-        checkFavourite({ reference_job_id: selectedImage.reference_job_id }) ==
+        isitaFavourite ==
         true
       ) {
         setIsFavourite(true);

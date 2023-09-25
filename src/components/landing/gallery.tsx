@@ -27,11 +27,12 @@ export default function Gallery({
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
 
-  const togglePopup = (image: Hit) => () => {
+  const togglePopup = (image: Hit) => async () => {
     setIsFavourite(false);
     setSelectedImage(image);
+    const isitaFavourite = await checkFavourite({ reference_job_id: image.reference_job_id });
     if (
-      checkFavourite({ reference_job_id: image.reference_job_id }) ==
+      isitaFavourite ==
       true
     ) {
         console.log('is a favourite')

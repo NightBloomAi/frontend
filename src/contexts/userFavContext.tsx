@@ -8,6 +8,7 @@ import {
 } from "@/api/nightbloomApi";
 import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import { data } from "autoprefixer";
 
 /******************************************************************************
     INTERFACES
@@ -17,7 +18,7 @@ interface IUserFavContext {
   selectedImage: Hit | undefined;
   setSelectedImage: React.Dispatch<React.SetStateAction<Hit | undefined>>;
   createFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
-  checkFavourite: ({reference_job_id}:{reference_job_id: string}) => boolean;
+  checkFavourite: ({reference_job_id}:{reference_job_id: string}) => Promise<boolean>;
 }
 
 /******************************************************************************
@@ -28,7 +29,7 @@ const UserFavContext = createContext<IUserFavContext>({
   selectedImage: undefined,
   setSelectedImage: () => {},
   createFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
-  checkFavourite: ({reference_job_id}:{reference_job_id: string}) => false,
+  checkFavourite: async ({reference_job_id}:{reference_job_id: string}) => false,
 });
 
 /******************************************************************************
@@ -40,6 +41,8 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
     undefined
   );
   const { session } = useAuthContext();
+
+  
 
   const favQuery = useQuery(
     "favourites",
@@ -82,11 +85,13 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
     kind: string;
   }
 
-  const checkFavourite = ({
+  const checkFavourite = async ({
     reference_job_id,
   }: {
     reference_job_id: string;
   }) => {
+
+   await favQuery.refetch();
    const isFavourite = favQuery.data.assets.some(
       (item: FavouriteAsset) => item.reference_job_id === reference_job_id
     );
