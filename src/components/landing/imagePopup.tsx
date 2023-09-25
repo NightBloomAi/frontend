@@ -52,7 +52,7 @@ export default function ImagePopup({
       
       if (favQuery) {
         console.log('passes')
-        await favQuery.refetch();
+        await favQuery.refetch;
         const isitaFavourite = await checkFavourite({
           reference_job_id: imageInfo.reference_job_id,
         });

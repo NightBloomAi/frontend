@@ -18,7 +18,11 @@ interface IUserFavContext {
   selectedImage: Hit | undefined;
   setSelectedImage: React.Dispatch<React.SetStateAction<Hit | undefined>>;
   createFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
-  checkFavourite: ({reference_job_id}:{reference_job_id: string}) => Promise<boolean>;
+  checkFavourite: ({
+    reference_job_id,
+  }: {
+    reference_job_id: string;
+  }) => Promise<boolean>;
 }
 
 /******************************************************************************
@@ -29,7 +33,8 @@ const UserFavContext = createContext<IUserFavContext>({
   selectedImage: undefined,
   setSelectedImage: () => {},
   createFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
-  checkFavourite: async ({reference_job_id}:{reference_job_id: string}) => false,
+  checkFavourite: async ({ reference_job_id }: { reference_job_id: string }) =>
+    false,
 });
 
 /******************************************************************************
@@ -41,8 +46,6 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
     undefined
   );
   const { session } = useAuthContext();
-
-  
 
   const favQuery = useQuery(
     "favourites",
@@ -90,17 +93,24 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
   }: {
     reference_job_id: string;
   }) => {
-
-   await favQuery.refetch();
-   const isFavourite = favQuery.data.assets.some(
-      (item: FavouriteAsset) => item.reference_job_id === reference_job_id
-    );
-    return isFavourite;
+    await favQuery.refetch;
+    if (favQuery) {
+      const isFavourite = favQuery.data.assets.some(
+        (item: FavouriteAsset) => item.reference_job_id === reference_job_id
+      );
+      return isFavourite;
+    }
   };
 
   return (
     <UserFavContext.Provider
-      value={{ favQuery, selectedImage, setSelectedImage, createFavourite, checkFavourite }}
+      value={{
+        favQuery,
+        selectedImage,
+        setSelectedImage,
+        createFavourite,
+        checkFavourite,
+      }}
     >
       {children}
     </UserFavContext.Provider>
