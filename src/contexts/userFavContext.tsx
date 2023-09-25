@@ -95,6 +95,7 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
   }) => {
     await favQuery.refetch;
     if (favQuery) {
+      console.log('going through why')
       const isFavourite = favQuery.data.assets.some(
         (item: FavouriteAsset) => item.reference_job_id === reference_job_id
       );

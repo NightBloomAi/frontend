@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { imageEndpointURL } from "@/api/midjourneyApi";
 import { useUserFavContext } from "@/contexts/userFavContext";
+import { useAuthContext } from "@/contexts/authContext";
 
 interface GalleryProps {
   data: Hit[];
@@ -26,20 +27,22 @@ export default function Gallery({
   const [selectedImage, setSelectedImage] = useState<Hit>(data[0]);
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
+  const { session } = useAuthContext();
 
   const togglePopup = (image: Hit) => async () => {
     setIsFavourite(false);
     setSelectedImage(image);
-    const isitaFavourite = await checkFavourite({ reference_job_id: image.reference_job_id });
-    if (
-      isitaFavourite ==
-      true
-    ) {
-        console.log('is a favourite')
-      setIsFavourite(true);
-    } else {
-        console.log('is not a favourite')
-      setIsFavourite(false);
+    if (session) {
+      const isitaFavourite = await checkFavourite({
+        reference_job_id: image.reference_job_id,
+      });
+      if (isitaFavourite == true) {
+        console.log("is a favourite");
+        setIsFavourite(true);
+      } else {
+        console.log("is not a favourite");
+        setIsFavourite(false);
+      }
     }
 
     setIsPopupVisible(!isPopupVisible);
@@ -139,7 +142,12 @@ export default function Gallery({
         ))}
       </ul>
       {isPopupVisible && (
-        <ImagePopup closePopup={closePopup} imageInfo={selectedImage} isFavourite={isFavourite} setIsFavourite={setIsFavourite}/>
+        <ImagePopup
+          closePopup={closePopup}
+          imageInfo={selectedImage}
+          isFavourite={isFavourite}
+          setIsFavourite={setIsFavourite}
+        />
       )}
     </div>
   );

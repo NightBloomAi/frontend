@@ -20,6 +20,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useUserFavContext } from "@/contexts/userFavContext";
 import { useMutation, useQueryClient } from "react-query";
+import { useAuthContext } from "@/contexts/authContext";
 
 interface ImagePopupProps {
   closePopup: () => void;
@@ -41,6 +42,7 @@ export default function ImagePopup({
   const [showMore, setShowMore] = useState(false);
   const [whichImage, setWhichImage] = useState(0);
   const { createFavourite, checkFavourite, favQuery } = useUserFavContext();
+  const {session, setSignInPopUpVisible}= useAuthContext();
 
   const queryClient = useQueryClient();
 
@@ -87,6 +89,10 @@ export default function ImagePopup({
     //         console.log(isFavourite);
     //     }
     // }
+
+    if (!session) {
+        setSignInPopUpVisible(true);
+    }
     console.log("Before mutation:", favQuery?.status, favQuery?.data);
     mutation.mutate(imageInfo.reference_job_id);
   };
