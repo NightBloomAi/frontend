@@ -91,6 +91,7 @@ export default function ImagePopup({
     // }
 
     if (!session) {
+        closePopup();
         setSignInPopUpVisible(true);
     }
     console.log("Before mutation:", favQuery?.status, favQuery?.data);
