@@ -3,6 +3,7 @@ import { useAuthContext } from "./authContext";
 import { Hit } from "@/types/searchRes.type";
 import { useQuery, useQueryClient, UseQueryResult } from "react-query";
 import {
+  checkFavouritesEndpoint,
   createFavouriteEndpoint,
   userFavouritesEndpoint,
 } from "@/api/nightbloomApi";
@@ -13,6 +14,10 @@ import { data } from "autoprefixer";
 /******************************************************************************
     INTERFACES
 *******************************************************************************/
+interface ICheckContext {
+  is_favourite: boolean;
+}
+
 interface IUserFavContext {
   favQuery: UseQueryResult<any, unknown> | undefined;
   selectedImage: Hit | undefined;
@@ -22,7 +27,7 @@ interface IUserFavContext {
     reference_job_id,
   }: {
     reference_job_id: string;
-  }) => Promise<boolean>;
+  }) => Promise<ICheckContext>;
 }
 
 /******************************************************************************
@@ -33,8 +38,7 @@ const UserFavContext = createContext<IUserFavContext>({
   selectedImage: undefined,
   setSelectedImage: () => {},
   createFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
-  checkFavourite: async ({ reference_job_id }: { reference_job_id: string }) =>
-    false,
+  checkFavourite: async ({ reference_job_id }: { reference_job_id: string }) => ({is_favourite:false}),
 });
 
 /******************************************************************************
@@ -93,14 +97,13 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
   }: {
     reference_job_id: string;
   }) => {
-    await favQuery.refetch;
-    if (favQuery) {
-      console.log('going through why')
-      const isFavourite = favQuery.data.assets.some(
-        (item: FavouriteAsset) => item.reference_job_id === reference_job_id
-      );
-      return isFavourite;
-    }
+   await queryClient.fetchQuery({queryKey:['checkFavourite'], queryFn: async ()=> {
+    const { data }: AxiosResponse = await checkFavouritesEndpoint({
+      id: reference_job_id,
+      jwt: Cookies.get("access_token"),
+    });
+    return data;
+   }})
   };
 
   return (
