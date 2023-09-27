@@ -14,7 +14,7 @@ export default function StyleGuide() {
             </div>
             <div className="h-16"></div>
             <div className="flex items-center justify-center flex-wrap gap-x-7 gap-y-7">
-                {styles.map((item) => {
+                {styles?.map((item) => {
                     return (
                         <div
                             key={item.displayName}

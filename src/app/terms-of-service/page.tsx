@@ -18,13 +18,13 @@ export default function TermsPage() {
                         our web application, content, and functionality.
                     </div>
                 </div>
-                {termsOfService.map((item: termType) => {
+                {termsOfService?.map((item: termType) => {
                     return (
                         <div className="gap-y-3 flex flex-col" key={item.name}>
                             <div className="text-[var(--pink)] text-xl">
                                 {item.name}
                             </div>
-                            {item.subsections.map((sub: subSectionType) => {
+                            {item.subsections?.map((sub: subSectionType) => {
                                 return (
                                     <div
                                         className="flex gap-x-3 pl-5 text-base"

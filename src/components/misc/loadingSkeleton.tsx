@@ -30,7 +30,7 @@ export default function LoadingSkeleton() {
             </div>
 
             <ul className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {data.map((item) => (
+                {data?.map((item) => (
                     <Skeleton
                         key={item}
                         variant="rectangular"

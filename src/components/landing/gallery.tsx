@@ -36,13 +36,13 @@ export default function Gallery({
       const isitaFavourite = await checkFavourite({
         reference_job_id: image.reference_job_id,
       });
-      if (isitaFavourite == true) {
-        console.log("is a favourite");
-        setIsFavourite(true);
-      } else {
-        console.log("is not a favourite");
-        setIsFavourite(false);
-      }
+      // if (isitaFavourite === true) {
+      //   console.log("is a favourite");
+      //   setIsFavourite(true);
+      // } else {
+      //   console.log("is not a favourite");
+      //   setIsFavourite(false);
+      // }
     }
 
     setIsPopupVisible(!isPopupVisible);

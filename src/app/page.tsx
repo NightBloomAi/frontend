@@ -32,13 +32,17 @@ export default function Home() {
     }, [debouncedCategory, setCategory]);
 
     useEffect(() => {
-        const url = new URL(window.location.href);
-        if (search === "") {
-            url.searchParams.delete("search");
-        } else {
-            url.searchParams.set("search", search);
+        try {
+            const url = new URL(window.location.href);
+            if (search === "") {
+                url.searchParams.delete("search");
+            } else {
+                url.searchParams.set("search", search);
+            }
+            router.push(url.toString());
+        } catch (e) {
+            console.error(e);
         }
-        router.push(url.toString());
     }, [router, search]);
 
     return (
