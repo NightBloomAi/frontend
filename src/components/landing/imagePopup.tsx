@@ -63,13 +63,13 @@ export default function ImagePopup({
     },
     {
       onSettled: async (isitaFavourite) => {
-        // if (isitaFavourite == true) {
-        //   setIsFavourite(true);
-        //   console.log(isFavourite);
-        // } else {
-        //   setIsFavourite(false);
-        //   console.log(isFavourite);
-        // }
+        if (isitaFavourite == true) {
+          setIsFavourite(true);
+          console.log(isFavourite);
+        } else {
+          setIsFavourite(false);
+          console.log(isFavourite);
+        }
         console.log("After mutation:", favQuery?.status, favQuery?.data);
       },
     }

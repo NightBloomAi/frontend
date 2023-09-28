@@ -193,8 +193,8 @@ export const checkFavouritesEndpoint = async ({
     const response = await base.get(`/user_favourites/favourites/${id}`, {
       headers,
     });
-    console.log(response);
-    return response.data;
+    // console.log(response.data);
+    return response.data.is_favourite;
   } catch (error) {
     console.error("Error checking if post is favourite", error);
     return error;

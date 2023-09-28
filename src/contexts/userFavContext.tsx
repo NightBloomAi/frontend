@@ -23,11 +23,9 @@ interface IUserFavContext {
   selectedImage: Hit | undefined;
   setSelectedImage: React.Dispatch<React.SetStateAction<Hit | undefined>>;
   createFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
-  checkFavourite: ({
-    reference_job_id,
-  }: {
+  checkFavourite: ({ reference_job_id, }: {
     reference_job_id: string;
-  }) => Promise<ICheckContext>;
+}) => Promise<undefined | boolean>;
 }
 
 /******************************************************************************
@@ -38,7 +36,11 @@ const UserFavContext = createContext<IUserFavContext>({
   selectedImage: undefined,
   setSelectedImage: () => {},
   createFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
-  checkFavourite: async ({ reference_job_id }: { reference_job_id: string }) => ({is_favourite:false}),
+  checkFavourite: async ({
+    reference_job_id,
+  }: {
+    reference_job_id: string;
+  }) => undefined,
 });
 
 /******************************************************************************
@@ -66,11 +68,11 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
       await queryClient.fetchQuery({
         queryKey: ["createFavouriteEndpoint"],
         queryFn: async () => {
-          const { data }: AxiosResponse = await createFavouriteEndpoint({
+          const response: AxiosResponse = await createFavouriteEndpoint({
             ids: imageIDs,
             jwt: Cookies.get("access_token"),
           });
-          return data;
+          return response;
         },
       });
     } catch (error) {
@@ -97,14 +99,19 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
   }: {
     reference_job_id: string;
   }) => {
-   await queryClient.fetchQuery({queryKey:['checkFavourite'], queryFn: async ()=> {
-    const { data }: AxiosResponse = await checkFavouritesEndpoint({
-      id: reference_job_id,
-      jwt: Cookies.get("access_token"),
+    return await queryClient.fetchQuery({
+      queryKey: ["checkFavourite"],
+      queryFn: async () => {
+        const response: AxiosResponse = await checkFavouritesEndpoint({
+          id: reference_job_id,
+          jwt: Cookies.get("access_token"),
+        });
+        console.log(response);
+        return response as unknown as boolean;
+      },
     });
-    return data;
-   }})
   };
+
 
   return (
     <UserFavContext.Provider
