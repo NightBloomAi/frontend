@@ -63,24 +63,30 @@ export default function AuthContextProvider({
     useLayoutEffect(() => {
         async function fetchData() {
             try {
+                console.log("passing 1")
                 const token = Cookies.get("access_token");
+                console.log("passing 2");
                 const currentUserData = await queryClient.fetchQuery({
                     queryKey: ["currentUserEndpoint"],
                     queryFn: async () => {
+                        console.log("passing 3")
                         const res = await currentUserEndpoint({
                             jwt: token,
                         });
+                        console.log(res);
                         return res;
                     },
                 });
 
                 if (token && !currentUserData.error_message) {
+                    console.log("passing 4")
                     setSession({
                         id: currentUserData.id,
                         signedIn: true,
                         jwt: token,
                         email: currentUserData.email,
                     });
+                    console.log(session);
                 }
             } catch (error) {
                 console.log(error);
@@ -90,6 +96,8 @@ export default function AuthContextProvider({
 
         fetchData();
     }, [queryClient]);
+
+
 
     /**
      * Function to use refresh token to get another access token

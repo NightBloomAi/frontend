@@ -88,4 +88,18 @@ export const styles: StylesType[] = [
     descript:
       "This style is favored by many artists for its versatility and ability to create fine details and soft blends.",
   },
+  {
+    name: "",
+    displayName: "Colouring Book",
+    imgsrc: "",
+    descript:
+      "This style, with clean lines and charming designs, invites artists of all ages to add vibrant colors to the canvas.",
+  },
+  {
+    name: "",
+    displayName: "Cinematographic",
+    imgsrc: "",
+    descript:
+      "This style captures hyper-realistic cinematic moments, emphasizing composition, lighting, and emotion to create visually captivating scenes.",
+  },
 ];
