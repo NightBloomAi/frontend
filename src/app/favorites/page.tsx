@@ -10,24 +10,30 @@ import { Hit } from "@/types/searchRes.type";
 import { useState } from "react";
 
 function FavouritesPage() {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const { favQuery, selectedImage, setSelectedImage } = useUserFavContext();
   const { setSignInPopUpVisible, setLoginNotSignUp } = useAuthContext();
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
 
   const togglePopup = (image: Hit | undefined) => async () => {
+    console.log("passing 1")
+    setIsFavourite(false);
     setSelectedImage(image);
-    if (selectedImage) {
-      const isitaFavourite = await checkFavourite({ reference_job_id: selectedImage.reference_job_id });
-      if (
-        isitaFavourite ==
-        true
-      ) {
+    if (image) {
+      console.log("passing 2")
+      console.log(selectedImage);
+      const isitaFavourite = await checkFavourite({
+        reference_job_id: image.reference_job_id,
+      });
+      console.log(isitaFavourite);
+      if (isitaFavourite == true) {
         setIsFavourite(true);
       } else {
         setIsFavourite(false);
       }
     }
+    setIsPopupVisible(!isPopupVisible);
   };
 
   /**
@@ -86,7 +92,7 @@ function FavouritesPage() {
             ))}
           </div>
         )}
-        {selectedImage && (
+        {selectedImage && isPopupVisible && (
           <ImagePopup
             closePopup={togglePopup(undefined)}
             imageInfo={selectedImage}

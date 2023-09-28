@@ -41,61 +41,65 @@ export default function ImagePopup({
   }, []);
   const [showMore, setShowMore] = useState(false);
   const [whichImage, setWhichImage] = useState(0);
-  const { createFavourite, checkFavourite, favQuery } = useUserFavContext();
-  const {session, setSignInPopUpVisible}= useAuthContext();
+  const { createFavourite, checkFavourite, favQuery, removeFavourite } = useUserFavContext();
+  const { session, setSignInPopUpVisible } = useAuthContext();
 
   const queryClient = useQueryClient();
 
-
-  const mutation = useMutation(
+  const addFavouriteMutation = useMutation(
     async (imageid: string) => {
       await createFavourite({ imageIDs: [imageid] });
       await queryClient.invalidateQueries({ queryKey: ["favourites"] });
-      
-      if (favQuery) {
-        console.log('passes')
-        await favQuery.refetch;
-        const isitaFavourite = await checkFavourite({
-          reference_job_id: imageInfo.reference_job_id,
-        });
-        return isitaFavourite;
-      }
+
+      const isitaFavourite = await checkFavourite({
+        reference_job_id: imageInfo.reference_job_id,
+      });
+      return isitaFavourite;
     },
     {
       onSettled: async (isitaFavourite) => {
         if (isitaFavourite == true) {
           setIsFavourite(true);
-          console.log(isFavourite);
         } else {
           setIsFavourite(false);
-          console.log(isFavourite);
         }
-        console.log("After mutation:", favQuery?.status, favQuery?.data);
       },
     }
   );
 
-  const handleFavourite = async () => {
-    // if (favQuery) {
-    //     await favQuery.refetch;
-    //     console.log(imageInfo.reference_job_id);
-    //     const isitaFavourite = await checkFavourite({reference_job_id:imageInfo.reference_job_id});
-    //     console.log(isitaFavourite);
-    //     if (isitaFavourite == true) {
-    //         setIsFavourite(true)
-    //         console.log(isFavourite);
-    //     } else {
-    //         setIsFavourite(false)
-    //         console.log(isFavourite);
-    //     }
-    // }
+  const removeFavouriteMutation = useMutation(
+    async (imageid: string) => {
+      await removeFavourite({imageIDs: [imageid]});
+      await queryClient.invalidateQueries({queryKey: ["favourites"]});
 
-    if (!session) {
-        closePopup();
-        setSignInPopUpVisible(true);
+      const isitaFavourite = await checkFavourite({reference_job_id: imageInfo.reference_job_id});
+      return isitaFavourite;
+    }, 
+    {
+      onSettled: async (isitaFavourite)=>{
+        if (isitaFavourite == false) {
+          setIsFavourite(false);
+        } else {
+          setIsFavourite(true);
+        }
+
+      }
     }
-    console.log("Before mutation:", favQuery?.status, favQuery?.data);
-    mutation.mutate(imageInfo.reference_job_id);
+  )
+
+  const handleFavourite = async () => {
+    if (!session) {
+      closePopup();
+      setSignInPopUpVisible(true);
+    }
+
+    if (isFavourite) {
+      removeFavouriteMutation.mutate(imageInfo.reference_job_id);
+
+    } else {
+      addFavouriteMutation.mutate(imageInfo.reference_job_id);
+    }
+    
   };
 
   return (

@@ -179,6 +179,30 @@ export const createFavouriteEndpoint = async ({
   }
 };
 
+export const removeFavouriteEndpoint = async ({
+  ids,
+  jwt,
+}: {
+  ids: string[];
+  jwt?: string;
+}) => {
+  const payload = {
+    ids: ids,
+  };
+  const headers = {
+    Authorization: `Bearer ${jwt}`,
+  };
+  try {
+    const response = await base.put(`/user_favourites/favourites`, payload, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing favourites", error);
+    return error;
+  }
+};
+
 export const checkFavouritesEndpoint = async ({
   id,
   jwt,

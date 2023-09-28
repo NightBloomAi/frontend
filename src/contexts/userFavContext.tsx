@@ -5,6 +5,7 @@ import { useQuery, useQueryClient, UseQueryResult } from "react-query";
 import {
   checkFavouritesEndpoint,
   createFavouriteEndpoint,
+  removeFavouriteEndpoint,
   userFavouritesEndpoint,
 } from "@/api/nightbloomApi";
 import { AxiosResponse } from "axios";
@@ -23,9 +24,12 @@ interface IUserFavContext {
   selectedImage: Hit | undefined;
   setSelectedImage: React.Dispatch<React.SetStateAction<Hit | undefined>>;
   createFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
-  checkFavourite: ({ reference_job_id, }: {
+  checkFavourite: ({
+    reference_job_id,
+  }: {
     reference_job_id: string;
-}) => Promise<undefined | boolean>;
+  }) => Promise<undefined | boolean>;
+  removeFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
 }
 
 /******************************************************************************
@@ -36,11 +40,9 @@ const UserFavContext = createContext<IUserFavContext>({
   selectedImage: undefined,
   setSelectedImage: () => {},
   createFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
-  checkFavourite: async ({
-    reference_job_id,
-  }: {
-    reference_job_id: string;
-  }) => undefined,
+  checkFavourite: async ({ reference_job_id }: { reference_job_id: string }) =>
+    undefined,
+    removeFavourite: async ({ imageIDs }: { imageIDs: string[] }) => {},
 });
 
 /******************************************************************************
@@ -106,12 +108,27 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
           id: reference_job_id,
           jwt: Cookies.get("access_token"),
         });
-        console.log(response);
         return response as unknown as boolean;
       },
     });
   };
 
+  const removeFavourite = async ({ imageIDs }: { imageIDs: string[] }) => {
+    try {
+      await queryClient.fetchQuery({
+        queryKey: ["removeFavourite"],
+        queryFn: async () => {
+          const response: AxiosResponse = await removeFavouriteEndpoint({
+            ids: imageIDs,
+            jwt: Cookies.get("access_token"),
+          });
+          return response;
+        },
+      });
+    } catch (error) {
+      console.error("Error removing favourites", error);
+    }
+  };
 
   return (
     <UserFavContext.Provider
@@ -121,6 +138,7 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
         setSelectedImage,
         createFavourite,
         checkFavourite,
+        removeFavourite,
       }}
     >
       {children}
