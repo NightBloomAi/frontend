@@ -17,16 +17,13 @@ function FavouritesPage() {
   const { checkFavourite } = useUserFavContext();
 
   const togglePopup = (image: Hit | undefined) => async () => {
-    console.log("passing 1")
     setIsFavourite(false);
     setSelectedImage(image);
     if (image) {
-      console.log("passing 2")
       console.log(selectedImage);
       const isitaFavourite = await checkFavourite({
         reference_job_id: image.reference_job_id,
       });
-      console.log(isitaFavourite);
       if (isitaFavourite == true) {
         setIsFavourite(true);
       } else {
