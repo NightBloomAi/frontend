@@ -41,7 +41,8 @@ export default function ImagePopup({
   }, []);
   const [showMore, setShowMore] = useState(false);
   const [whichImage, setWhichImage] = useState(0);
-  const { createFavourite, checkFavourite, favQuery, removeFavourite } = useUserFavContext();
+  const { createFavourite, checkFavourite, favQuery, removeFavourite } =
+    useUserFavContext();
   const { session, setSignInPopUpVisible } = useAuthContext();
 
   const queryClient = useQueryClient();
@@ -69,23 +70,24 @@ export default function ImagePopup({
 
   const removeFavouriteMutation = useMutation(
     async (imageid: string) => {
-      await removeFavourite({imageIDs: [imageid]});
-      await queryClient.invalidateQueries({queryKey: ["favourites"]});
+      await removeFavourite({ imageIDs: [imageid] });
+      await queryClient.invalidateQueries({ queryKey: ["favourites"] });
 
-      const isitaFavourite = await checkFavourite({reference_job_id: imageInfo.reference_job_id});
+      const isitaFavourite = await checkFavourite({
+        reference_job_id: imageInfo.reference_job_id,
+      });
       return isitaFavourite;
-    }, 
+    },
     {
-      onSettled: async (isitaFavourite)=>{
+      onSettled: async (isitaFavourite) => {
         if (isitaFavourite == false) {
           setIsFavourite(false);
         } else {
           setIsFavourite(true);
         }
-
-      }
+      },
     }
-  )
+  );
 
   const handleFavourite = async () => {
     if (!session) {
@@ -95,11 +97,9 @@ export default function ImagePopup({
 
     if (isFavourite) {
       removeFavouriteMutation.mutate(imageInfo.reference_job_id);
-
     } else {
       addFavouriteMutation.mutate(imageInfo.reference_job_id);
     }
-    
   };
 
   return (
@@ -202,18 +202,31 @@ export default function ImagePopup({
                         className="h-4 hover:-translate-y-[2px] text-[var(--onDark)] sm:h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
                       />
                     </a>
-                    <div
-                      className="group hover:-translate-y-[2px] duration-300"
+
+                    <motion.a
                       onClick={handleFavourite}
+                      className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2.75rem)] before:mb-2 before:w-16 before:px-1 ${
+                        isFavourite
+                          ? 'before:content-["unfavourite?"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
+                          : 'before:content-["favourite?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
+                      } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        duration: 0.1,
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
                       <LikeIcon
-                        className={`h-[0.9rem] group-hover:fill-[var(--pink)] duration-300 ${
+                        className={`h-[0.9rem] duration-300 ${
                           isFavourite
                             ? "fill-[var(--pink)]"
                             : "fill-[var(--onDark)]"
                         }`}
                       />
-                    </div>
+                    </motion.a>
                   </div>
                 </div>
               </div>
