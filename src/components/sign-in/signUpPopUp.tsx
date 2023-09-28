@@ -26,7 +26,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
 
         await registerEndpoint(regobj).then((data) => {
             if (data.error_message === undefined) {
-                toast.success("Registered Successfully");
+                toast("Registered, please click the link in your email to verify your account and continue to login.", {icon:'✉️', duration: 7000});
                 setVerify(true);
                 setLoginNotSignUp(true);
             } else {

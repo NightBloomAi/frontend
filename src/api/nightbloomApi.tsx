@@ -149,6 +149,7 @@ export const userFavouritesEndpoint = async ({ jwt }: { jwt?: string }) => {
     const response = await base.get(`/user_favourites/favourites`, {
       headers,
     });
+    console.log(response.data.assets);
     return response.data;
   }
 };
@@ -174,6 +175,52 @@ export const createFavouriteEndpoint = async ({
     return response.data;
   } catch (error) {
     console.error("Error adding to favourites", error);
+    return error;
+  }
+};
+
+export const removeFavouriteEndpoint = async ({
+  ids,
+  jwt,
+}: {
+  ids: string[];
+  jwt?: string;
+}) => {
+  const payload = {
+    ids: ids,
+  };
+  const headers = {
+    Authorization: `Bearer ${jwt}`,
+  };
+  try {
+    const response = await base.put(`/user_favourites/favourites`, payload, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing favourites", error);
+    return error;
+  }
+};
+
+export const checkFavouritesEndpoint = async ({
+  id,
+  jwt,
+}: {
+  id: string;
+  jwt?: string;
+}) => {
+  const headers = {
+    Authorization: `Bearer ${jwt}`,
+  };
+  try {
+    const response = await base.get(`/user_favourites/favourites/${id}`, {
+      headers,
+    });
+    // console.log(response.data);
+    return response.data.is_favourite;
+  } catch (error) {
+    console.error("Error checking if post is favourite", error);
     return error;
   }
 };
