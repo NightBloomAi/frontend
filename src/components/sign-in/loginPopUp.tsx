@@ -73,6 +73,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                             });
                         }
                     }
+                    console.log("passing");
                     closePopup();
                 } catch (error) {
                     console.log("Error logging in:" + error);
