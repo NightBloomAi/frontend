@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
 ];
 
 const Navbar = () => {
-    const { session, loading } = useAuthContext();
+    const { session, loading, setSignInPopUpVisible, logout } = useAuthContext();
     const { activeNav } = useNavContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [visible, setVisible] = useState(true);
@@ -63,7 +63,7 @@ const Navbar = () => {
         },
         {
             name: session?.signedIn ? "Sign Out" : "Sign In",
-            href: session?.signedIn ? "/sign-out" : "/sign-in",
+            href: session?.signedIn ? "/" : "/sign-in",
             icon: session?.signedIn ? (
                 <LogoutIcon className="h-7 w-7" />
             ) : (
@@ -165,6 +165,12 @@ const Navbar = () => {
                                         onClick={() => {
                                             toggleMenu();
                                             setWhichPage(item.name);
+                                            if (item.name == "Sign In") {
+                                                setSignInPopUpVisible(true);
+                                            }
+                                            if (item.name == "Sign Out") {
+                                                logout();
+                                            }
                                         }}
                                     />
                                 </div>
