@@ -74,16 +74,18 @@ export default function AuthContextProvider({
                             jwt: token,
                         });
                         console.log(res);
+                        console.log(token);
+                        console.log(currentUserData);
                         return res;
                     },
                 });
 
-                if (token && !currentUserData.error_message) {
+                if (!currentUserData.error_message) {
                     console.log("passing 4")
                     setSession({
                         id: currentUserData.id,
                         signedIn: true,
-                        jwt: token,
+                        jwt: currentUserData.email,
                         email: currentUserData.email,
                     });
                     console.log(session);

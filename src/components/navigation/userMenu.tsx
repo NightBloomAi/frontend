@@ -2,6 +2,8 @@
 import React, { useContext } from "react";
 import { UserIcon } from "../assets/icons";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import { styled, alpha } from "@mui/material/styles";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
@@ -152,13 +154,36 @@ export default function UserMenu() {
         />
         <MenuItem
           onClick={() => {
-            router.push("/");
+            router.push("/account-settings");
             handleClose();
           }}
           disableRipple
         >
           <SettingsOutlinedIcon />
           Account Settings
+        </MenuItem>
+        <Divider
+          sx={{ my: 0.5, backgroundColor: "rgba(208, 188, 255, 0.11)" }}
+        />
+        <MenuItem
+          onClick={() => {
+            router.push("/privacy-policy");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <ShieldOutlinedIcon />
+          Privacy Policy
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/terms-of-service");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <PlaylistAddCheckIcon />
+          Terms of Service
         </MenuItem>
         <Divider
           sx={{ my: 0.5, backgroundColor: "rgba(208, 188, 255, 0.11)" }}
