@@ -74,6 +74,8 @@ export default function AuthContextProvider({
                             jwt: token,
                         });
                         console.log(res);
+                        console.log(token);
+                        console.log(currentUserData);
                         return res;
                     },
                 });
