@@ -24,7 +24,7 @@ interface InputProps {
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
     const queryClient = useQueryClient();
     const { isDevMode } = useStageContext();
-    const { setLoginNotSignUp, session, setSession } = useAuthContext();
+    const { setLoginNotSignUp, session, setSession, googleAuth } = useAuthContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -95,7 +95,17 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
         });
     };
 
-    const handleGoogle = () => {};
+    const handleGoogle = async () => {
+        const googleURL = await googleAuth();
+        if (googleURL) {
+            console.log(googleURL?.url);
+            window.open(googleURL?.url, "_blank");
+        } else {
+            console.log(googleURL, "didnt work")
+        }
+       
+
+    } 
 
     const validate = () => {
         let result = true;
