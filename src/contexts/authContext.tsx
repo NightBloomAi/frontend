@@ -1,10 +1,12 @@
 import {
     currentUserEndpoint,
+    googleLoginEndpoint,
     logoutEndpoint,
     refreshTokenEndpoint,
 } from "@/api/nightbloomApi";
 import {
     ICurrentUserResponse,
+    IGoogleResponse,
     IJwtDecode,
     ILoginResponse,
     ILogoutResponse,
@@ -35,6 +37,7 @@ interface AuthContextType {
     loading: boolean;
     error?: any;
     logout: () => Promise<void>;
+    googleAuth: ()=> Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -46,6 +49,7 @@ const AuthContext = createContext<AuthContextType>({
     setLoginNotSignUp: () => {},
     loading: false,
     logout: async () => {},
+    googleAuth: async ()=> undefined,
 });
 
 export default function AuthContextProvider({
@@ -174,6 +178,24 @@ export default function AuthContextProvider({
         setLoading(false);
     };
 
+    const googleAuth = async () => {
+        setLoading(true);
+        try {
+            return await queryClient.fetchQuery({
+                queryKey: ["googleAuthEndpoint"],
+                queryFn: async()=> {
+                    const response: AxiosResponse =
+                    await googleLoginEndpoint();
+                    console.log(response);
+                    return response;
+                }
+            })
+        } catch (error) {
+            return error;
+        }
+        setLoading(false);
+    }
+
     useEffect(() => {
         checkJwtExp();
     }, [checkJwtExp]);
@@ -189,6 +211,7 @@ export default function AuthContextProvider({
                 setLoginNotSignUp,
                 logout,
                 loading,
+                googleAuth,
             }}
         >
             {children}

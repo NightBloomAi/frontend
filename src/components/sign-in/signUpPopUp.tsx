@@ -17,7 +17,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [verify, setVerify] = useState(false);
-    const { setLoginNotSignUp } = useAuthContext();
+    const { setLoginNotSignUp, googleAuth } = useAuthContext();
 
     const handleSignUp = async (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -35,6 +35,18 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
         });
     };
 
+    const handleGoogle = async () => {
+        const googleURL = await googleAuth();
+        if (googleURL) {
+            console.log(googleURL?.url);
+            window.open(googleURL?.url, "_blank");
+        } else {
+            console.log(googleURL, "didnt work")
+        }
+       
+
+    } 
+
     return (
         <motion.div
             onClick={(e) => e.stopPropagation()}
@@ -51,8 +63,8 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
                     className="w-full h-auto flex flex-col items-center justify-center lg:p-12 p-9 gap-y-9"
                 >
                     <div className="text-4xl font-museo pt-5">Sign Up</div>
-                    <div className="flex flex-col items-center justify-center gap-y-6">
-                        <div className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-80 md:w-96 flex justify-center items-center">
+                    <div className="flex flex-col items-center justify-center gap-y-6 cursor-pointer">
+                        <div onClick={handleGoogle} className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-80 md:w-96 flex justify-center items-center">
                             <Google />
                             <div className="pl-2">Continue With Google</div>
                         </div>
