@@ -80,12 +80,12 @@ export default function AuthContextProvider({
                     },
                 });
 
-                if (token && !currentUserData.error_message) {
+                if (!currentUserData.error_message) {
                     console.log("passing 4")
                     setSession({
                         id: currentUserData.id,
                         signedIn: true,
-                        jwt: token,
+                        jwt: currentUserData.email,
                         email: currentUserData.email,
                     });
                     console.log(session);
