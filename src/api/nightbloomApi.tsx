@@ -61,6 +61,15 @@ export const loginEndpoint = async ({
   }
 };
 
+export const googleLoginEndpoint = async()=> {
+  try {
+    const response = await base.get(`/google/login`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+
 export const logoutEndpoint = async ({ jwt }: { jwt?: string }) => {
   const headers = {
     Authorization: `Bearer ${jwt}`,
@@ -217,10 +226,11 @@ export const checkFavouritesEndpoint = async ({
     const response = await base.get(`/user_favourites/favourites/${id}`, {
       headers,
     });
-    // console.log(response.data);
     return response.data.is_favourite;
   } catch (error) {
     console.error("Error checking if post is favourite", error);
     return error;
   }
 };
+
+

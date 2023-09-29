@@ -30,3 +30,9 @@ export interface ILogoutResponse {
     success?: boolean;
     error_message?: string;
 }
+
+export interface IGoogleResponse {
+    url?: string;
+    id?: string;
+    email?: string;
+}
