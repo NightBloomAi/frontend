@@ -7,14 +7,17 @@ import LoadingSnackbar from "@/components/misc/loadingSnackbar";
 import { useAuthContext } from "@/contexts/authContext";
 import { useUserFavContext } from "@/contexts/userFavContext";
 import { Hit } from "@/types/searchRes.type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function FavouritesPage() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const { favQuery, selectedImage, setSelectedImage } = useUserFavContext();
-  const { setSignInPopUpVisible, setLoginNotSignUp } = useAuthContext();
+  const { session, setSignInPopUpVisible, setLoginNotSignUp } = useAuthContext();
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
+
+  useEffect(()=>{console.log("favquery", favQuery);}, [favQuery]);
+  
 
   const togglePopup = (image: Hit | undefined) => async () => {
     setIsFavourite(false);
@@ -36,9 +39,9 @@ function FavouritesPage() {
   /**
    * If the user is not signed in, show a message telling them to sign in
    */
-  if (favQuery?.data?.session && favQuery?.data.session?.signedIn === false) {
+  if (!session?.signedIn) {
     return (
-      <div className="flex flex-col justify-center align-middle w-full h-full">
+      <div className="flex flex-col justify-center align-middle w-full h-[calc(100vh-4rem)] items-center">
         <p className="text-center">
           Please{" "}
           <span
