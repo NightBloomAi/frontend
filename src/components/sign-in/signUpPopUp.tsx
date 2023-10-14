@@ -64,7 +64,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
                 >
                     <div className="text-4xl font-museo pt-5">Sign Up</div>
                     <div className="flex flex-col items-center justify-center gap-y-6 cursor-pointer">
-                        <div onClick={handleGoogle} className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] w-80 md:w-96 flex justify-center items-center">
+                        <div onClick={handleGoogle} className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] hover:bg-[var(--trans-light-grey)] duration-300 w-80 md:w-96 flex justify-center items-center">
                             <Google />
                             <div className="pl-2">Continue With Google</div>
                         </div>

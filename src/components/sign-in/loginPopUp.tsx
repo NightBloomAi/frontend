@@ -129,7 +129,7 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
 
                 <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
                     <div
-                        className="cursor-pointer rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] md:w-96 w-80 flex justify-center items-center"
+                        className="cursor-pointer rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] hover:bg-[var(--trans-light-grey)] duration-300 md:w-96 w-80 flex justify-center items-center"
                         onClick={handleGoogle}
                     >
                         <Google />
