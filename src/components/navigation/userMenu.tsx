@@ -136,7 +136,7 @@ export default function UserMenu() {
           {session?.email}
         </MenuItem> */}
 
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             router.push("/user-profile");
             handleClose();
@@ -151,7 +151,7 @@ export default function UserMenu() {
         </MenuItem>
         <Divider
           sx={{ my: 0.5, backgroundColor: "rgba(208, 188, 255, 0.11)" }}
-        />
+        /> */}
         <MenuItem
           onClick={() => {
             router.push("/account-settings");

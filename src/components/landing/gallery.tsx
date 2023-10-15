@@ -237,6 +237,10 @@ const filter: filterType[] = [
     displayName: "line drawing",
   },
   {
+    name: "oil_painting",
+    displayName: "oil painting"
+  },
+  {
     name: "op_art",
     displayName: "op art",
   },
