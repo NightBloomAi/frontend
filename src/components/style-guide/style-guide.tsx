@@ -9,7 +9,7 @@ export default function StyleGuide() {
   return (
     <section className="flex flex-col justify-center items-center">
       <div className="h-16"></div>
-      <div className="flex flex-col justify-center items-center my-16 gap-y-4 md:my-32 md:gap-y-8">
+      <div className="flex flex-col justify-center items-center gap-y-4 my-16 md:gap-y-8">
         <h1 className="text-4xl md:text-5xl font-museo">Style Guide</h1>
         <h2 className="text-center">
           Embrace your curiousity - Explore popular styles
@@ -83,23 +83,23 @@ export const styles: StylesType[] = [
       "Popularized in the early days of video games and is still used today as a form of nostalgia.",
   },
   {
-    name: "",
+    name: "oil_painting",
     displayName: "Oil Paint",
-    imgsrc: "",
+    imgsrc: "https://cdn.midjourney.com/d0b2d1f3-556b-4564-9790-a75db4643b8d/0_0.png",
     descript:
       "This style is favored by many artists for its versatility and ability to create fine details and soft blends.",
   },
   {
-    name: "",
+    name: "coloring_book",
     displayName: "Colouring Book",
-    imgsrc: "",
+    imgsrc: "https://cdn.midjourney.com/65cb4c99-79e2-494a-9822-644daaadbf8b/0_0.png",
     descript:
       "This style, with clean lines and charming designs, invites artists of all ages to add vibrant colors to the canvas.",
   },
   {
-    name: "",
+    name: "cinematographic",
     displayName: "Cinematographic",
-    imgsrc: "",
+    imgsrc: "https://cdn.midjourney.com/249a5f90-1eaf-4940-b999-8f8b83b0791a/0_0.png",
     descript:
       "This style captures hyper-realistic cinematic moments, emphasizing composition, lighting, and emotion to create visually captivating scenes.",
   },
