@@ -157,10 +157,10 @@ export default function ImagePopup({
                   </button>
                 </p>
                 <div className="flex items-center justify-between">
-                  {(imageInfo.category !== 'none') && (
+                  {imageInfo.category !== "none" && (
                     <Link
-                    href={`/style-guide/${imageInfo.category}`}
-                    // onClick={() => router.push(`/style-guide/${imageInfo.category}`)}
+                      href={`/style-guide/${imageInfo.category}`}
+                      // onClick={() => router.push(`/style-guide/${imageInfo.category}`)}
                       className="cursor-pointer hover:-translate-y-[2px] xl:px-4 lg:px-3 md:px-2 px-1 text-center lg:py-2 py-1 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full md:text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300 text-xs"
                     >
                       Explore Style
@@ -198,8 +198,9 @@ export default function ImagePopup({
                       <ExportIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
                     </a>
                     <a
-                      href={imageEndpointURL({
+                      href={alternateImagesURL({
                         reference_job_id: imageInfo.reference_job_id,
+                        ref: whichImage,
                       })}
                       download
                       target="blank"
