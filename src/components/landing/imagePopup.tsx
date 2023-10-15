@@ -22,6 +22,7 @@ import { useUserFavContext } from "@/contexts/userFavContext";
 import { useMutation, useQueryClient } from "react-query";
 import { useAuthContext } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ImagePopupProps {
   closePopup: () => void;
@@ -157,12 +158,13 @@ export default function ImagePopup({
                 </p>
                 <div className="flex items-center justify-between">
                   {(imageInfo.category !== 'none') && (
-                    <div
-                    onClick={() => router.push(`/style-guide/${imageInfo.category}`)}
+                    <Link
+                    href={`/style-guide/${imageInfo.category}`}
+                    // onClick={() => router.push(`/style-guide/${imageInfo.category}`)}
                       className="cursor-pointer hover:-translate-y-[2px] xl:px-4 lg:px-3 md:px-2 px-1 text-center lg:py-2 py-1 border-[var(--pink)] border-2 text-[var(--pink)] rounded-full md:text-base hover:bg-[var(--pink)] hover:text-[var(--light-grey)] duration-300 text-xs"
                     >
                       Explore Style
-                    </div>
+                    </Link>
                   )}
 
                   <div className="flex items-center justify-center xl:gap-x-4 gap-x-2">
