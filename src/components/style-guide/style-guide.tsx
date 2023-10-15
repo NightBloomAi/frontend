@@ -33,12 +33,13 @@ export default function StyleGuide() {
               />
               <div className="my-5 mx-4 text-sm">{item.descript}</div>
               <div className="w-full flex mt-auto items-center justify-end">
-                <div
-                  onClick={() => router.push(`/style-guide/${item.name}`)}
+                <Link
+                href={`/style-guide/${item.name}`}
+                  // onClick={() => router.push(`/style-guide/${item.name}`)}
                   className="rounded-full h-10 w-24 border-2 border-[var(--onDark)] flex items-center justify-center my-5 mx-4 cursor-pointer hover:bg-[var(--onDark)] text-[var(--onDark)] hover:text-[var(--lightish-grey)] hover:-translate-y-1 duration-300"
                 >
                   Explore
-                </div>
+                </Link>
               </div>
             </div>
           );
