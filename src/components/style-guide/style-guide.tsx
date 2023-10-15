@@ -21,7 +21,7 @@ export default function StyleGuide() {
           return (
             <div
               key={item.displayName}
-              className="bg-[var(--lightish-grey)] rounded-xl boxshadow w-72 h-96 flex-col flex items-start justify-start"
+              className="bg-[var(--lightish-grey)] rounded-xl boxshadow w-72 h-[24.5rem] flex-col flex items-start justify-start"
             >
               <div className="text-[var(--onDark)] my-5 mx-4 text-base">
                 {item.displayName}
@@ -31,7 +31,7 @@ export default function StyleGuide() {
                 alt={item.displayName}
                 className="w-full h-36 object-cover "
               />
-              <div className="my-5 mx-4 text-sm">{item.descript}</div>
+              <div className="mt-5 mx-4 text-sm">{item.descript}</div>
               <div className="w-full flex mt-auto items-center justify-end">
                 <Link
                 href={`/style-guide/${item.name}`}
