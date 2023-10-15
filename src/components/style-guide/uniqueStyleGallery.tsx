@@ -1,16 +1,17 @@
+"use client"
 import React, { useEffect, useState } from "react";
-import { StylesType } from "./style-guide";
+import { StylesType, styles } from "./style-guide";
 import SearchBar from "../landing/searchBar";
 import useSearch from "@/hooks/useSearch";
 import SearchResults from "../landing/searchResults";
 import StyleSearchResults from "./styleSearchResults";
 
 interface UniqueStyleGalleryProps {
-  item: StylesType | undefined;
+  // item: StylesType | undefined;
   category:  string;
 }
 
-export default function UniqueStyleGallery({ item, category }: UniqueStyleGalleryProps,) {
+export default function UniqueStyleGallery({  category }: UniqueStyleGalleryProps,) {
   const [search, setSearch] = useState("");
 
   const { data, loading, error, fetchMoreData, resetPage } = useSearch(
@@ -18,6 +19,8 @@ export default function UniqueStyleGallery({ item, category }: UniqueStyleGaller
     search,
     category
   );
+
+  const item = styles.find((style) => style.name === category);
   // const [category, setCategory] = useState("");
 
   

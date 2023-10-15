@@ -1,15 +1,15 @@
-"use client";
+
 import { styles } from "@/components/style-guide/style-guide";
 import React from "react";
 import { useParams } from "next/navigation";
 import UniqueStyleGallery from "@/components/style-guide/uniqueStyleGallery";
 
 export default function StyleGallery({ params }: { params: { slug: string } }) {
-    const name = useParams().slug;
+    const name = params.slug;
 
-    const item = styles.find((style) => style.name === name);
+    
 
-    const category = item?.name;
+    const category = name;
 
-    return <UniqueStyleGallery item={item} category={category as string} />;
+    return <UniqueStyleGallery category={category as string} />;
 }
