@@ -48,11 +48,6 @@ const Navbar = () => {
 
   const queryClient = useQueryClient();
 
-  const refreshFavs = async () => {
-    await queryClient.invalidateQueries({ queryKey: ["favourites"], refetchInactive: true, refetchActive: true });
-    
-  };
-
   const mobileNavItems: NavItem[] = [
     {
       name: "Home",
@@ -91,12 +86,7 @@ const Navbar = () => {
           label={item.name}
           onClick={async () => {
             toggleMenu;
-            if (item.name == "Favorites") {
-              await refreshFavs();
-              setWhichPage(item.name);
-            } else {
-              setWhichPage(item.name);
-            }
+            setWhichPage(item.name);
           }}
           className={
             activeNav === item.id
@@ -177,12 +167,7 @@ const Navbar = () => {
                     label={item.name}
                     onClick={async () => {
                       toggleMenu();
-                      if (item.name === "favorites") {
-                        await refreshFavs();
-                        setWhichPage(item.name);
-                      } else {
-                        setWhichPage(item.name);
-                      }
+                      setWhichPage(item.name);
 
                       if (item.name == "Sign In") {
                         setSignInPopUpVisible(true);
