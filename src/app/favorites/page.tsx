@@ -2,28 +2,33 @@
 "use client";
 
 import { imageEndpointURL } from "@/api/midjourneyApi";
+import { userFavouritesEndpoint } from "@/api/nightbloomApi";
 import ImagePopup from "@/components/landing/imagePopup";
 import LoadingSnackbar from "@/components/misc/loadingSnackbar";
 import { useAuthContext } from "@/contexts/authContext";
 import { useUserFavContext } from "@/contexts/userFavContext";
 import { Hit } from "@/types/searchRes.type";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 function FavouritesPage() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const { favQuery, selectedImage, setSelectedImage } = useUserFavContext();
-  const { session, setSignInPopUpVisible, setLoginNotSignUp } = useAuthContext();
+  const { selectedImage, setSelectedImage } = useUserFavContext();
+  const { session, setSignInPopUpVisible, setLoginNotSignUp } =
+    useAuthContext();
   const [isFavourite, setIsFavourite] = useState(false);
   const { checkFavourite } = useUserFavContext();
 
-  useEffect(()=>{console.log("favquery", favQuery);}, [favQuery]);
-  
+  const favQuery = useQuery({
+    queryKey: ["favourites"],
+    queryFn: () => userFavouritesEndpoint({ jwt: session?.jwt }),
+  });
+
 
   const togglePopup = (image: Hit | undefined) => async () => {
     setIsFavourite(false);
     setSelectedImage(image);
     if (image) {
-      console.log(selectedImage);
       const isitaFavourite = await checkFavourite({
         reference_job_id: image.reference_job_id,
       });
