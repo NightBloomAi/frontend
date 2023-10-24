@@ -42,16 +42,9 @@ function FavouritesPage() {
     };
 
     /**
-     * If the user is not signed in, show a loading snackbar until we know if they are signed in or not
-     */
-    if (session?.signedIn === undefined) {
-        return <LoadingSnackbar />;
-    }
-
-    /**
      * If the user is not signed in, show a message telling them to sign in
      */
-    if (!session.signedIn) {
+    if (!session?.signedIn) {
         return (
             <div className="flex flex-col justify-center align-middle w-full h-[calc(100vh-4rem)] items-center">
                 <p className="text-center">
