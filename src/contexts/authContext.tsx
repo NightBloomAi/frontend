@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     currentUserEndpoint,
     googleLoginEndpoint,
@@ -6,7 +7,6 @@ import {
 } from "@/api/nightbloomApi";
 import {
     ICurrentUserResponse,
-    IGoogleResponse,
     IJwtDecode,
     ILoginResponse,
     ILogoutResponse,
@@ -37,7 +37,7 @@ interface AuthContextType {
     loading: boolean;
     error?: any;
     logout: () => Promise<void>;
-    googleAuth: ()=> Promise<any>;
+    googleAuth: () => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -49,7 +49,7 @@ const AuthContext = createContext<AuthContextType>({
     setLoginNotSignUp: () => {},
     loading: false,
     logout: async () => {},
-    googleAuth: async ()=> undefined,
+    googleAuth: async () => undefined,
 });
 
 export default function AuthContextProvider({
@@ -67,23 +67,20 @@ export default function AuthContextProvider({
     useLayoutEffect(() => {
         async function fetchData() {
             try {
-                console.log("passing 1")
                 const token = Cookies.get("access_token");
-                console.log("passing 2");
                 const currentUserData = await queryClient.fetchQuery({
                     queryKey: ["currentUserEndpoint"],
                     queryFn: async () => {
-                        console.log("passing 3")
+                        console.log("passing 3");
                         const res = await currentUserEndpoint({
                             jwt: token,
                         });
-                        console.log(res);
                         return res;
                     },
                 });
 
                 if (!currentUserData.error_message) {
-                    console.log("passing 4")
+                    console.log("passing 4");
                     setSession({
                         id: currentUserData.id,
                         signedIn: true,
@@ -100,8 +97,6 @@ export default function AuthContextProvider({
 
         fetchData();
     }, [queryClient]);
-
-
 
     /**
      * Function to use refresh token to get another access token
@@ -183,18 +178,17 @@ export default function AuthContextProvider({
         try {
             return await queryClient.fetchQuery({
                 queryKey: ["googleAuthEndpoint"],
-                queryFn: async()=> {
-                    const response: AxiosResponse =
-                    await googleLoginEndpoint();
+                queryFn: async () => {
+                    const response: AxiosResponse = await googleLoginEndpoint();
                     console.log(response);
                     return response;
-                }
-            })
+                },
+            });
         } catch (error) {
             return error;
         }
         setLoading(false);
-    }
+    };
 
     useEffect(() => {
         checkJwtExp();
