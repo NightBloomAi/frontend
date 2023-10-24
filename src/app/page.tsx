@@ -1,49 +1,91 @@
 "use client";
 
-import SearchBar from "@/components/landing/searchBar";
 import SearchResults from "@/components/landing/searchResults";
 import useSearch from "@/hooks/useSearch";
-import { useDebounce } from "@/hooks/useDebounce";
 import { SelectChangeEvent } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
+import { SearchIcon } from "@/components/assets/icons";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useRef, useCallback } from "react";
 
+/**
+ * The landing page for the app that shows the search bar and the search results
+ *
+ * @returns Landing page for the app
+ */
 export default function Home() {
     const router = useRouter();
     const params = useSearchParams();
-    const searchParam = params.get("search");
-    const [search, setSearch] = useState(searchParam ?? "");
+    const searchRef = useRef<HTMLInputElement>(null);
+    const search = params.get("search") ?? "";
     const [category, setCategory] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
+    const debouncedSearchValue = useDebounce(debouncedSearch, 500);
     const { data, loading, error, fetchMoreData, resetPage } = useSearch(
         1,
         search,
         category
     );
 
+    /**
+     * Change the category state when the user selects a new category
+     */
     const changeCategory = (event: SelectChangeEvent<string>) => {
         resetPage();
         setCategory(event.target.value);
     };
 
-    const debouncedCategory = useDebounce(category, 500);
+    /**
+     * Handle the search value change by updating the debounced search value state
+     * (This will then trigger the useEffect hook below)
+     *
+     * @param event The event that triggered the search value change
+     */
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDebouncedSearch(event.target.value);
+    };
 
-    useEffect(() => {
-        setCategory(debouncedCategory);
-    }, [debouncedCategory, setCategory]);
+    /**
+     * Update the URL and fetch data when the search value changes (debounced)
+     *
+     * @param searchValue The search value to update the URL with
+     */
+    const updateURLAndFetchData = useCallback(
+        (searchValue: string) => {
+            // Convert URLSearchParams to a regular object
+            const currentParams = Array.from(params.entries()).reduce(
+                (obj, [key, value]) => {
+                    obj[key] = value;
+                    return obj;
+                },
+                {} as Record<string, string>
+            );
 
+            // Update the search parameter
+            const newSearchParams = {
+                ...currentParams, // keep the other query string parameters
+                search: searchValue,
+            };
+
+            // Create a query string and update the URL
+            const queryString = new URLSearchParams(newSearchParams).toString();
+            router.replace(`?${queryString}`);
+
+            // Reset page
+            resetPage();
+        },
+        [params, router, resetPage]
+    );
+
+    /**
+     * Fetch data when the search value changes (debounced)
+     * This will also update the URL with the new search value
+     */
     useEffect(() => {
-        try {
-            const url = new URL(window.location.href);
-            if (search === "") {
-                url.searchParams.delete("search");
-            } else {
-                url.searchParams.set("search", search);
-            }
-            router.push(url.toString());
-        } catch (e) {
-            console.error(e);
+        if (search !== debouncedSearchValue) {
+            updateURLAndFetchData(debouncedSearchValue);
         }
-    }, [router, search]);
+    }, [debouncedSearchValue, search, updateURLAndFetchData]);
 
     return (
         <section className="flex flex-col justify-center items-center">
@@ -52,11 +94,17 @@ export default function Home() {
                 <h2 className="text-center">
                     Discover your imagination - Midjourney search engine
                 </h2>
-                <SearchBar
-                    onSearch={setSearch}
-                    onSearchChange={resetPage}
-                    initialSearch={search}
-                />
+                <div className="relative mt-4">
+                    <SearchIcon />
+                    <input
+                        ref={searchRef}
+                        type="text"
+                        placeholder="Type to search"
+                        value={debouncedSearch}
+                        onChange={handleSearchChange}
+                        className="w-full py-3 pl-12 pr-40 text-[var(--pink)] rounded-full outline-none bg-[var(--trans-grey)] focus:rounded-full focus:outline-none border-2 border-transparent"
+                    />
+                </div>
             </div>
 
             <SearchResults
@@ -66,6 +114,7 @@ export default function Home() {
                 category={category}
                 setCategory={changeCategory}
                 fetchMoreData={fetchMoreData}
+                params={params}
             />
 
             <div className="my-4"></div>
