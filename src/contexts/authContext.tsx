@@ -1,11 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-    currentUserEndpoint,
-    googleLoginEndpoint,
-    logoutEndpoint,
-    refreshTokenEndpoint,
-} from "@/api/nightbloomApi";
-import {
     ICurrentUserResponse,
     IJwtDecode,
     ILoginResponse,
@@ -25,6 +19,7 @@ import { useQueryClient } from "react-query";
 import { useStageContext } from "./stageContext";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
+import Endpoints from "@/api/endpoints";
 
 interface AuthContextType {
     session?: ISession;
@@ -72,7 +67,7 @@ export default function AuthContextProvider({
                     queryKey: ["currentUserEndpoint"],
                     queryFn: async () => {
                         console.log("passing 3");
-                        const res = await currentUserEndpoint({
+                        const res = await Endpoints.currentUser({
                             jwt: token,
                         });
                         return res;
@@ -105,7 +100,7 @@ export default function AuthContextProvider({
         const res = await queryClient.fetchQuery({
             queryKey: ["currentUserEndpoint"],
             queryFn: async () =>
-                (await refreshTokenEndpoint({
+                (await Endpoints.refreshToken({
                     jwt: session?.jwt,
                 })) as ILoginResponse,
         });
@@ -157,7 +152,7 @@ export default function AuthContextProvider({
                 queryKey: ["logoutEndpoint"],
                 queryFn: async () => {
                     const { data }: AxiosResponse<ILogoutResponse> =
-                        await logoutEndpoint({
+                        await Endpoints.logout({
                             jwt: session?.jwt,
                         });
                     return data;
@@ -178,11 +173,7 @@ export default function AuthContextProvider({
         try {
             return await queryClient.fetchQuery({
                 queryKey: ["googleAuthEndpoint"],
-                queryFn: async () => {
-                    const response: AxiosResponse = await googleLoginEndpoint();
-                    console.log(response);
-                    return response;
-                },
+                queryFn: async () => await Endpoints.googleLogin(),
             });
         } catch (error) {
             return error;

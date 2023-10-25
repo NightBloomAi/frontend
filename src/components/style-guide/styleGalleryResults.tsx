@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { imageEndpointURL } from "@/api/midjourneyApi";
-import { Hit } from "@/types/searchRes.type";
-import { useEffect, useState } from "react";
+import Endpoints from "@/api/endpoints";
 import ImagePopup from "../landing/imagePopup";
+import { imageEndpointURL } from "@/api/midjourneyApi";
+import { Hit, ImageDetail } from "@/types/searchRes.type";
 import { useUserFavContext } from "@/contexts/userFavContext";
-import { useAuthContext } from "@/contexts/authContext";
 import { ReadonlyURLSearchParams, useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/authContext";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { AxiosResponse } from "axios";
 
 interface GalleryProps {
     data: Hit[];
@@ -25,6 +28,21 @@ export default function StyleGalleryResults({
     const [isFavourite, setIsFavourite] = useState(false);
     const { checkFavourite } = useUserFavContext();
     const { session } = useAuthContext();
+
+    const imageQuery = useQuery({
+        queryKey: [
+            "imageDetails",
+            params.get("imageId") ?? selectedImage.reference_job_id,
+        ],
+        queryFn: async () => {
+            const res = await Endpoints.imageDetails({
+                asset_id:
+                    params.get("imageId") ?? selectedImage.reference_job_id,
+            });
+            return res as AxiosResponse<ImageDetail>;
+        },
+        enabled: isPopupVisible,
+    });
 
     /**
      * Handles setting the image ID in the URL query parameters
@@ -66,12 +84,9 @@ export default function StyleGalleryResults({
             const isitaFavourite = await checkFavourite({
                 reference_job_id: image.reference_job_id,
             });
-            console.log(isitaFavourite);
             if (isitaFavourite === true) {
-                console.log("is a favourite");
                 setIsFavourite(true);
             } else {
-                console.log("is not a favourite");
                 setIsFavourite(false);
             }
         }
@@ -90,15 +105,24 @@ export default function StyleGalleryResults({
     useEffect(() => {
         if (params.get("imageId") !== null) {
             const imageId = params.get("imageId");
-            const selectedImage = data.find(
-                (image) => image.reference_job_id === imageId
-            );
-            if (selectedImage) {
-                setSelectedImage(selectedImage);
-                setIsPopupVisible(true);
-            }
+            const hit = {
+                reference_job_id: imageId ?? "",
+                prompt: imageQuery.data?.data.asset.prompt ?? "",
+                full_command: imageQuery.data?.data.asset.full_command ?? "",
+                height: imageQuery.data?.data.asset.height ?? 0,
+                category: imageQuery.data?.data.asset.category ?? "",
+            };
+
+            setSelectedImage(hit);
+            setIsPopupVisible(true);
         }
-    }, [data, params]);
+    }, [
+        imageQuery.data?.data.asset.category,
+        imageQuery.data?.data.asset.full_command,
+        imageQuery.data?.data.asset.height,
+        imageQuery.data?.data.asset.prompt,
+        params,
+    ]);
 
     return (
         <div className="flex flex-col gap-y-4">

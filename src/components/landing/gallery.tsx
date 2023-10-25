@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { Hit } from "@/types/searchRes.type";
+import { Hit, ImageDetail } from "@/types/searchRes.type";
 import React, { useEffect, useState } from "react";
 import ImagePopup from "./imagePopup";
+import Endpoints from "@/api/endpoints";
 import {
     FormControl,
     MenuItem,
@@ -12,6 +13,8 @@ import { imageEndpointURL } from "@/api/midjourneyApi";
 import { useUserFavContext } from "@/contexts/userFavContext";
 import { useAuthContext } from "@/contexts/authContext";
 import { ReadonlyURLSearchParams, useRouter } from "next/navigation";
+import { useQuery } from "react-query";
+import { AxiosResponse } from "axios";
 
 interface GalleryProps {
     data: Hit[];
@@ -32,6 +35,18 @@ export default function Gallery({
     const [isFavourite, setIsFavourite] = useState(false);
     const { checkFavourite } = useUserFavContext();
     const { session } = useAuthContext();
+
+    const imageQuery = useQuery({
+        queryKey: ["imageDetails", selectedImage.reference_job_id],
+        queryFn: async () => {
+            const res = await Endpoints.imageDetails({
+                asset_id:
+                    params.get("imageId") ?? selectedImage.reference_job_id,
+            });
+            return res as AxiosResponse<ImageDetail>;
+        },
+        enabled: isPopupVisible,
+    });
 
     /**
      * Handles setting the image ID in the URL query parameters
@@ -108,15 +123,25 @@ export default function Gallery({
     useEffect(() => {
         if (params.get("imageId") !== null) {
             const imageId = params.get("imageId");
-            const selectedImage = data.find(
-                (image) => image.reference_job_id === imageId
-            );
-            if (selectedImage) {
-                setSelectedImage(selectedImage);
-                setIsPopupVisible(true);
-            }
+            const hit = {
+                reference_job_id: imageId ?? "",
+                prompt: imageQuery.data?.data.asset.prompt ?? "",
+                full_command: imageQuery.data?.data.asset.full_command ?? "",
+                height: imageQuery.data?.data.asset.height ?? 0,
+                category: imageQuery.data?.data.asset.category ?? "",
+            };
+
+            setSelectedImage(hit);
+            setIsPopupVisible(true);
         }
-    }, [data, params]);
+    }, [
+        data,
+        imageQuery.data?.data.asset.category,
+        imageQuery.data?.data.asset.full_command,
+        imageQuery.data?.data.asset.height,
+        imageQuery.data?.data.asset.prompt,
+        params,
+    ]);
 
     return (
         <div className="flex flex-col gap-y-4">
