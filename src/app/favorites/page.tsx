@@ -18,7 +18,7 @@ function FavouritesPage() {
     const params = useSearchParams();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const { selectedImage, setSelectedImage } = useUserFavContext();
-    const { session, setSignInPopUpVisible, setLoginNotSignUp } =
+    const { session, setSignInPopUpVisible, setPopupContent } =
         useAuthContext();
     const [isFavourite, setIsFavourite] = useState(false);
     const { checkFavourite } = useUserFavContext();
@@ -135,7 +135,7 @@ function FavouritesPage() {
                     <span
                         onClick={() => {
                             setSignInPopUpVisible(true);
-                            setLoginNotSignUp(true);
+                            setPopupContent("login");
                         }}
                         className={`m-2 cursor-pointer text-[var(--pink)] duration-300 hover:-translate-y-1 after:absolute hover:after:w-[2.65rem] after:w-0 after:duration-300 after:h-[0.15rem] after:bg-[var(--pink)] relative after:rounded-full after:left-0 after:-bottom-1`}
                     >

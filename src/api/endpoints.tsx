@@ -81,6 +81,11 @@ class Endpoints {
         }
     };
 
+    static forgotPassword = async ({email}: {email: string}) => {
+        const response = await base.post(`/account/forgot_password`, {email: email});
+        return response?.data;
+    }
+
     /**
      * Log the user in with Google
      *

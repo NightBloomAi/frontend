@@ -15,7 +15,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [verify, setVerify] = useState(false);
-    const { setLoginNotSignUp, googleAuth } = useAuthContext();
+    const { setPopupContent, googleAuth } = useAuthContext();
 
     const handleSignUp = async (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -29,7 +29,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
                     { icon: "✉️", duration: 7000 }
                 );
                 setVerify(true);
-                setLoginNotSignUp(true);
+                setPopupContent("login");
             } else {
                 toast.error(`${data.error_message}`);
             }
@@ -127,7 +127,7 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
                             <span
                                 className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300"
                                 onClick={() => {
-                                    setLoginNotSignUp(true);
+                                    setPopupContent("login");
                                 }}
                             >
                                 Log in

@@ -10,8 +10,8 @@ export default function SignInButton() {
         session,
         signInPopUpVisible,
         setSignInPopUpVisible,
-        loginNotSignUp,
-        setLoginNotSignUp,
+        popupContent,
+        setPopupContent,
     } = useAuthContext();
     const [userMenu, setUserMenu] = useState(false);
     const [signUpOrLoginVisible, setSignUpButtonVisible] = useState(false);
@@ -42,7 +42,6 @@ export default function SignInButton() {
             {signInPopUpVisible && (
                 <SignInPopup
                     closePopup={closePopup}
-                    loginNotSignUp={loginNotSignUp}
                 />
             )}
             {session?.signedIn ? (
@@ -60,10 +59,10 @@ export default function SignInButton() {
                     <div
                         onClick={() => {
                             togglePopupVisible();
-                            setLoginNotSignUp(false);
+                            setPopupContent("register");
                         }}
                         className={`${
-                            loginNotSignUp
+                            popupContent=== "login"
                                 ? "text-[var(--lightest-grey)]"
                                 : "text-[var(--pink)]"
                         } hover:text-[var(--pink)] cursor-pointer hover:-translate-y-1 duration-300`}
@@ -74,10 +73,10 @@ export default function SignInButton() {
                     <div
                         onClick={() => {
                             togglePopupVisible();
-                            setLoginNotSignUp(true);
+                            setPopupContent("login");
                         }}
                         className={`${
-                            loginNotSignUp
+                            popupContent==="login"
                                 ? "text-[var(--pink)]"
                                 : "text-[var(--lightest-grey)]"
                         } hover:text-[var(--pink)] cursor-pointer hover:-translate-y-1 duration-300`}

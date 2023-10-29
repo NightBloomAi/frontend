@@ -26,13 +26,14 @@ interface AuthContextType {
     setSession: React.Dispatch<React.SetStateAction<ISession | undefined>>;
     signInPopUpVisible: boolean;
     setSignInPopUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    loginNotSignUp: boolean;
-    setLoginNotSignUp: React.Dispatch<React.SetStateAction<boolean>>;
+    popupContent:string;
+    setPopupContent: React.Dispatch<React.SetStateAction<string>>;
     data?: ICurrentUserResponse;
     loading: boolean;
     error?: any;
     logout: () => Promise<void>;
     googleAuth: () => Promise<any>;
+    forgotPassword: ({ email }: { email: string; }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -40,11 +41,12 @@ const AuthContext = createContext<AuthContextType>({
     setSession: () => {},
     signInPopUpVisible: false,
     setSignInPopUpVisible: () => {},
-    loginNotSignUp: true,
-    setLoginNotSignUp: () => {},
+    popupContent: "",
+    setPopupContent: () => {},
     loading: false,
     logout: async () => {},
     googleAuth: async () => undefined,
+    forgotPassword: async ()=> {},
 });
 
 export default function AuthContextProvider({
@@ -56,7 +58,7 @@ export default function AuthContextProvider({
     const { isDevMode } = useStageContext();
     const [loading, setLoading] = useState(false);
     const [signInPopUpVisible, setSignInPopUpVisible] = useState(false);
-    const [loginNotSignUp, setLoginNotSignUp] = useState(true);
+    const [popupContent, setPopupContent] = useState("login");
     const [session, setSession] = useState<ISession | undefined>(undefined);
 
     useLayoutEffect(() => {
@@ -168,6 +170,19 @@ export default function AuthContextProvider({
         setLoading(false);
     };
 
+    const forgotPassword = async ({email}: {email:string})=> {
+        setLoading(true);
+        await queryClient.fetchQuery({
+            queryKey: ["forgotPasswordEndpoint"],
+            queryFn: async ()=> {
+                const {data}: AxiosResponse = 
+                await Endpoints.forgotPassword({email: email});
+                return data;
+            },
+        })
+        setLoading(false);
+    }
+
     const googleAuth = async () => {
         setLoading(true);
         try {
@@ -192,11 +207,12 @@ export default function AuthContextProvider({
                 setSession,
                 signInPopUpVisible,
                 setSignInPopUpVisible,
-                loginNotSignUp,
-                setLoginNotSignUp,
+                popupContent,
+                setPopupContent,
                 logout,
                 loading,
                 googleAuth,
+                forgotPassword,
             }}
         >
             {children}

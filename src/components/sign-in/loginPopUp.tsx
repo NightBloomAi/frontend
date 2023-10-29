@@ -10,6 +10,7 @@ import { ILoginResponse } from "@/types/auth.type";
 import Cookies from "js-cookie";
 import LoadingSnackbar from "../misc/loadingSnackbar";
 import Endpoints from "@/api/endpoints";
+import Link from "next/link";
 
 interface LoginProps {
     closePopup: () => void;
@@ -23,7 +24,7 @@ interface InputProps {
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
     const queryClient = useQueryClient();
     const { isDevMode } = useStageContext();
-    const { setLoginNotSignUp, session, setSession, googleAuth } =
+    const { setPopupContent, session, setSession, googleAuth } =
         useAuthContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -156,18 +157,20 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                     >
                         Continue
                     </button>
-                    <div className="text-base">
+                    <div className="text-base text-center">
                         <span className="opacity-50">
                             Don&apos;t have an account?{" "}
                         </span>
                         <span
                             className="cursor-pointer text-[var(--pink)] underline-offset-2 underline opacity-60 hover:opacity-100 hover:-translate-y-2 duration-300"
                             onClick={() => {
-                                setLoginNotSignUp(false);
+                                setPopupContent("register");
                             }}
                         >
                             Sign up
                         </span>
+                        <br></br>
+                        <span onClick={()=>{setPopupContent("forgot")}} className="opacity-50 cursor-pointer underline-offset-2 underline hover:opacity-100 hover:translate-y-2 duration-300">Forgot your password?</span>
                     </div>
                 </div>
             </form>
