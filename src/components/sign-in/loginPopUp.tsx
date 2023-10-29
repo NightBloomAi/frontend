@@ -4,13 +4,12 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useAuthContext } from "../../contexts/authContext";
 import { useMutation, useQueryClient } from "react-query";
-import { AxiosError, AxiosResponse } from "axios";
-import { currentUserEndpoint, loginEndpoint } from "@/api/nightbloomApi";
+import { AxiosError } from "axios";
 import { useStageContext } from "@/contexts/stageContext";
-import { ICurrentUserResponse, ILoginResponse } from "@/types/auth.type";
-import { Snackbar } from "@mui/base";
+import { ILoginResponse } from "@/types/auth.type";
 import Cookies from "js-cookie";
 import LoadingSnackbar from "../misc/loadingSnackbar";
+import Endpoints from "@/api/endpoints";
 
 interface LoginProps {
     closePopup: () => void;
@@ -24,18 +23,18 @@ interface InputProps {
 export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
     const queryClient = useQueryClient();
     const { isDevMode } = useStageContext();
-    const { setLoginNotSignUp, session, setSession, googleAuth } = useAuthContext();
+    const { setLoginNotSignUp, session, setSession, googleAuth } =
+        useAuthContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
     const mutation = useMutation(
-        (props: InputProps) => {
-            return loginEndpoint({
+        (props: InputProps) =>
+            Endpoints.login({
                 email: props.email,
                 password: props.password,
-            });
-        },
+            }),
         {
             onMutate: () => setLoading(true),
             onSettled: () => setLoading(false),
@@ -57,12 +56,10 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
                     } else {
                         const currentUserData = await queryClient.fetchQuery({
                             queryKey: ["currentUserEndpoint"],
-                            queryFn: async () => {
-                                const res = await currentUserEndpoint({
+                            queryFn: async () =>
+                                await Endpoints.currentUser({
                                     jwt: response.access_token,
-                                });
-                                return res;
-                            },
+                                }),
                         });
                         if (!currentUserData.error_message) {
                             setSession({
@@ -101,11 +98,9 @@ export default function LoginPopUp({ closePopup }: LoginProps): JSX.Element {
             console.log(googleURL?.url);
             window.open(googleURL?.url, "_blank");
         } else {
-            console.log(googleURL, "didnt work")
+            console.log(googleURL, "didnt work");
         }
-       
-
-    } 
+    };
 
     const validate = () => {
         let result = true;

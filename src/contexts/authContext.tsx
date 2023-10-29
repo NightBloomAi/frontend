@@ -1,12 +1,6 @@
-import {
-    currentUserEndpoint,
-    googleLoginEndpoint,
-    logoutEndpoint,
-    refreshTokenEndpoint,
-} from "@/api/nightbloomApi";
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     ICurrentUserResponse,
-    IGoogleResponse,
     IJwtDecode,
     ILoginResponse,
     ILogoutResponse,
@@ -25,6 +19,7 @@ import { useQueryClient } from "react-query";
 import { useStageContext } from "./stageContext";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
+import Endpoints from "@/api/endpoints";
 
 interface AuthContextType {
     session?: ISession;
@@ -37,7 +32,7 @@ interface AuthContextType {
     loading: boolean;
     error?: any;
     logout: () => Promise<void>;
-    googleAuth: ()=> Promise<any>;
+    googleAuth: () => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -49,7 +44,7 @@ const AuthContext = createContext<AuthContextType>({
     setLoginNotSignUp: () => {},
     loading: false,
     logout: async () => {},
-    googleAuth: async ()=> undefined,
+    googleAuth: async () => undefined,
 });
 
 export default function AuthContextProvider({
@@ -67,23 +62,20 @@ export default function AuthContextProvider({
     useLayoutEffect(() => {
         async function fetchData() {
             try {
-                console.log("passing 1")
                 const token = Cookies.get("access_token");
-                console.log("passing 2");
                 const currentUserData = await queryClient.fetchQuery({
                     queryKey: ["currentUserEndpoint"],
                     queryFn: async () => {
-                        console.log("passing 3")
-                        const res = await currentUserEndpoint({
+                        console.log("passing 3");
+                        const res = await Endpoints.currentUser({
                             jwt: token,
                         });
-                        console.log(res);
                         return res;
                     },
                 });
 
                 if (!currentUserData.error_message) {
-                    console.log("passing 4")
+                    console.log("passing 4");
                     setSession({
                         id: currentUserData.id,
                         signedIn: true,
@@ -101,8 +93,6 @@ export default function AuthContextProvider({
         fetchData();
     }, [queryClient]);
 
-
-
     /**
      * Function to use refresh token to get another access token
      */
@@ -110,7 +100,7 @@ export default function AuthContextProvider({
         const res = await queryClient.fetchQuery({
             queryKey: ["currentUserEndpoint"],
             queryFn: async () =>
-                (await refreshTokenEndpoint({
+                (await Endpoints.refreshToken({
                     jwt: session?.jwt,
                 })) as ILoginResponse,
         });
@@ -162,7 +152,7 @@ export default function AuthContextProvider({
                 queryKey: ["logoutEndpoint"],
                 queryFn: async () => {
                     const { data }: AxiosResponse<ILogoutResponse> =
-                        await logoutEndpoint({
+                        await Endpoints.logout({
                             jwt: session?.jwt,
                         });
                     return data;
@@ -183,18 +173,13 @@ export default function AuthContextProvider({
         try {
             return await queryClient.fetchQuery({
                 queryKey: ["googleAuthEndpoint"],
-                queryFn: async()=> {
-                    const response: AxiosResponse =
-                    await googleLoginEndpoint();
-                    console.log(response);
-                    return response;
-                }
-            })
+                queryFn: async () => await Endpoints.googleLogin(),
+            });
         } catch (error) {
             return error;
         }
         setLoading(false);
-    }
+    };
 
     useEffect(() => {
         checkJwtExp();

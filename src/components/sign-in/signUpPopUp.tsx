@@ -1,13 +1,11 @@
 import { Google } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Verify from "./verify";
-import toast, { Toaster } from "react-hot-toast";
-import { STATUS_CODES } from "http";
+import toast from "react-hot-toast";
 import { useAuthContext } from "../../contexts/authContext";
 import Link from "next/link";
-import { JsxElement } from "typescript";
-import { registerEndpoint } from "@/api/nightbloomApi";
+import Endpoints from "@/api/endpoints";
 
 interface SignProps {
     closePopup: () => void;
@@ -24,9 +22,12 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
         let regobj = { email, password };
         console.log(regobj);
 
-        await registerEndpoint(regobj).then((data) => {
+        await Endpoints.register(regobj).then((data) => {
             if (data.error_message === undefined) {
-                toast("Registered, please click the link in your email to verify your account and continue to login.", {icon:'✉️', duration: 7000});
+                toast(
+                    "Registered, please click the link in your email to verify your account and continue to login.",
+                    { icon: "✉️", duration: 7000 }
+                );
                 setVerify(true);
                 setLoginNotSignUp(true);
             } else {
@@ -41,11 +42,9 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
             console.log(googleURL?.url);
             window.open(googleURL?.url, "_blank");
         } else {
-            console.log(googleURL, "didnt work")
+            console.log(googleURL, "didnt work");
         }
-       
-
-    } 
+    };
 
     return (
         <motion.div
@@ -64,7 +63,10 @@ export default function SignUpPopUp({ closePopup }: SignProps): JSX.Element {
                 >
                     <div className="text-4xl font-museo pt-5">Sign Up</div>
                     <div className="flex flex-col items-center justify-center gap-y-6 cursor-pointer">
-                        <div onClick={handleGoogle} className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] hover:bg-[var(--trans-light-grey)] duration-300 w-80 md:w-96 flex justify-center items-center">
+                        <div
+                            onClick={handleGoogle}
+                            className="rounded-full px-5 py-3 text-base bg-[var(--trans-grey)] hover:bg-[var(--trans-light-grey)] duration-300 w-80 md:w-96 flex justify-center items-center"
+                        >
                             <Google />
                             <div className="pl-2">Continue With Google</div>
                         </div>

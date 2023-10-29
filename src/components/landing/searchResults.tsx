@@ -1,11 +1,21 @@
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingSkeleton from "../misc/loadingSkeleton";
 import ErrorMsg from "../misc/error";
 import Loading from "../misc/loading";
 import Gallery from "./gallery";
 import { Hit } from "@/types/searchRes.type";
-import { ChangeEvent } from "react";
-import LoadingSkeleton from "../misc/loadingSkeleton";
-import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
+import { ReadonlyURLSearchParams } from "next/navigation";
+
+interface Props {
+    data: Hit[] | undefined;
+    loading: boolean;
+    error: any;
+    category: string;
+    setCategory: (event: SelectChangeEvent<string>) => void;
+    fetchMoreData: () => void;
+    params: ReadonlyURLSearchParams;
+}
 
 function SearchResults({
     data,
@@ -14,14 +24,8 @@ function SearchResults({
     category,
     setCategory,
     fetchMoreData,
-}: {
-    data: Hit[] | undefined;
-    loading: boolean;
-    error: any;
-    category: string;
-    setCategory: (event: SelectChangeEvent<string>) => void;
-    fetchMoreData: () => void;
-}): JSX.Element {
+    params,
+}: Props): JSX.Element {
     if (loading) return <LoadingSkeleton />;
     if (error || !data) return <ErrorMsg error={error} />;
 
@@ -38,6 +42,7 @@ function SearchResults({
                 data={data}
                 category={category}
                 setCategory={setCategory}
+                params={params}
             />
         </InfiniteScroll>
     );

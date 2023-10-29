@@ -1,4 +1,4 @@
-import { searchEndpoint } from "@/api/nightbloomApi";
+import Endpoints from "@/api/endpoints";
 import { Hit } from "@/types/searchRes.type";
 import { useReducer, useRef, useEffect } from "react";
 
@@ -40,7 +40,7 @@ const useSearch = (initialPage: number, search: string, category: string) => {
         const fetchData = async () => {
             dispatch({ type: "LOADING" });
             try {
-                const res = await searchEndpoint({
+                const res = await Endpoints.search({
                     page: pageRef.current,
                     query: search,
                     category,
@@ -56,7 +56,7 @@ const useSearch = (initialPage: number, search: string, category: string) => {
     const fetchMoreData = async () => {
         pageRef.current++;
         try {
-            const res = await searchEndpoint({
+            const res = await Endpoints.search({
                 page: pageRef.current,
                 query: search,
                 category,
