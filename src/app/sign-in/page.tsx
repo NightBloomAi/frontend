@@ -8,7 +8,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
-    const { loginNotSignUp, setSignInPopUpVisible, signInPopUpVisible } = useAuthContext();
+    const { popupContent, setSignInPopUpVisible, signInPopUpVisible } = useAuthContext();
     const router = useRouter();
     const isTablet = useMediaQuery("(max-width: 768px)");
 
@@ -25,7 +25,7 @@ export default function SignInPage() {
 
     return (
         <div className="fixed top-0 bottom-0 left-0 right-0">
-            {signInPopUpVisible && (loginNotSignUp ? (
+            {signInPopUpVisible && (popupContent==="login" ? (
                 <LoginPopUp closePopup={closePopup} />
             ) : (
                 <SignUpPopUp closePopup={closePopup} />
