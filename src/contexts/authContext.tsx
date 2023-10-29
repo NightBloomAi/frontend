@@ -34,6 +34,7 @@ interface AuthContextType {
     logout: () => Promise<void>;
     googleAuth: () => Promise<any>;
     forgotPassword: ({ email }: { email: string; }) => Promise<void>;
+    resetPassword: ({password, otp}: {password: string, otp: string})=> Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -47,7 +48,9 @@ const AuthContext = createContext<AuthContextType>({
     logout: async () => {},
     googleAuth: async () => undefined,
     forgotPassword: async ()=> {},
+    resetPassword: async ()=>{},
 });
+
 
 export default function AuthContextProvider({
     children,
@@ -183,6 +186,19 @@ export default function AuthContextProvider({
         setLoading(false);
     }
 
+    const resetPassword = async ({password, otp}: {password: string, otp:string})=> {
+        setLoading(true);
+        await queryClient.fetchQuery({
+            queryKey: ["resetPasswordEndpoint"],
+            queryFn: async ()=> {
+                const {data}: AxiosResponse = 
+                await Endpoints.resetPassword({password: password, otp: otp});
+                return data;
+            }
+        })
+
+    }
+
     const googleAuth = async () => {
         setLoading(true);
         try {
@@ -213,6 +229,7 @@ export default function AuthContextProvider({
                 loading,
                 googleAuth,
                 forgotPassword,
+                resetPassword,
             }}
         >
             {children}
