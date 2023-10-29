@@ -4,16 +4,20 @@ import React from "react";
 import SignUpPopUp from "./signUpPopUp";
 import LoginPopUp from "./loginPopUp";
 import Link from "next/link";
+import { useAuthContext } from "@/contexts/authContext";
+import ForgotPasswordPopup from "./forgotPasswordPopup";
 
 interface SignInPopupProps {
     closePopup: () => void;
-    loginNotSignUp: boolean;
+   
 }
 
 export default function SignInPopup({
     closePopup,
-    loginNotSignUp,
+   
 }: SignInPopupProps): JSX.Element {
+    const {popupContent}= useAuthContext();
+
     return (
         <>
             <div
@@ -29,11 +33,10 @@ export default function SignInPopup({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
             >
-                {loginNotSignUp ? (
-                    <LoginPopUp closePopup={closePopup} />
-                ) : (
-                    <SignUpPopUp closePopup={closePopup} />
-                )}
+
+                {popupContent=== "login" &&  <LoginPopUp closePopup={closePopup} />};
+                {popupContent==="register" && <SignUpPopUp closePopup={closePopup} />}
+                {popupContent==="forgot" && <ForgotPasswordPopup/>}
             </motion.div>
         </>
     );
