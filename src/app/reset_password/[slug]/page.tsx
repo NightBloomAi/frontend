@@ -3,8 +3,10 @@ import ResetPassword from "@/components/sign-in/resetPassword";
 import React from "react";
 import { useParams } from "next/navigation";
 
-export default function ResetPasswordPage() {
-    const params = useParams();
+export const dynamicParams = true;
+
+export default function ResetPasswordPage({params}: {params: {slug: string}}) {
+    // const params = useParams();
   const otp = params.slug;
 
   
