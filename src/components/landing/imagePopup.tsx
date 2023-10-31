@@ -18,7 +18,8 @@ import { faCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import OpenWithIcon from '@mui/icons-material/OpenWith';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import OpenWithIcon from "@mui/icons-material/OpenWith";
 import StyleIcon from "@mui/icons-material/Style";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { useUserFavContext } from "@/contexts/userFavContext";
@@ -41,10 +42,19 @@ export default function ImagePopup({
   isFavourite,
   setIsFavourite,
 }: ImagePopupProps): JSX.Element {
-  const [copied, setCopied] = useState(false);
+  
   const onCopy = React.useCallback(() => {
-    setCopied(true);
+    setActions({...actions, copied:true});
   }, []);
+
+  const onShare = React.useCallback(() => {
+    setActions({...actions, shared:true});
+  }, []);
+  const [actions, setActions] = useState({
+    copied: false,
+    shared: false,
+    downloaded: false,
+  });
   const [showMore, setShowMore] = useState(false);
   const [whichImage, setWhichImage] = useState(0);
   const { createFavourite, checkFavourite, favQuery, removeFavourite } =
@@ -119,7 +129,13 @@ export default function ImagePopup({
       <motion.div
         onClick={() => {
           closePopup();
-          setCopied(false);
+
+          setActions({
+            ...actions,
+            copied: false,
+            shared: false,
+            downloaded: false,
+          });
         }}
         className="fixed top-0 bottom-0 left-0 right-0 z-50 flex justify-center items-center"
         initial={{ opacity: 0 }}
@@ -138,7 +154,13 @@ export default function ImagePopup({
               className="sm:hidden block -order-2 self-start pl-2 -my-4"
               onClick={() => {
                 closePopup();
-                setCopied(false);
+
+                setActions({
+                  ...actions,
+                  copied: false,
+                  shared: false,
+                  downloaded: false,
+                });
               }}
             >
               <ChevronLeftIcon />
@@ -175,7 +197,7 @@ export default function ImagePopup({
                     <CopyToClipboard onCopy={onCopy} text={imageInfo.prompt}>
                       <motion.a
                         className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
-                          copied
+                          actions.copied
                             ? 'before:content-["copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
                             : 'before:content-["copy_prompt?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
                         } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
@@ -189,20 +211,22 @@ export default function ImagePopup({
                         }}
                       >
                         <CopyIcon
-                          className={`h-[0.9rem] ${
-                            copied ? "fill-[var(--pink)]" : "fill-[--onDark]"
+                          className={`h-[0.9rem] group-hover:fill-[var(--pink)] duration-300 ${
+                            actions.copied
+                              ? "fill-[var(--pink)]"
+                              : "fill-[--onDark]"
                           }`}
                         />
                       </motion.a>
                     </CopyToClipboard>
 
                     <CopyToClipboard
-                      onCopy={onCopy}
+                      onCopy={onShare}
                       text={window.location.href}
                     >
                       <motion.a
                         className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
-                          copied
+                          actions.shared
                             ? 'before:content-["link_copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
                             : 'before:content-["share_link?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
                         } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
@@ -215,22 +239,44 @@ export default function ImagePopup({
                           damping: 17,
                         }}
                       >
-                        <ExportIcon className="h-[0.9rem] group-hover:fill-[var(--pink)] duration-300" />
+                        <ExportIcon className={`h-[0.9rem] group-hover:fill-[var(--pink)] duration-300 ${
+                            actions.shared
+                              ? "fill-[var(--pink)]"
+                              : "fill-[--onDark]"
+                          }`} />
                       </motion.a>
                     </CopyToClipboard>
-                    <a
+                    <motion.a
                       href={alternateImagesURL({
                         reference_job_id: imageInfo.reference_job_id,
                         ref: whichImage,
                       })}
                       download
                       target="blank"
+                      onClick={() => {
+                        setActions({ ...actions, downloaded: true });
+                      }}
+                      className={`group text-center flex items-center justify-center cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
+                        actions.downloaded
+                          ? 'before:content-["downloaded!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
+                          : 'before:content-["download?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
+                      } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        duration: 0.1,
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
-                      <FontAwesomeIcon
-                        icon={faCircleDown}
-                        className="h-4 hover:-translate-y-[2px] text-[var(--onDark)] sm:h-5 text-center align-text-bottom hover:text-[var(--pink)] duration-300"
-                      />
-                    </a>
+                      <FontAwesomeIcon icon={faCircleDown}
+                        className={`h-5 group-hover:text-[var(--pink)] duration-300 text-center ${
+                            actions.downloaded
+                              ? "fill-[var(--pink)]"
+                              : "fill-[--onDark]"
+                          }`}/>
+                    </motion.a>
 
                     <motion.a
                       onClick={handleFavourite}
