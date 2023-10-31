@@ -17,7 +17,7 @@ interface IUserFavContext {
     favQuery: UseQueryResult<any, unknown> | undefined;
     selectedImage: Hit | undefined;
     setSelectedImage: React.Dispatch<React.SetStateAction<Hit | undefined>>;
-    createFavourite: ({ imageIDs }: { imageIDs: string[] }) => Promise<void>;
+    createFavourite: ({ imageIDs, variant }: { imageIDs: string[], variant: string }) => Promise<void>;
     checkFavourite: ({
         reference_job_id,
     }: {
@@ -62,7 +62,7 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
         }
     );
 
-    const createFavourite = async ({ imageIDs }: { imageIDs: string[] }) => {
+    const createFavourite = async ({ imageIDs, variant }: { imageIDs: string[], variant: string }) => {
         try {
             await queryClient.fetchQuery({
                 queryKey: ["createFavouriteEndpoint"],
@@ -71,6 +71,7 @@ const UserFavProvider = ({ children }: { children: ReactNode }) => {
                         await Endpoints.createFavourite({
                             ids: imageIDs,
                             jwt: Cookies.get("access_token"),
+                            variant: variant,
                         });
                     return response;
                 },

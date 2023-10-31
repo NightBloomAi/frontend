@@ -2,7 +2,7 @@
 "use client";
 
 import Endpoints from "@/api/endpoints";
-import { imageEndpointURL } from "@/api/midjourneyApi";
+import { alternateImagesURL, imageEndpointURL } from "@/api/midjourneyApi";
 import ImagePopup from "@/components/landing/imagePopup";
 import LoadingSnackbar from "@/components/misc/loadingSnackbar";
 import { useAuthContext } from "@/contexts/authContext";
@@ -18,6 +18,7 @@ function FavouritesPage() {
     const params = useSearchParams();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const { selectedImage, setSelectedImage } = useUserFavContext();
+    const [variant, setVariant]= useState(0);
     const { session, setSignInPopUpVisible, setPopupContent } =
         useAuthContext();
     const [isFavourite, setIsFavourite] = useState(false);
@@ -46,12 +47,14 @@ function FavouritesPage() {
         enabled: isPopupVisible,
     });
 
-    const sortedFavourites = (favQuery: FavImageDetail[]) => {
-      return favQuery.sort(function (a:FavImageDetail, b:FavImageDetail) {
-        return a.favourited_at_unix - b.favourited_at_unix;
-      })
-    }
 
+    /**
+     * compares the unix property of 2 objects. 
+     * used as a comparison function to sort an array of FavImageDetail objects in descending order of their favourited_at_unix values
+     * @param a the first object to be compared
+     * @param b the second object to be compared
+     * @returns positive number if b favourited after a causing b to be sorted before a, negative number if a favourited after b causing a to be sorted before b
+     */
     const compareTimes = (a:FavImageDetail, b:FavImageDetail) => {
       return b.favourited_at_unix - a.favourited_at_unix;
     }
@@ -88,9 +91,10 @@ function FavouritesPage() {
         router.replace(`/favorites/?${queryString}`);
     };
 
-    const togglePopup = (image: Hit | undefined) => async () => {
+    const togglePopup = (image: Hit | undefined, whichVariant: number) => async () => {
         setIsFavourite(false);
         setSelectedImage(image);
+        setVariant(whichVariant);
         if (image) {
             handleSetQueryParams(image.reference_job_id);
             const isitaFavourite = await checkFavourite({
@@ -181,12 +185,12 @@ function FavouritesPage() {
                             <div
                                 key={asset.reference_job_id}
                                 className="object-cover w-full overflow-hidden cursor-pointer rounded"
-                                onClick={togglePopup(asset)}
+                                onClick={togglePopup(asset, +asset.variant)}
                             >
                                 <img
-                                    src={imageEndpointURL({
+                                    src={alternateImagesURL({
                                         reference_job_id:
-                                            asset.reference_job_id,
+                                            asset.reference_job_id, ref: asset.variant,
                                     })}
                                     alt={asset.reference_job_id}
                                     className="object-cover h-full w-full duration-500 hover:scale-110"
@@ -197,10 +201,11 @@ function FavouritesPage() {
                 )}
                 {selectedImage && isPopupVisible && (
                     <ImagePopup
-                        closePopup={togglePopup(undefined)}
+                        closePopup={togglePopup(undefined, 0)}
                         imageInfo={selectedImage}
                         isFavourite={isFavourite}
                         setIsFavourite={setIsFavourite}
+                        favouriteVariant={variant}
                     />
                 )}
             </div>
