@@ -1,3 +1,4 @@
+"use client"
 import ResetPassword from "@/components/sign-in/resetPassword";
 import React from "react";
 import { useParams } from "next/navigation";
