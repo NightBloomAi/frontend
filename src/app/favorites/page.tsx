@@ -7,7 +7,7 @@ import ImagePopup from "@/components/landing/imagePopup";
 import LoadingSnackbar from "@/components/misc/loadingSnackbar";
 import { useAuthContext } from "@/contexts/authContext";
 import { useUserFavContext } from "@/contexts/userFavContext";
-import { Hit, ImageDetail } from "@/types/searchRes.type";
+import { FavImageDetail, Hit, ImageDetail } from "@/types/searchRes.type";
 import { AxiosResponse } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -45,6 +45,16 @@ function FavouritesPage() {
         },
         enabled: isPopupVisible,
     });
+
+    const sortedFavourites = (favQuery: FavImageDetail[]) => {
+      return favQuery.sort(function (a:FavImageDetail, b:FavImageDetail) {
+        return a.favourited_at_unix - b.favourited_at_unix;
+      })
+    }
+
+    const compareTimes = (a:FavImageDetail, b:FavImageDetail) => {
+      return b.favourited_at_unix - a.favourited_at_unix;
+    }
 
     /**
      * Handles setting the image ID in the URL query parameters
@@ -167,7 +177,7 @@ function FavouritesPage() {
                 )}
                 {favQuery?.data && (
                     <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                        {favQuery?.data.assets.map((asset: any) => (
+                        {favQuery?.data.assets.sort(compareTimes).map((asset: any) => (
                             <div
                                 key={asset.reference_job_id}
                                 className="object-cover w-full overflow-hidden cursor-pointer rounded"
