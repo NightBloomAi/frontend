@@ -111,6 +111,8 @@ export default function StyleGalleryResults({
                 full_command: imageQuery.data?.data.asset.full_command ?? "",
                 height: imageQuery.data?.data.asset.height ?? 0,
                 category: imageQuery.data?.data.asset.category ?? "",
+                generation_time: imageQuery.data?.data.asset.generation_time ?? "",
+                width: imageQuery.data?.data.asset.width ?? 0,
             };
 
             setSelectedImage(hit);
