@@ -1,3 +1,4 @@
+"use client"
 /* eslint-disable @next/next/no-img-element */
 import { Hit, ImageDetail } from "@/types/searchRes.type";
 import React, { useEffect, useState } from "react";
@@ -77,7 +78,8 @@ export default function Gallery({
             queryString.delete("imageId");
         }
 
-        router.replace(`?${queryString}`);
+        
+        router.push(`?${queryString}`, { scroll: false } as any)
     };
 
     /**
