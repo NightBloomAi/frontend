@@ -6,11 +6,13 @@ type State = {
     data: Hit[] | undefined;
     loading: boolean;
     error: string | null;
+    moreData: boolean;
 };
 
 type Action =
     | { type: "LOAD"; payload: Hit[] }
     | { type: "ERROR"; payload: string }
+    | {type: "FINISHEDDATA"}
     | { type: "LOADING" };
 
 function reducer(state: State, action: Action): State {
@@ -21,6 +23,8 @@ function reducer(state: State, action: Action): State {
             return { ...state, loading: false, error: action.payload };
         case "LOADING":
             return { ...state, loading: true };
+        case "FINISHEDDATA":
+            return {...state, loading: false, moreData: false}
         default:
             return state;
     }
@@ -31,9 +35,10 @@ const useSearch = (initialPage: number, search: string, category: string) => {
         data: undefined,
         loading: true,
         error: null,
+        moreData: true,
     });
 
-    const { data, loading, error } = state;
+    const { data, loading, error, moreData } = state;
     const pageRef = useRef(initialPage);
 
     useEffect(() => {
@@ -45,7 +50,8 @@ const useSearch = (initialPage: number, search: string, category: string) => {
                     query: search,
                     category,
                 });
-                dispatch({ type: "LOAD", payload: res.hits });
+                    dispatch({ type: "LOAD", payload: res.hits });
+
             } catch (error: any) {
                 dispatch({ type: "ERROR", payload: error.message });
             }
@@ -61,6 +67,9 @@ const useSearch = (initialPage: number, search: string, category: string) => {
                 query: search,
                 category,
             });
+            if (res.hits.length=== 0) {
+                dispatch({type:"FINISHEDDATA"})
+            }
             if (data) {
                 dispatch({ type: "LOAD", payload: data.concat(res.hits) });
             }
@@ -73,7 +82,7 @@ const useSearch = (initialPage: number, search: string, category: string) => {
         pageRef.current = 1;
     };
 
-    return { data, loading, error, fetchMoreData, resetPage };
+    return { moreData, data, loading, error, fetchMoreData, resetPage };
 };
 
 export default useSearch;

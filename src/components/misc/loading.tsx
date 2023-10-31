@@ -12,5 +12,6 @@ export default function Loading() {
         >
             <CircularProgress size={60} sx={{ m: 2 }} />
         </Box>
+        
     );
 }
