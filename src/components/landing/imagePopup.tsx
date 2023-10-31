@@ -34,6 +34,7 @@ interface ImagePopupProps {
   imageInfo: Hit;
   isFavourite: boolean;
   setIsFavourite: React.Dispatch<React.SetStateAction<boolean>>;
+  favouriteVariant?: number;
 }
 
 export default function ImagePopup({
@@ -41,6 +42,7 @@ export default function ImagePopup({
   imageInfo,
   isFavourite,
   setIsFavourite,
+  favouriteVariant,
 }: ImagePopupProps): JSX.Element {
   
   const onCopy = React.useCallback(() => {
@@ -56,7 +58,7 @@ export default function ImagePopup({
     downloaded: false,
   });
   const [showMore, setShowMore] = useState(false);
-  const [whichImage, setWhichImage] = useState(0);
+  const [whichImage, setWhichImage] = useState(favouriteVariant ?? 0);
   const { createFavourite, checkFavourite, favQuery, removeFavourite } =
     useUserFavContext();
   const { session, setSignInPopUpVisible } = useAuthContext();
@@ -65,8 +67,8 @@ export default function ImagePopup({
   const queryClient = useQueryClient();
 
   const addFavouriteMutation = useMutation(
-    async (imageid: string) => {
-      await createFavourite({ imageIDs: [imageid] });
+    async ({imageid,variant}:{imageid: string, variant: string}) => {
+      await createFavourite({ imageIDs: [imageid], variant: variant });
       await queryClient.invalidateQueries({ queryKey: ["favourites"] });
 
       const isitaFavourite = await checkFavourite({
@@ -115,7 +117,7 @@ export default function ImagePopup({
     if (isFavourite) {
       removeFavouriteMutation.mutate(imageInfo.reference_job_id);
     } else {
-      addFavouriteMutation.mutate(imageInfo.reference_job_id);
+      addFavouriteMutation.mutate({imageid: imageInfo.reference_job_id, variant:whichImage.toString()} );
     }
   };
 

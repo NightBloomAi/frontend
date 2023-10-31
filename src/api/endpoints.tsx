@@ -245,12 +245,15 @@ class Endpoints {
   static createFavourite = async ({
     ids,
     jwt,
+    variant,
   }: {
     ids: string[];
     jwt?: string;
+    variant: string;
   }) => {
     const payload = {
       ids: ids,
+      variant: variant,
     };
     const headers = {
       Authorization: `Bearer ${jwt}`,
