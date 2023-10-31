@@ -4,6 +4,8 @@ type SearchRes = {
 };
 
 type Hit = {
+    width: any;
+    generation_time: string;
     reference_job_id: string;
     prompt: string;
     full_command: string;
