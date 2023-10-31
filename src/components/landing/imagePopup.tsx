@@ -47,6 +47,11 @@ export default function ImagePopup({
         useUserFavContext();
     const { session, setSignInPopUpVisible } = useAuthContext();
     const router = useRouter();
+    const [shareLink, setShareLink]= useState({
+        value: router,
+        copied: false,
+    })
+    
 
     const queryClient = useQueryClient();
 
@@ -209,8 +214,8 @@ export default function ImagePopup({
                                             <motion.a
                                                 className={`group cursor-pointer relative hover:before:block before:hidden before:text-center before:text-[var(--light-grey)] before:text-[0.5rem] before:rounded-sm before:absolute before:bottom-full before:left-[calc(50%-2rem)] before:mb-2 before:w-16 before:px-1 ${
                                                     copied
-                                                        ? 'before:content-["copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
-                                                        : 'before:content-["copy_prompt?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
+                                                        ? 'before:content-["link_copied!"] before:bg-[var(--pink)] after:border-t-[var(--pink)]'
+                                                        : 'before:content-["share_link?"] before:bg-[var(--onDark)] after:border-t-[var(--onDark)]'
                                                 } after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-[6px] after:-mb-[0.15rem] after:border-transparent hover:after:block after:hidden`}
                                                 whileHover={{ scale: 1.2 }}
                                                 whileTap={{ scale: 0.9 }}
