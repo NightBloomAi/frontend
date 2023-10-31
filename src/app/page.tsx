@@ -21,7 +21,7 @@ export default function Home() {
     const [category, setCategory] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState(search);
     const debouncedSearchValue = useDebounce(debouncedSearch, 500);
-    const { data, loading, error, fetchMoreData, resetPage } = useSearch(
+    const { moreData, data, loading, error, fetchMoreData, resetPage } = useSearch(
         1,
         search,
         category
@@ -114,6 +114,7 @@ export default function Home() {
                 category={category}
                 setCategory={changeCategory}
                 fetchMoreData={fetchMoreData}
+                moreData={moreData}
                 params={params}
             />
 

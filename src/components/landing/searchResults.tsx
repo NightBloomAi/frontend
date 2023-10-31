@@ -14,6 +14,7 @@ interface Props {
     category: string;
     setCategory: (event: SelectChangeEvent<string>) => void;
     fetchMoreData: () => void;
+    moreData: boolean;
     params: ReadonlyURLSearchParams;
 }
 
@@ -24,6 +25,7 @@ function SearchResults({
     category,
     setCategory,
     fetchMoreData,
+    moreData,
     params,
 }: Props): JSX.Element {
     if (loading) return <LoadingSkeleton />;
@@ -33,9 +35,15 @@ function SearchResults({
         <InfiniteScroll
             dataLength={data.length}
             next={fetchMoreData}
-            hasMore={true}
+            hasMore={moreData}
             loader={<Loading />}
-            endMessage={<p>No more data to load.</p>}
+            endMessage={<div>
+                <div className="w-full flex justify-center items-center">
+                  <div className="text-center">
+                    <h1 className="text-4xl font-museo mt-7">No more results</h1>
+                  </div>
+                </div>
+              </div>}
             style={{ height: "auto", overflow: "visible" }}
         >
             <Gallery
