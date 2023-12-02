@@ -33,6 +33,7 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Views } from "@/models/view.models";
 import { Logout } from "@mui/icons-material";
+import UserMenu from "./UserMenu";
 
 type Props = {
     children: React.ReactNode;
