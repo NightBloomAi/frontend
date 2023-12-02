@@ -22,8 +22,6 @@ import { useAuthContext } from "@/context/auth.context";
 import { useNavContext } from "@/context/nav.context";
 import { updateQuery } from "@/utils/helperFunctions";
 import { useRouter } from "next/router";
-import { Logout } from "@mui/icons-material";
-import { Views } from "@/models/view.models";
 import MenuIcon from "@mui/icons-material/Menu";
 import SignInDialog from "../auth/SignInDialog";
 import SignUpDialog from "../auth/SignUpDialog";
@@ -33,7 +31,8 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import UserMenu from "@/components/navigation/UserMenu";
+import { Views } from "@/models/view.models";
+import { Logout } from "@mui/icons-material";
 
 type Props = {
     children: React.ReactNode;
