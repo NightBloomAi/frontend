@@ -1,29 +1,28 @@
-import type { ImageDetail } from "@/models/search.models";
 import ImageComponent from "../gallery/ImageComponent";
-import Endpoints from "@/services/endpoints";
 import React, { useState } from "react";
 import { useThemeContext } from "@/context/theme.context";
 import { Dialog, Link, Typography } from "@mui/material";
 import { updateQuery } from "@/utils/helperFunctions";
 import { Box, Stack } from "@mui/system";
 import { useQuery } from "react-query";
-import { AxiosResponse } from "axios";
+import { API_CLIENT } from "@/services/ApiClient";
 
 type Props = {
     imageId: string;
     variant?: string;
+    route?: string;
 };
 
-const ImagePopup: React.FC<Props> = ({ imageId, variant }) => {
+const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
     const { theme } = useThemeContext();
     const [showMore, setShowMore] = useState(false);
 
     const imageQuery = useQuery({
         queryKey: ["imageDetails", imageId],
         queryFn: async () =>
-            (await Endpoints.imageDetails({
+            await API_CLIENT.imageDetails({
                 asset_id: imageId,
-            })) as AxiosResponse<ImageDetail>,
+            }),
         enabled: imageId !== "",
     });
 
@@ -31,7 +30,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant }) => {
      * Resets currently opened image
      */
     const closeImagePopup = () => {
-        updateQuery({ imageId: undefined, variant: undefined });
+        updateQuery({ imageId: undefined, variant: undefined }, route);
     };
 
     return (
@@ -135,18 +134,28 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant }) => {
                                         }
                                         onClick={() => {
                                             if (index <= 3) {
-                                                updateQuery({
-                                                    variant:
-                                                        "0_" + index.toString(),
-                                                });
+                                                updateQuery(
+                                                    {
+                                                        variant:
+                                                            "0_" +
+                                                            index.toString(),
+                                                    },
+                                                    route
+                                                );
                                             } else if (index === 4) {
-                                                updateQuery({
-                                                    variant: "grid_0",
-                                                });
+                                                updateQuery(
+                                                    {
+                                                        variant: "grid_0",
+                                                    },
+                                                    route
+                                                );
                                             } else {
-                                                updateQuery({
-                                                    variant: "0_0",
-                                                });
+                                                updateQuery(
+                                                    {
+                                                        variant: "0_0",
+                                                    },
+                                                    route
+                                                );
                                             }
                                         }}
                                     />

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import Skeleton from "@mui/material/Skeleton";
-import Endpoints from "@/services/endpoints";
+import { API_CLIENT } from "@/services/ApiClient";
 
 type Props = {
     reference_job_id?: string;
@@ -25,7 +25,7 @@ const ImageComponent: React.FC<Props> = ({
     // Image URL
     const imageUrl = fullImagePath
         ? fullImagePath
-        : Endpoints.imageEndpointURL({
+        : API_CLIENT.imageEndpointURL({
               reference_job_id: reference_job_id ?? "",
               variant: variant,
               infiniteScroll: infiniteScroll,

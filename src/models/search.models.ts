@@ -3,6 +3,10 @@ type SearchRes = {
     page: number;
 };
 
+type CategoriesRes = {
+    categories: string[]
+}
+
 type Hit = {
     width: any;
     generation_time: string;
@@ -13,7 +17,7 @@ type Hit = {
     category: string;
 };
 
-type ImageDetail = {
+type ImageDetailRes = {
     asset: {
         category: string;
         full_command: string;
@@ -45,4 +49,9 @@ type FavImageDetail = {
     favourited_at_unix: number;
 };
 
-export type { SearchRes, Hit, ImageDetail, FavImageDetail };
+type FavImageDetailRes = {
+    assets: FavImageDetail[];
+    source: string;
+};
+
+export type { SearchRes, Hit, ImageDetailRes, FavImageDetail, CategoriesRes, FavImageDetailRes };

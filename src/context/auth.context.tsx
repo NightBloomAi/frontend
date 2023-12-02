@@ -2,16 +2,9 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import {
     CurrentSessionResponse,
     DecodedJwt,
-    SignInResponse,
     UserSession,
 } from "@/models/auth.models";
-import {
-    useMutation,
-    UseMutationResult,
-    useQuery,
-    useQueryClient,
-} from "react-query";
-import Endpoints from "@/services/endpoints";
+import { useMutation, UseMutationResult, useQuery } from "react-query";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { AxiosError, AxiosResponse } from "axios";
@@ -21,6 +14,7 @@ import { updateQuery } from "@/utils/helperFunctions";
 import { Views } from "@/models/view.models";
 import { useRouter } from "next/router";
 import EmailIcon from "@mui/icons-material/Email";
+import { API_CLIENT } from "@/services/ApiClient";
 
 /******************************************************************************
     INTERFACES
@@ -90,10 +84,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const accessToken = isDevMode
                 ? Cookies.get("access_token")
                 : undefined;
+            API_CLIENT.setJwt(accessToken ?? "");
 
-            return (await Endpoints.currentUser({
-                jwt: accessToken,
-            })) as AxiosResponse<CurrentSessionResponse>;
+            return (await API_CLIENT.currentUser()) as AxiosResponse<CurrentSessionResponse>;
         },
         onSettled: () => setIsLoading(false),
         onSuccess: async (res) => {
@@ -127,10 +120,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationKey: ["signIn"],
         mutationFn: async (input: { email: string; password: string }) => {
             setIsLoading(true);
-            return (await Endpoints.login({
-                email: input.email,
-                password: input.password,
-            })) as AxiosResponse<SignInResponse>;
+            return await API_CLIENT.login(input);
         },
         onSettled: () => setIsLoading(false),
         onSuccess: async (res) => {
@@ -154,7 +144,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationKey: ["signInWithGoogle"],
         mutationFn: async () => {
             setIsLoading(true);
-            return await Endpoints.googleLogin();
+            return await API_CLIENT.googleLogin();
         },
         onSettled: () => setIsLoading(false),
         onSuccess: async (res) => {
@@ -174,9 +164,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationFn: async () => {
             setIsLoading(true);
             if (isDevMode) return;
-            return await Endpoints.logout({
-                jwt: userSession?.jwt,
-            });
+            return await API_CLIENT.logout();
         },
         onSettled: () => setIsLoading(false),
         onSuccess: () => {
@@ -195,7 +183,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationKey: ["signUp"],
         mutationFn: async (input: { email: string; password: string }) => {
             setIsLoading(true);
-            return await Endpoints.register({
+            return await API_CLIENT.register({
                 email: input.email,
                 password: input.password,
             });

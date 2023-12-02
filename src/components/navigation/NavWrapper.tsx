@@ -17,12 +17,13 @@ import {
     useScrollTrigger,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useAuthContext } from "@/context/auth.context";
 import { useThemeContext } from "@/context/theme.context";
+import { useAuthContext } from "@/context/auth.context";
+import { useNavContext } from "@/context/nav.context";
 import { updateQuery } from "@/utils/helperFunctions";
-import { Views } from "@/models/view.models";
-import { Logout } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { Logout } from "@mui/icons-material";
+import { Views } from "@/models/view.models";
 import MenuIcon from "@mui/icons-material/Menu";
 import SignInDialog from "../auth/SignInDialog";
 import SignUpDialog from "../auth/SignUpDialog";
@@ -32,8 +33,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { useNavContext } from "@/context/nav.context";
-import UserMenu from "./userMenu";
+import UserMenu from "@/components/navigation/UserMenu";
 
 type Props = {
     children: React.ReactNode;
@@ -190,12 +190,12 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
             >
                 <Toolbar
                     sx={{
-                        display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        display: "flex",
                         maxWidth: "xl",
-                        mx: "auto",
                         width: "100%",
+                        mx: "auto",
                     }}
                 >
                     {/***************************************************
@@ -245,6 +245,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                                             ? theme.palette.primary.main
                                             : theme.palette.text.primary,
                                     mx: 2,
+                                    fontSize: 18,
                                     cursor: "pointer",
                                     "&:hover": {
                                         color: theme.palette.primary.dark,

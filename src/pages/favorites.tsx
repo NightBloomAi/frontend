@@ -1,20 +1,39 @@
 import React from "react";
-import { Stack } from "@mui/system";
 import Layout from "@/components/layouts/Layout";
+import ImageComponent from "@/components/gallery/ImageComponent";
+import TopLoadingBar from "@/components/utils/TopLoadingBar";
+import { Box, Stack } from "@mui/system";
 import { Link, Typography } from "@mui/material";
 import { updateQuery } from "@/utils/helperFunctions";
 import { useAuthContext } from "@/context/auth.context";
+import { useQuery } from "react-query";
+import { API_CLIENT } from "@/services/ApiClient";
+import { useRouter } from "next/router";
+import ImagePopup from "@/components/home/ImagePopup";
 
 const FavoritesPage = () => {
-    const { userSession } = useAuthContext();
+    const router = useRouter();
+    const { userSession, isLoading } = useAuthContext();
+    const favoritesQuery = useQuery({
+        queryKey: "userFavourites",
+        queryFn: async () => await API_CLIENT.userFavourites(),
+    });
+
+    // Extract query parameters`
+    const imageId = router.query.imageId ?? "";
+    const variant = router.query.variant ?? "0_0";
 
     return (
         <Layout>
             <Stack justifyContent={"center"} alignItems={"center"} gap={4}>
+                {/***************************************************
+                 * HEADER SECTION
+                 ***************************************************/}
                 <Stack
                     direction={"column"}
                     sx={{
-                        my: 12,
+                        mt: 10,
+                        mb: 14,
                         gap: 4,
                     }}
                 >
@@ -30,7 +49,14 @@ const FavoritesPage = () => {
                         Keep track of your favorite images
                     </Typography>
                 </Stack>
-                {userSession === null ? (
+
+                {/***************************************************
+                 * CONTENT SECTION
+                 ***************************************************/}
+                {userSession === null && !isLoading ? (
+                    // **************************************************
+                    // User is not logged in
+                    // **************************************************
                     <Typography
                         variant={"body1"}
                         sx={{
@@ -55,10 +81,66 @@ const FavoritesPage = () => {
                         </Link>{" "}
                         to view your favorites
                     </Typography>
+                ) : favoritesQuery.isLoading ? (
+                    // **************************************************
+                    // User is logged in, but favorites are loading
+                    // **************************************************
+                    <React.Fragment>
+                        <TopLoadingBar />
+                        <Box className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            {Array.from(
+                                { length: 10 },
+                                (_value, index) => index
+                            ).map((i) => {
+                                return (
+                                    <ImageComponent
+                                        key={i}
+                                        reference_job_id={i.toString()}
+                                        variant={"0_0"}
+                                        infiniteScroll={true}
+                                    />
+                                );
+                            })}
+                        </Box>
+                    </React.Fragment>
                 ) : (
-                    <></>
+                    // **************************************************
+                    // User is logged in, and favorites have loaded
+                    // **************************************************
+                    <Box
+                        className={`w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4`}
+                    >
+                        {favoritesQuery.data?.data.assets.map((asset) => {
+                            return (
+                                <ImageComponent
+                                    key={asset.reference_job_id}
+                                    reference_job_id={asset.reference_job_id}
+                                    infiniteScroll={true}
+                                    onClick={() => {
+                                        updateQuery(
+                                            {
+                                                imageId: asset.reference_job_id,
+                                                variant: "0_0",
+                                            },
+                                            "favorites"
+                                        );
+                                    }}
+                                />
+                            );
+                        })}
+                    </Box>
                 )}
             </Stack>
+            {/***************************************************
+             * IMAGE POPUP
+             ***************************************************/}
+            {imageId !== "" && (
+                <ImagePopup
+                    imageId={imageId.toString()}
+                    variant={variant.toString()}
+                    route="favorites"
+                />
+            )}
         </Layout>
     );
 };
