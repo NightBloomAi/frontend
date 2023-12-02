@@ -32,13 +32,8 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-<<<<<<< Updated upstream
 import { useNavContext } from "@/context/nav.context";
 import UserMenu from "./userMenu";
-=======
-import UserMenu from "./UserMenu";
-
->>>>>>> Stashed changes
 
 type Props = {
     children: React.ReactNode;
