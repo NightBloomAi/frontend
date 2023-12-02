@@ -33,7 +33,7 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Views } from "@/models/view.models";
 import { Logout } from "@mui/icons-material";
-import UserMenu from "@/components/navigation/UserMenu";
+import AccountMenu from "./AccountMenu";
 
 type Props = {
     children: React.ReactNode;
@@ -274,7 +274,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         }}
                     >
                         {userSession !== null ? (
-                            <UserMenu />
+                            <AccountMenu />
                         ) : (
                             <Button
                                 variant="outlined"
