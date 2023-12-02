@@ -1,38 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect } from "react";
-import Layout from "@/components/layouts/Layout";
-import authCheck from "@/components/auth/authCheck";
-import ImagePopup from "@/components/home/ImagePopup";
-import SearchField from "@/components/home/SearchField";
-import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 import InfiniteGallery from "@/components/home/InfiniteGallery";
-import CategoriesFilter from "@/components/home/CategoriesFilter";
-import { updateQuery } from "@/utils/helperFunctions";
-import { SearchRes } from "@/models/search.models";
-import { Stack, debounce, Box } from "@mui/material";
-import { useInfiniteQuery } from "react-query";
-import { useState, ChangeEvent } from "react";
-import { useRouter } from "next/router";
-import { AxiosResponse } from "axios";
+import LogoAndSlogan from "@/components/home/LogoAndSlogan";
+import SearchField from "@/components/home/SearchField";
+import Layout from "@/components/layouts/Layout";
 import { API_CLIENT } from "@/services/ApiClient";
+import { updateQuery } from "@/utils/helperFunctions";
+import { debounce } from "@mui/material";
+import { Box, Stack } from "@mui/system";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, useCallback, useState } from "react";
+import { useInfiniteQuery } from "react-query";
 
-const Home = () => {
+const StyleGuideExplore = () => {
     const router = useRouter();
-
-    // Extract query parameters
+    const category = router.query.id;
     const searchQuery = router.query.search ?? "";
-    const category = router.query.category ?? "";
     const imageId = router.query.imageId ?? "";
     const variant = router.query.variant ?? "0_0";
 
-    // Local state for search input
     const [searchInput, setSearchInput] = useState(searchQuery.toString());
 
     /**
      * Uses debounce function from MUI
      */
     const debouncedUpdateQuery = useCallback(
-        debounce((value) => updateQuery({ search: value }), 500),
+        debounce((value) => updateQuery({ search: value }, router.asPath), 500),
         []
     );
 
@@ -55,15 +47,11 @@ const Home = () => {
     const infiniteScrollQuery = useInfiniteQuery({
         queryKey: ["searchImages", searchQuery, category],
         queryFn: async ({ pageParam = 1 }) => {
-            // const sleep = (ms: any) =>
-            //     new Promise((resolve) => setTimeout(resolve, ms));
-            // await sleep(1000);
-
-            return (await API_CLIENT.search({
+            return await API_CLIENT.search({
                 page: pageParam,
                 query: searchQuery.toString(),
-                category: category.toString(),
-            })) as AxiosResponse<SearchRes>;
+                category: category?.toString() ?? "",
+            });
         },
         getNextPageParam: (lastPage) => {
             // Handles whether you should fetch for next page
@@ -76,16 +64,6 @@ const Home = () => {
         refetchOnWindowFocus: false,
     });
 
-    /**
-     * Update the search input field from query param
-     */
-    useEffect(() => {
-        setSearchInput(searchQuery.toString());
-    }, [searchQuery]);
-
-    /**
-     * Render the home page.
-     */
     return (
         <Layout>
             <Box>
@@ -105,16 +83,6 @@ const Home = () => {
                 </Stack>
 
                 {/***************************************************
-                 * FILTER (CATEGORIES)
-                 ***************************************************/}
-                <Stack direction={"row"} justifyContent={"flex-end"}>
-                    <CategoriesFilter
-                        category={category.toString()}
-                        infiniteScrollQuery={infiniteScrollQuery}
-                    />
-                </Stack>
-
-                {/***************************************************
                  * IMAGES SECTION (INFINITE SCROLL)
                  ***************************************************/}
                 <InfiniteGallery
@@ -122,16 +90,6 @@ const Home = () => {
                     variant={variant.toString()}
                 />
             </Box>
-
-            {/***************************************************
-             * IMAGE POPUP
-             ***************************************************/}
-            {imageId !== "" && (
-                <ImagePopup
-                    imageId={imageId.toString()}
-                    variant={variant.toString()}
-                />
-            )}
         </Layout>
     );
 };
@@ -146,4 +104,4 @@ const stackSx = {
     gap: 4,
 };
 
-export default authCheck(Home);
+export default StyleGuideExplore;

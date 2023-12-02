@@ -4,13 +4,19 @@ import {
     ListItemIcon,
     Menu,
     MenuItem,
+    Divider,
 } from "@mui/material";
 import React from "react";
 import { Logout } from "@mui/icons-material";
 import { useAuthContext } from "@/context/auth.context";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import GradingIcon from "@mui/icons-material/Grading";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { useRouter } from "next/router";
 
 const UserMenu = () => {
+    const router = useRouter();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const { signOutMutation } = useAuthContext();
     const open = Boolean(anchorEl);
@@ -71,6 +77,41 @@ const UserMenu = () => {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+                <MenuItem
+                    onClick={async () => {
+                        router.push("/account-settings");
+                        handleClose();
+                    }}
+                >
+                    <ListItemIcon>
+                        <SettingsOutlinedIcon fontSize="small" />
+                    </ListItemIcon>
+                    Account Settings
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                    onClick={async () => {
+                        router.push("/privacy-policy");
+                        handleClose();
+                    }}
+                >
+                    <ListItemIcon>
+                        <ShieldOutlinedIcon fontSize="small" />
+                    </ListItemIcon>
+                    Privacy Policy
+                </MenuItem>
+                <MenuItem
+                    onClick={async () => {
+                        router.push("/terms-of-service");
+                        handleClose();
+                    }}
+                >
+                    <ListItemIcon>
+                        <GradingIcon fontSize="small" />
+                    </ListItemIcon>
+                    Terms of Service
+                </MenuItem>
+                <Divider />
                 <MenuItem
                     onClick={async () => {
                         await signOutMutation?.mutate();

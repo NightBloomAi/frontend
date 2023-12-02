@@ -1,13 +1,14 @@
-import authCheck from "@/components/auth/authCheck";
 import Layout from "@/components/layouts/Layout";
+import { updateQuery } from "@/utils/helperFunctions";
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import Link from "next/link";
 import React from "react";
 
-const StyleGuidePage = () => {
+const AccountSettingsPage = () => {
     return (
         <Layout>
-            <Stack alignItems={"center"} justifyContent={"center"}>
+            <Stack justifyContent={"center"} alignItems={"center"} gap={4}>
                 <Stack
                     direction={"column"}
                     sx={{
@@ -21,10 +22,10 @@ const StyleGuidePage = () => {
                         variant={"h3"}
                         textAlign={"center"}
                     >
-                        Style Guide
+                        Account Settings
                     </Typography>
                     <Typography variant={"body1"} textAlign={"center"}>
-                        Embrace your curiousity - Explore popular styles
+                        Manage your account settings
                     </Typography>
                 </Stack>
             </Stack>
@@ -32,4 +33,4 @@ const StyleGuidePage = () => {
     );
 };
 
-export default StyleGuidePage;
+export default AccountSettingsPage;

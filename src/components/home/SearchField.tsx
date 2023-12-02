@@ -31,7 +31,6 @@ const SearchField: React.FC<Props> = ({
                 backgroundColor: theme.palette?.transGrey.main,
                 borderRadius: 30,
                 "& fieldset": {
-                    borderStyle: "dashed",
                     borderColor: "transparent",
                 },
                 "& .MuiOutlinedInput-root": {

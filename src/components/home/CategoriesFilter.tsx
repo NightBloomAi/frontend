@@ -1,6 +1,6 @@
 import { useThemeContext } from "@/context/theme.context";
 import { SearchRes } from "@/models/search.models";
-import Endpoints from "@/services/endpoints";
+import { API_CLIENT } from "@/services/ApiClient";
 import { updateQuery } from "@/utils/helperFunctions";
 import { Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { AxiosResponse } from "axios";
@@ -26,7 +26,7 @@ const CategoriesFilter: React.FC<Props> = ({
      * Fetches list of categories
      */
     const getCategoriesQuery = useQuery({
-        queryFn: async () => await Endpoints.getCategories(),
+        queryFn: async () => await API_CLIENT.getCategories(),
     });
 
     /**
