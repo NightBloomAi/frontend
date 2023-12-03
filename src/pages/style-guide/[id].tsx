@@ -4,7 +4,7 @@ import InfiniteGallery from "@/components/home/InfiniteGallery";
 import stylesList from "@/components/styleGuide/stylesList";
 import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 import SearchField from "@/components/home/SearchField";
-import ImagePopup from "@/components/home/ImagePopup";
+import ImagePopup from "@/components/imagePopup/ImagePopup";
 import Layout from "@/components/layouts/Layout";
 import { updateQuery } from "@/utils/helperFunctions";
 import { API_CLIENT } from "@/services/ApiClient";

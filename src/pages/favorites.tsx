@@ -9,7 +9,7 @@ import { useAuthContext } from "@/context/auth.context";
 import { useQuery } from "react-query";
 import { API_CLIENT } from "@/services/ApiClient";
 import { useRouter } from "next/router";
-import ImagePopup from "@/components/home/ImagePopup";
+import ImagePopup from "@/components/imagePopup/ImagePopup";
 
 const FavoritesPage = () => {
     const router = useRouter();

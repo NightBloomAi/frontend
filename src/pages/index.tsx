@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect } from "react";
 import Layout from "@/components/layouts/Layout";
 import authCheck from "@/components/auth/authCheck";
-import ImagePopup from "@/components/home/ImagePopup";
+import ImagePopup from "@/components/imagePopup/ImagePopup";
 import SearchField from "@/components/home/SearchField";
 import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 import InfiniteGallery from "@/components/home/InfiniteGallery";

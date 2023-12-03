@@ -10,6 +10,7 @@ type Props = {
     variant?: string;
     infiniteScroll?: boolean; // If true, variant is ignored
     blur?: boolean; // If true, image is blurred
+    zoomOnHover?: boolean; // If true, image is zoomed on hover
 };
 
 const ImageComponent: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const ImageComponent: React.FC<Props> = ({
     variant = "0_0",
     infiniteScroll = false,
     blur = false,
+    zoomOnHover = true,
 }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -39,9 +41,7 @@ const ImageComponent: React.FC<Props> = ({
             setHasLoaded(true);
         };
 
-        const handleError = () => {
-            console.log("Error loading image");
-        };
+        const handleError = () => {};
 
         image.onload = handleLoad;
         image.onerror = handleError;
@@ -71,10 +71,10 @@ const ImageComponent: React.FC<Props> = ({
             )}
             <img
                 className={`${
-                    onClick ? "hover:scale-110" : ""
+                    zoomOnHover ? "hover:scale-110" : ""
                 } object-cover h-full w-full duration-500 ${
                     hasLoaded ? "block" : "hidden"
-                } ${blur && !infiniteScroll ? "filter brightness-25" : ""}`}
+                } ${blur && !infiniteScroll ? "filter brightness-[0.30]" : ""}`}
                 src={imageUrl}
                 alt={reference_job_id}
                 onLoad={() => setHasLoaded(true)}
