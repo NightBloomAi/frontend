@@ -4,12 +4,14 @@ import { Typography, Button, Link } from "@mui/material";
 import { UseQueryResult } from "react-query";
 import { Stack, Box } from "@mui/system";
 import axios from "axios";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { useState } from "react";
 import CopyToClipboardButton from "./CopyToClipboardButton";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { API_CLIENT } from "@/services/ApiClient";
 
 type Props = {
     imageQuery: UseQueryResult<
@@ -20,7 +22,24 @@ type Props = {
 
 const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
     const { theme } = useThemeContext();
+    const router = useRouter();
     const [showMore, setShowMore] = useState(false);
+    const variant = router.query.variant?.toString() ?? "0_0";
+
+    const downloadImage = async (imageUrl: string, imageName: string) => {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const urlObject = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = urlObject;
+        link.download = imageName || "download";
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(urlObject);
+    };
 
     return (
         <Stack
@@ -119,6 +138,26 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
                             // TODO: Add to favorites
                         }}
                         disabled={true}
+                    />
+
+                    <CopyToClipboardButton
+                        icon={<FileDownloadIcon />}
+                        tooltip="Download image"
+                        snackbarMessage="Image downloaded"
+                        onClick={() => {
+                            if (imageQuery.data) {
+                                downloadImage(
+                                    API_CLIENT.imageEndpointURL({
+                                        reference_job_id:
+                                            imageQuery.data?.data.asset
+                                                .reference_job_id,
+                                        variant: variant,
+                                        infiniteScroll: false,
+                                    }),
+                                    `${imageQuery.data?.data.asset.id}.png`
+                                );
+                            }
+                        }}
                     />
                 </Stack>
             </Stack>
