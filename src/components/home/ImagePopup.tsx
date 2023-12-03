@@ -30,6 +30,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
      * Resets currently opened image
      */
     const closeImagePopup = () => {
+        console.log;
         updateQuery({ imageId: undefined, variant: undefined }, route);
     };
 

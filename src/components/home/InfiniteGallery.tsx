@@ -14,11 +14,13 @@ type Props = {
         unknown
     >;
     variant: string;
+    currentRoute: string;
 };
 
 const InfiniteGallery: React.FC<Props> = ({
     infiniteScrollQuery,
     variant = "0_0",
+    currentRoute,
 }) => {
     /**
      * Displays a fallback loader for infinite scroll gallery when data is not yet fetched
@@ -81,10 +83,13 @@ const InfiniteGallery: React.FC<Props> = ({
                                 variant={variant}
                                 infiniteScroll={true}
                                 onClick={() => {
-                                    updateQuery({
-                                        imageId: hit.reference_job_id,
-                                        variant: variant,
-                                    });
+                                    updateQuery(
+                                        {
+                                            imageId: hit.reference_job_id,
+                                            variant: variant,
+                                        },
+                                        currentRoute
+                                    );
                                 }}
                             />
                         );

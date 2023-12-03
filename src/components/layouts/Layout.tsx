@@ -49,13 +49,6 @@ const Layout: React.FC<Props> = ({ children }) => {
                 <link rel="apple-touch-icon" href="logo/logo.png" />
                 <link rel="icon" type="image/x-icon" href="/logo/logo.png" />
                 <meta name="theme-color" content="#01282A" />
-
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Comfortaa&family=MuseoModerno&display=swap"
-                    rel="stylesheet"
-                />
             </Head>
             <Box
                 component="main"

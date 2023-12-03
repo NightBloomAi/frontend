@@ -1,30 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { ChangeEvent, useCallback, useState } from "react";
 import InfiniteGallery from "@/components/home/InfiniteGallery";
+import stylesList from "@/components/styleGuide/stylesList";
 import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 import SearchField from "@/components/home/SearchField";
+import ImagePopup from "@/components/home/ImagePopup";
 import Layout from "@/components/layouts/Layout";
-import { API_CLIENT } from "@/services/ApiClient";
 import { updateQuery } from "@/utils/helperFunctions";
+import { API_CLIENT } from "@/services/ApiClient";
+import { useInfiniteQuery } from "react-query";
 import { debounce } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useCallback, useState } from "react";
-import { useInfiniteQuery } from "react-query";
 
 const StyleGuideExplore = () => {
     const router = useRouter();
-    const category = router.query.id;
     const searchQuery = router.query.search ?? "";
     const imageId = router.query.imageId ?? "";
     const variant = router.query.variant ?? "0_0";
+    const category = router.query.id;
 
     const [searchInput, setSearchInput] = useState(searchQuery.toString());
+    const categoryObj = stylesList.find((style) => style.name === category);
 
-    /**
+    /**ƒ
      * Uses debounce function from MUI
      */
     const debouncedUpdateQuery = useCallback(
-        debounce((value) => updateQuery({ search: value }, router.asPath), 500),
+        debounce((value) => {
+            return updateQuery({ search: value }, router.asPath);
+        }, 500),
         []
     );
 
@@ -64,6 +69,21 @@ const StyleGuideExplore = () => {
         refetchOnWindowFocus: false,
     });
 
+    if (!categoryObj) {
+        return (
+            <Layout>
+                <Box>
+                    <Stack sx={stackSx}>
+                        <LogoAndSlogan
+                            title={"Category not found"}
+                            subtitle={"Please try again"}
+                        />
+                    </Stack>
+                </Box>
+            </Layout>
+        );
+    }
+
     return (
         <Layout>
             <Box>
@@ -71,7 +91,10 @@ const StyleGuideExplore = () => {
                     {/***************************************************
                      * LOGO AND TAGLINE
                      ***************************************************/}
-                    <LogoAndSlogan />
+                    <LogoAndSlogan
+                        title={categoryObj?.displayName}
+                        subtitle={categoryObj?.descript}
+                    />
 
                     {/***************************************************
                      * SEARCH INPUT FIELD
@@ -88,8 +111,19 @@ const StyleGuideExplore = () => {
                 <InfiniteGallery
                     infiniteScrollQuery={infiniteScrollQuery}
                     variant={variant.toString()}
+                    currentRoute={router.basePath}
                 />
             </Box>
+            {/***************************************************
+             * IMAGE POPUP
+             ***************************************************/}
+            {imageId !== "" && (
+                <ImagePopup
+                    imageId={imageId.toString()}
+                    variant={variant.toString()}
+                    route={router.basePath}
+                />
+            )}
         </Layout>
     );
 };

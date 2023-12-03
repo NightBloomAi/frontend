@@ -2,7 +2,12 @@ import { useThemeContext } from "@/context/theme.context";
 import { Typography } from "@mui/material";
 import React from "react";
 
-const LogoAndSlogan = () => {
+type Props = {
+    title: string;
+    subtitle: string;
+};
+
+const LogoAndSlogan: React.FC<Props> = ({ title, subtitle }) => {
     const { theme } = useThemeContext();
 
     return (
@@ -13,14 +18,14 @@ const LogoAndSlogan = () => {
                 className="font-museo"
                 color={theme.palette.secondary.main}
             >
-                NightBloom
+                {title}
             </Typography>
             <Typography
                 sx={{
                     textAlign: "center",
                 }}
             >
-                Discover your imagination - Midjourney search engine
+                {subtitle}
             </Typography>
         </React.Fragment>
     );

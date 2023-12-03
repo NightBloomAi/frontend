@@ -55,10 +55,6 @@ const Home = () => {
     const infiniteScrollQuery = useInfiniteQuery({
         queryKey: ["searchImages", searchQuery, category],
         queryFn: async ({ pageParam = 1 }) => {
-            // const sleep = (ms: any) =>
-            //     new Promise((resolve) => setTimeout(resolve, ms));
-            // await sleep(1000);
-
             return (await API_CLIENT.search({
                 page: pageParam,
                 query: searchQuery.toString(),
@@ -93,7 +89,12 @@ const Home = () => {
                     {/***************************************************
                      * LOGO AND TAGLINE
                      ***************************************************/}
-                    <LogoAndSlogan />
+                    <LogoAndSlogan
+                        title={"NightBloom"}
+                        subtitle={
+                            "Discover your imagination - Midjourney search engine"
+                        }
+                    />
 
                     {/***************************************************
                      * SEARCH INPUT FIELD
@@ -120,6 +121,7 @@ const Home = () => {
                 <InfiniteGallery
                     infiniteScrollQuery={infiniteScrollQuery}
                     variant={variant.toString()}
+                    currentRoute="/"
                 />
             </Box>
 
