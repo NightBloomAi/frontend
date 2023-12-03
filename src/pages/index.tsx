@@ -94,6 +94,7 @@ const Home = () => {
                         subtitle={
                             "Discover your imagination - Midjourney search engine"
                         }
+                        hasSearchBar={true}
                     />
 
                     {/***************************************************
@@ -143,7 +144,6 @@ const stackSx = {
     direction: "column",
     justifyContent: "center",
     alignItems: "center",
-    mt: 8,
     mb: 10,
     gap: 4,
 };

@@ -8,6 +8,7 @@ declare module '@mui/material/styles' {
 
     interface PaletteOptions {
         transGrey?: PaletteColorOptions,
+        selected?: PaletteColorOptions,
     }
 }
 
@@ -38,6 +39,11 @@ const themeDark = createTheme({
         transGrey: {
             main: "rgba(208,188,255,.11)"
         },
+        selected: {
+            main: "#9264FF",
+            dark: "#D0BCFF",
+            light: "#D0BCFF",
+        }
     },
     components: {
         MuiButton: {

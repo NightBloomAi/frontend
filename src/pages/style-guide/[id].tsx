@@ -94,6 +94,7 @@ const StyleGuideExplore = () => {
                     <LogoAndSlogan
                         title={categoryObj?.displayName}
                         subtitle={categoryObj?.descript}
+                        hasSearchBar={true}
                     />
 
                     {/***************************************************
@@ -133,7 +134,6 @@ const stackSx = {
     direction: "column",
     justifyContent: "center",
     alignItems: "center",
-    mt: 8,
     mb: 10,
     gap: 4,
 };

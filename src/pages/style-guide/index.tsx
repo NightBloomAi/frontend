@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-import Layout from "@/components/layouts/Layout";
-import stylesList from "@/components/styleGuide/stylesList";
 import { useThemeContext } from "@/context/theme.context";
-import { Category } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useRouter } from "next/router";
 import React from "react";
+import Layout from "@/components/layouts/Layout";
+import stylesList from "@/components/styleGuide/stylesList";
+import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 
 const StyleGuidePage = () => {
     const { theme } = useThemeContext();
@@ -18,26 +17,12 @@ const StyleGuidePage = () => {
                 {/***************************************************
                  * HEADER SECTION
                  ***************************************************/}
-                <Stack
-                    direction={"column"}
-                    sx={{
-                        mt: 10,
-                        mb: 14,
-                        gap: 4,
-                    }}
-                >
-                    <Typography
-                        component={"div"}
-                        className={"font-museo"}
-                        variant={"h3"}
-                        textAlign={"center"}
-                    >
-                        Style Guide
-                    </Typography>
-                    <Typography variant={"body1"} textAlign={"center"}>
-                        Embrace your curiousity - Explore popular styles
-                    </Typography>
-                </Stack>
+                <LogoAndSlogan
+                    title={"Style Guide"}
+                    subtitle={
+                        "Embrace your curiousity - Explore popular styles"
+                    }
+                />
 
                 {/***************************************************
                  * CONTENT SECTION

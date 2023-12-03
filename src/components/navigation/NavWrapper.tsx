@@ -78,7 +78,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
             <Typography
                 variant="h6"
                 component={"div"}
-                sx={{ my: 2, fontWeight: 700, cursor: "pointer" }}
+                sx={{ my: 2, fontWeight: 600, cursor: "pointer" }}
                 className="font-museo"
                 color={theme.palette.primary.main}
             >
@@ -205,9 +205,10 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         color="secondary"
                         aria-label="open drawer"
                         onClick={handleDrawerToggle}
+                        size="large"
                         sx={{ mr: 2, display: { sm: "none" } }}
                     >
-                        <MenuIcon />
+                        <MenuIcon fontSize="large" />
                     </IconButton>
                     {/***************************************************
                      * LOGO
@@ -224,7 +225,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                             display: {
                                 xs: "none",
                                 sm: "block",
-                                fontWeight: 700,
+                                fontWeight: 600,
                             },
                         }}
                     >

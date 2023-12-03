@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { API_CLIENT } from "@/services/ApiClient";
 import { useRouter } from "next/router";
 import ImagePopup from "@/components/imagePopup/ImagePopup";
+import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 
 const FavoritesPage = () => {
     const router = useRouter();
@@ -29,26 +30,10 @@ const FavoritesPage = () => {
                 {/***************************************************
                  * HEADER SECTION
                  ***************************************************/}
-                <Stack
-                    direction={"column"}
-                    sx={{
-                        mt: 10,
-                        mb: 14,
-                        gap: 4,
-                    }}
-                >
-                    <Typography
-                        component={"div"}
-                        className={"font-museo"}
-                        variant={"h3"}
-                        textAlign={"center"}
-                    >
-                        Favorites
-                    </Typography>
-                    <Typography variant={"body1"} textAlign={"center"}>
-                        Keep track of your favorite images
-                    </Typography>
-                </Stack>
+                <LogoAndSlogan
+                    title={"Favorites"}
+                    subtitle={"Keep track of your favorite images"}
+                />
 
                 {/***************************************************
                  * CONTENT SECTION

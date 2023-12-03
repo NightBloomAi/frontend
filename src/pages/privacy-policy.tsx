@@ -1,4 +1,5 @@
 import authCheck from "@/components/auth/authCheck";
+import LogoAndSlogan from "@/components/home/LogoAndSlogan";
 import Layout from "@/components/layouts/Layout";
 import { useThemeContext } from "@/context/theme.context";
 import { Stack } from "@mui/system";
@@ -20,12 +21,11 @@ const PrivacyPolicyPage = () => {
                     height: "auto",
                 }}
             >
-                <div className="font-museo text-4xl mt-32 mb-16 gap-y-3 flex flex-col items-center justify-center">
-                    NightBloom Privacy Policy
-                    <div className="text-base">
-                        Effective Date: 8th August 2023
-                    </div>
-                </div>
+                <LogoAndSlogan
+                    title={"Privacy Policy"}
+                    subtitle={"Effective Date: 8th August 2023"}
+                />
+
                 <div className="flex flex-col justify-start gap-y-6">
                     <div className="flex flex-col gap-y-3">
                         <div className="text-[var(--pink)] text-xl">

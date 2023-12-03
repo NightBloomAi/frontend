@@ -1,7 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { useThemeContext } from "@/context/theme.context";
-import { Dialog, Link, Typography } from "@mui/material";
+import {
+    Dialog,
+    IconButton,
+    Link,
+    Typography,
+    useMediaQuery,
+} from "@mui/material";
 import { updateQuery } from "@/utils/helperFunctions";
 import { Stack } from "@mui/system";
 import { useQuery } from "react-query";
@@ -14,6 +20,8 @@ import OpenWithIcon from "@mui/icons-material/OpenWith";
 import EventIcon from "@mui/icons-material/Event";
 import SettingsInputCompositeIcon from "@mui/icons-material/SettingsInputComposite";
 import DatasetIcon from "@mui/icons-material/Dataset";
+import TopLoadingBar from "../utils/TopLoadingBar";
+import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
     imageId: string;
@@ -23,12 +31,22 @@ type Props = {
 
 const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
     const { theme } = useThemeContext();
+    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const imageQuery = useQuery({
         queryKey: ["imageDetails", imageId],
         queryFn: async () =>
             await API_CLIENT.imageDetails({
                 asset_id: imageId,
+            }),
+        enabled: imageId !== "",
+    });
+
+    const favoriteQuery = useQuery({
+        queryKey: ["isFavorite", imageId],
+        queryFn: async () =>
+            await API_CLIENT.checkFavorite({
+                id: imageId,
             }),
         enabled: imageId !== "",
     });
@@ -92,7 +110,12 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
             onClose={closeImagePopup}
             fullWidth
             maxWidth={"lg"}
+            fullScreen={fullScreen}
         >
+            {(favoriteQuery.isLoading || imageQuery.isLoading) && (
+                <TopLoadingBar />
+            )}
+
             <Stack
                 sx={{
                     backgroundColor: theme.palette.background.default,
@@ -111,7 +134,10 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                     {/************************************************
                      *  IMAGE PROMPT BOX
                      ************************************************/}
-                    <ImagePromptBox imageQuery={imageQuery} />
+                    <ImagePromptBox
+                        imageQuery={imageQuery}
+                        favoriteQuery={favoriteQuery}
+                    />
 
                     {/************************************************
                      *  IMAGE DETAILS BOX
@@ -137,10 +163,14 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                 sx={{
                                     p: 2,
                                     border: 2,
-                                    maxWidth: 300,
+                                    flex: 1,
+                                    width: "100%",
                                     borderRadius: 2,
                                     overflow: "hidden",
                                     borderColor: theme.palette.transGrey.main,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    display: "flex",
                                 }}
                             >
                                 <Typography variant="body1" fontWeight={700}>
@@ -148,7 +178,14 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                 </Typography>
 
                                 <Link
-                                    className="object-cover mt-2 mx-auto w-32 h-32"
+                                    sx={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        display: "flex",
+                                    }}
                                     href={API_CLIENT.imageEndpointURL({
                                         reference_job_id: imageId ?? "",
                                         variant: "0_0",
@@ -171,19 +208,21 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                 sx={{
                                     flexDirection: "column",
                                     gap: 2,
+                                    flex: 2,
                                 }}
                             >
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        p: 1,
+                                        py: 2,
+                                        px: 2,
                                         borderRadius: 2,
                                         border: 2,
                                         borderColor:
                                             theme.palette.transGrey.main,
                                     }}
                                 >
-                                    <OpenWithIcon />{" "}
+                                    <OpenWithIcon sx={{ mr: 2 }} />{" "}
                                     {imageQuery.data?.data.asset.height} x{" "}
                                     {imageQuery.data?.data.asset.width}
                                 </Typography>
@@ -191,27 +230,31 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        p: 1,
+                                        py: 2,
+                                        px: 2,
                                         borderRadius: 2,
                                         border: 2,
                                         borderColor:
                                             theme.palette.transGrey.main,
                                     }}
                                 >
-                                    <EventIcon /> {dateConvert()}
+                                    <EventIcon sx={{ mr: 2 }} /> {dateConvert()}
                                 </Typography>
 
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        p: 1,
+                                        py: 2,
+                                        px: 2,
                                         borderRadius: 2,
                                         border: 2,
                                         borderColor:
                                             theme.palette.transGrey.main,
                                     }}
                                 >
-                                    <SettingsInputCompositeIcon />{" "}
+                                    <SettingsInputCompositeIcon
+                                        sx={{ mr: 2 }}
+                                    />{" "}
                                     {convertString(
                                         imageQuery.data?.data.asset.kind ?? ""
                                     )}
@@ -220,14 +263,15 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        p: 1,
+                                        py: 2,
+                                        px: 2,
                                         borderRadius: 2,
                                         border: 2,
                                         borderColor:
                                             theme.palette.transGrey.main,
                                     }}
                                 >
-                                    <DatasetIcon />{" "}
+                                    <DatasetIcon sx={{ mr: 2 }} />{" "}
                                     {capitalizeFirstLetter(
                                         imageQuery?.data?.data?.source ?? ""
                                     )}
@@ -246,6 +290,20 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                     variant={variant}
                     route={route}
                 />
+
+                {fullScreen && (
+                    <Stack
+                        sx={{
+                            backgroundColor: theme.palette.background.default,
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                        }}
+                    >
+                        <IconButton onClick={closeImagePopup}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Stack>
+                )}
             </Stack>
         </Dialog>
     );

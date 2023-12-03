@@ -1,5 +1,5 @@
 import { useThemeContext } from "@/context/theme.context";
-import { ImageDetailRes } from "@/models/search.models";
+import { CheckFavRes, ImageDetailRes } from "@/models/search.models";
 import { Typography, Button, Link } from "@mui/material";
 import { UseQueryResult } from "react-query";
 import { Stack, Box } from "@mui/system";
@@ -12,15 +12,20 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { API_CLIENT } from "@/services/ApiClient";
+import FavouriteButton from "./FavouriteButton";
 
 type Props = {
     imageQuery: UseQueryResult<
         axios.AxiosResponse<ImageDetailRes, any>,
         unknown
     >;
+    favoriteQuery: UseQueryResult<
+        axios.AxiosResponse<CheckFavRes, any>,
+        unknown
+    >;
 };
 
-const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
+const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
     const { theme } = useThemeContext();
     const router = useRouter();
     const [showMore, setShowMore] = useState(false);
@@ -47,9 +52,8 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
             sx={{
                 backgroundColor: theme.palette.transGrey.main,
                 p: 2,
-                flex: 1,
-                height: "100%",
                 gap: 4,
+                borderRadius: 2,
             }}
         >
             {/************************************************
@@ -89,10 +93,8 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
                 alignItems={"center"}
                 sx={{
                     marginTop: "auto",
-                    flexDirection: {
-                        xs: "column",
-                        sm: "row",
-                    },
+                    flexDirection: "row",
+                    gap: 2,
                 }}
             >
                 {imageQuery?.data?.data.asset.category !== "none" && (
@@ -130,14 +132,11 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery }) => {
                             )
                         }
                     />
-                    <CopyToClipboardButton
+                    <FavouriteButton
                         icon={<FavoriteIcon />}
                         tooltip="Favorite image"
                         snackbarMessage="Added to favorites"
-                        onClick={() => {
-                            // TODO: Add to favorites
-                        }}
-                        disabled={true}
+                        isFavorite={favoriteQuery?.data?.data?.is_favourite}
                     />
 
                     <CopyToClipboardButton

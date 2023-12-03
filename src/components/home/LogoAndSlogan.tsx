@@ -1,21 +1,42 @@
 import { useThemeContext } from "@/context/theme.context";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 
 type Props = {
     title: string;
     subtitle: string;
+    hasSearchBar?: boolean;
 };
 
-const LogoAndSlogan: React.FC<Props> = ({ title, subtitle }) => {
+const LogoAndSlogan: React.FC<Props> = ({
+    title,
+    subtitle,
+    hasSearchBar = false,
+}) => {
     const { theme } = useThemeContext();
 
     return (
-        <React.Fragment>
+        <Stack
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+                mt: 8,
+                mb: hasSearchBar ? 0 : 10,
+                gap: 4,
+            }}
+        >
             <Typography
                 component={"div"}
                 variant={"h3"}
                 className="font-museo"
+                sx={{
+                    fontSize: {
+                        xs: "2.5rem",
+                        sm: "3rem",
+                        md: "3.2rem",
+                    },
+                }}
                 color={theme.palette.secondary.main}
             >
                 {title}
@@ -23,11 +44,12 @@ const LogoAndSlogan: React.FC<Props> = ({ title, subtitle }) => {
             <Typography
                 sx={{
                     textAlign: "center",
+                    maxWidth: "sm",
                 }}
             >
                 {subtitle}
             </Typography>
-        </React.Fragment>
+        </Stack>
     );
 };
 

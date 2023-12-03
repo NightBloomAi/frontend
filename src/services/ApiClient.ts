@@ -1,6 +1,6 @@
 import { CurrentSessionResponse, SignInResponse } from "@/models/auth.models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { CategoriesRes, FavImageDetailRes, ImageDetailRes, SearchRes } from "@/models/search.models";
+import { CategoriesRes, CheckFavRes, FavImageDetailRes, ImageDetailRes, SearchRes } from "@/models/search.models";
 
 class ApiClient {
 
@@ -147,9 +147,9 @@ class ApiClient {
      */
     createFavorite(payload: {
         ids: string[],
-        variant: string,
+        variant: string | null,
     }): Promise<AxiosResponse> {
-        return this.client.post("/user_favourites/favorites", payload, {
+        return this.client.post("/user_favourites/favourites", payload, {
             headers: {
                 Authorization: `Bearer ${this.jwt}`,
             },
@@ -163,7 +163,7 @@ class ApiClient {
      * @returns The response from the server
      */
     removeFavorite(payload: { ids: string[] }): Promise<AxiosResponse> {
-        return this.client.put(`/user_favourites/favorites`, payload, {
+        return this.client.put(`/user_favourites/favourites`, payload, {
             headers: {
                 Authorization: `Bearer ${this.jwt}`,
             },
@@ -176,7 +176,7 @@ class ApiClient {
      * @param id The asset id to check
      * @returns The response from the server
      */
-    checkFavorite(payload: { id: string }): Promise<AxiosResponse> {
+    checkFavorite(payload: { id: string }): Promise<AxiosResponse<CheckFavRes>> {
         return this.client.get(`/user_favourites/favourites/${payload.id}`, {
             headers: {
                 Authorization: `Bearer ${this.jwt}`,

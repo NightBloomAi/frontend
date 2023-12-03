@@ -54,4 +54,8 @@ type FavImageDetailRes = {
     source: string;
 };
 
-export type { SearchRes, Hit, ImageDetailRes, FavImageDetail, CategoriesRes, FavImageDetailRes };
+type CheckFavRes = {
+    is_favourite: boolean;
+}
+
+export type { SearchRes, Hit, ImageDetailRes, FavImageDetail, CategoriesRes, FavImageDetailRes, CheckFavRes };

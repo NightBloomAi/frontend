@@ -1,5 +1,6 @@
-import { IconButton, Snackbar, Tooltip } from "@mui/material";
-import { Fragment, useState } from "react";
+import { IconButton, Tooltip } from "@mui/material";
+import { Fragment } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
     icon: React.ReactNode;
@@ -16,10 +17,11 @@ const CopyToClipboardButton: React.FC<Props> = ({
     disabled,
     onClick,
 }) => {
-    const [open, setOpen] = useState(false);
-
+    /**
+     * Handle click on copy to clipboard button
+     */
     const handleClick = () => {
-        setOpen(true);
+        toast.success(snackbarMessage ?? "Copied to clibboard");
         onClick && onClick();
     };
 
@@ -28,19 +30,12 @@ const CopyToClipboardButton: React.FC<Props> = ({
             <Tooltip title={tooltip ?? "Copy to clibboard"}>
                 <IconButton
                     onClick={handleClick}
-                    color="primary"
+                    color="default"
                     disabled={disabled}
                 >
                     {icon}
                 </IconButton>
             </Tooltip>
-            <Snackbar
-                message={snackbarMessage ?? "Copied to clibboard"}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                autoHideDuration={2000}
-                onClose={() => setOpen(false)}
-                open={open}
-            />
         </Fragment>
     );
 };

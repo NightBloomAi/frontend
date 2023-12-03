@@ -33,6 +33,7 @@ const ImageGallery: React.FC<Props> = ({
                 reference_job_id={imageId}
                 variant={variant}
                 zoomOnHover={false}
+                fullImage={true}
             />
             <Stack
                 direction={"row"}

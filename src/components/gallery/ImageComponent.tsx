@@ -11,6 +11,7 @@ type Props = {
     infiniteScroll?: boolean; // If true, variant is ignored
     blur?: boolean; // If true, image is blurred
     zoomOnHover?: boolean; // If true, image is zoomed on hover
+    fullImage?: boolean; // If true, full image is shown
 };
 
 const ImageComponent: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const ImageComponent: React.FC<Props> = ({
     infiniteScroll = false,
     blur = false,
     zoomOnHover = true,
+    fullImage = false,
 }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -55,9 +57,11 @@ const ImageComponent: React.FC<Props> = ({
 
     return (
         <div
-            className={`object-cover w-full max-h-96 overflow-hidden aspect-square ${
-                onClick ? "cursor-pointer" : ""
-            } rounded`}
+            className={`object-cover ${
+                !fullImage
+                    ? " w-full max-h-96 aspect-square"
+                    : "h-auto max-h-[70vh]"
+            } overflow-hidden ${onClick ? "cursor-pointer" : ""} rounded`}
             onClick={onClick}
         >
             {!hasLoaded && (
@@ -70,11 +74,11 @@ const ImageComponent: React.FC<Props> = ({
                 />
             )}
             <img
-                className={`${
-                    zoomOnHover ? "hover:scale-110" : ""
-                } object-cover h-full w-full duration-500 ${
-                    hasLoaded ? "block" : "hidden"
-                } ${blur && !infiniteScroll ? "filter brightness-[0.30]" : ""}`}
+                className={`${zoomOnHover ? "hover:scale-110" : ""} ${
+                    fullImage ? "h-auto" : "h-full object-cover"
+                } w-full duration-500 ${hasLoaded ? "block" : "hidden"} ${
+                    blur && !infiniteScroll ? "filter brightness-[0.30]" : ""
+                }`}
                 src={imageUrl}
                 alt={reference_job_id}
                 onLoad={() => setHasLoaded(true)}
