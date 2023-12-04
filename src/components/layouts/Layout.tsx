@@ -48,7 +48,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                 <link rel="icon" href="logo/logo.svg" type="image/svg+xml" />
                 <link rel="apple-touch-icon" href="logo/logo.png" />
                 <link rel="icon" type="image/x-icon" href="/logo/logo.png" />
-                <meta name="theme-color" content="#01282A" />
+                <meta name="theme-color" content="#1c1b1f" />
             </Head>
             <Box
                 component="main"
