@@ -25,10 +25,8 @@ const ImageGallery: React.FC<Props> = ({
     variant,
     route,
 }) => {
-    const { theme } = useThemeContext();
-
     return (
-        <Stack sx={{ flex: 1 }}>
+        <Stack sx={{ flex: "auto", maxWidth: 500 }}>
             <ImageComponent
                 reference_job_id={imageId}
                 variant={variant}

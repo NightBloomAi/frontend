@@ -58,9 +58,7 @@ const ImageComponent: React.FC<Props> = ({
     return (
         <div
             className={`object-cover ${
-                !fullImage
-                    ? " w-full max-h-96 aspect-square"
-                    : "h-auto max-h-[70vh]"
+                !fullImage ? " w-full max-h-96 aspect-square" : "h-auto w-auto"
             } overflow-hidden ${onClick ? "cursor-pointer" : ""} rounded`}
             onClick={onClick}
         >
@@ -75,7 +73,9 @@ const ImageComponent: React.FC<Props> = ({
             )}
             <img
                 className={`${zoomOnHover ? "hover:scale-110" : ""} ${
-                    fullImage ? "h-auto" : "h-full object-cover"
+                    fullImage
+                        ? "h-auto max-h-[60vh] object-contain"
+                        : "h-full object-cover"
                 } w-full duration-500 ${hasLoaded ? "block" : "hidden"} ${
                     blur && !infiniteScroll ? "filter brightness-[0.30]" : ""
                 }`}

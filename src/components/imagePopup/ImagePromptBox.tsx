@@ -1,6 +1,6 @@
 import { useThemeContext } from "@/context/theme.context";
 import { CheckFavRes, ImageDetailRes } from "@/models/search.models";
-import { Typography, Button, Link } from "@mui/material";
+import { Typography, Button, Link, useMediaQuery } from "@mui/material";
 import { UseQueryResult } from "react-query";
 import { Stack, Box } from "@mui/system";
 import axios from "axios";
@@ -30,6 +30,7 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
     const router = useRouter();
     const [showMore, setShowMore] = useState(false);
     const variant = router.query.variant?.toString() ?? "0_0";
+    const mobileScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     /**
      * Download image from url
@@ -111,7 +112,7 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
                             );
                         }}
                     >
-                        Explore style
+                        {mobileScreen ? "Explore" : "Explore style"}
                     </Button>
                 )}
                 <Stack direction={"row"}>

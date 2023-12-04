@@ -122,6 +122,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
             fullWidth
             maxWidth={"lg"}
             fullScreen={fullScreen}
+            scroll="paper"
         >
             {(favoriteQuery.isLoading || imageQuery.isLoading) && (
                 <TopLoadingBar />
