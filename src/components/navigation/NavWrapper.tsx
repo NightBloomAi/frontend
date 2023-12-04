@@ -34,6 +34,9 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import GradingIcon from "@mui/icons-material/Grading";
 
 type Props = {
     children: React.ReactNode;
@@ -115,6 +118,39 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                     </ListItem>
                 ))}
 
+                <Divider sx={{ mt: 1 }} />
+
+                {/***************************************************
+                 * MISC OPTIONS
+                 ***************************************************/}
+                <ListItem key={"privacy-policy"} disablePadding>
+                    <ListItemButton
+                        sx={{ textAlign: "left" }}
+                        onClick={async () => {
+                            router.push("/privacy-policy");
+                        }}
+                    >
+                        <ListItemIcon>
+                            <ShieldOutlinedIcon sx={{ fontSize: 26 }} />
+                        </ListItemIcon>
+                        <ListItemText primary={"Privacy Policy"} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={"terms-of-service"} disablePadding>
+                    <ListItemButton
+                        sx={{ textAlign: "left" }}
+                        onClick={async () => {
+                            router.push("/terms-of-service");
+                        }}
+                    >
+                        <ListItemIcon>
+                            <GradingIcon sx={{ fontSize: 26 }} />
+                        </ListItemIcon>
+                        <ListItemText primary={"Terms of Service"} />
+                    </ListItemButton>
+                </ListItem>
+                <Divider sx={{ mt: 1 }} />
+
                 {/***************************************************
                  * SIGN IN/ SIGN UP / PROFILE OPTIONS
                  ***************************************************/}
@@ -148,19 +184,39 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         </ListItem>
                     </React.Fragment>
                 ) : (
-                    <ListItem key={"sign out"} disablePadding>
-                        <ListItemButton
-                            sx={{ textAlign: "left" }}
-                            onClick={async () => {
-                                await signOutMutation?.mutate();
-                            }}
-                        >
-                            <ListItemIcon>
-                                <Logout sx={{ fontSize: 26 }} />
-                            </ListItemIcon>
-                            <ListItemText primary={"Sign Out"} />
-                        </ListItemButton>
-                    </ListItem>
+                    <React.Fragment>
+                        {/***************************************************
+                         * ACCOUNT OPTIONS
+                         ***************************************************/}
+                        <ListItem key={"account-settings"} disablePadding>
+                            <ListItemButton
+                                sx={{ textAlign: "left" }}
+                                onClick={async () => {
+                                    router.push("/account-settings");
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <SettingsOutlinedIcon
+                                        sx={{ fontSize: 26 }}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText primary={"Account Settings"} />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key={"sign out"} disablePadding>
+                            <ListItemButton
+                                sx={{ textAlign: "left" }}
+                                onClick={async () => {
+                                    await signOutMutation?.mutate();
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <Logout sx={{ fontSize: 26 }} />
+                                </ListItemIcon>
+                                <ListItemText primary={"Sign Out"} />
+                            </ListItemButton>
+                        </ListItem>
+                    </React.Fragment>
                 )}
             </List>
         </Box>
