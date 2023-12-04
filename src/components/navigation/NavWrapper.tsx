@@ -152,6 +152,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         <ListItemButton
                             sx={{ textAlign: "left" }}
                             onClick={async () => {
+                                console.log("signing out user - nav wrapper");
                                 await signOutMutation?.mutate();
                             }}
                         >
