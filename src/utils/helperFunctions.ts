@@ -21,12 +21,8 @@ export const updateQuery = (queries: { [key: string]: string | undefined }, path
             delete newQueryParams[key];
         }
 
-        console.log(path?.split("/")[1])
-
         // If the query is category and the path is category, remove the query
         if (queries[key] === "category" && path?.split("/")[1] === "style-guide") {
-            console.log("here")
-            console.log(path?.split("/")[1])
             delete newQueryParams[key];
         }
     }

@@ -314,7 +314,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                         }}
                     >
                         <IconButton onClick={closeImagePopup}>
-                            <CloseIcon />
+                            <CloseIcon fontSize="large" />
                         </IconButton>
                     </Stack>
                 )}

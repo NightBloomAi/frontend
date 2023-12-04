@@ -114,7 +114,6 @@ const UserMenu = () => {
                 <Divider />
                 <MenuItem
                     onClick={async () => {
-                        console.log("signing out - user menu");
                         await signOutMutation?.mutate();
                         handleClose();
                     }}

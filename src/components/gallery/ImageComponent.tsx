@@ -61,6 +61,7 @@ const ImageComponent: React.FC<Props> = ({
                 !fullImage ? " w-full max-h-96 aspect-square" : "h-auto w-auto"
             } overflow-hidden ${onClick ? "cursor-pointer" : ""} rounded`}
             onClick={onClick}
+            draggable={false}
         >
             {!hasLoaded && (
                 <Skeleton
