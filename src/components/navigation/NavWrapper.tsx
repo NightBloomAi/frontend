@@ -38,6 +38,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import GradingIcon from "@mui/icons-material/Grading";
 import ForogtPasswordDialog from "../auth/ForgotPasswordDialog";
+import ResetPasswordDialog from "../auth/ResetPasswordDialog";
 
 type Props = {
     children: React.ReactNode;
@@ -349,6 +350,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         <SignInDialog />
                         <SignUpDialog />
                         <ForogtPasswordDialog />
+                        <ResetPasswordDialog />
                     </Box>
                 </Toolbar>
             </AppBar>

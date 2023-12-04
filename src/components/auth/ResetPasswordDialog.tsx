@@ -35,7 +35,7 @@ const ResetPasswordDialog = () => {
                         color: (theme) => theme.palette.grey[500],
                     }}
                 >
-                    <CloseIcon fontSize="large"/>
+                    <CloseIcon fontSize="large" />
                 </IconButton>
             </DialogTitle>
             <ResetPassword />
