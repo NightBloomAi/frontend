@@ -28,4 +28,9 @@ type DecodedJwt = {
     nbf: number
 }
 
-export type { CurrentSessionResponse, DecodedJwt, SignInResponse, UserSession, RefreshTokenResponse }
+type UserProfileRes = {
+    user_id: string,
+    username: string,
+}
+
+export type { CurrentSessionResponse, DecodedJwt, SignInResponse, UserSession, RefreshTokenResponse, UserProfileRes }

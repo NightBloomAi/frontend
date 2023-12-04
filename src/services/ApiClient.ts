@@ -1,4 +1,4 @@
-import { CurrentSessionResponse, SignInResponse } from "@/models/auth.models";
+import { CurrentSessionResponse, SignInResponse, UserProfileRes } from "@/models/auth.models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { CategoriesRes, CheckFavRes, FavImageDetailRes, ImageDetailRes, SearchRes } from "@/models/search.models";
 
@@ -217,6 +217,19 @@ class ApiClient {
      */
     getCategories(): Promise<AxiosResponse<CategoriesRes>> {
         return this.client.get("/search/asset/categories");
+    }
+
+    /**
+     * The user's profile information
+     * 
+     * @returns The response from the server
+     */
+    getUserProfile(): Promise<AxiosResponse<UserProfileRes>> {
+        return this.client.get("/user_profile/profile", {
+            headers: {
+                Authorization: `Bearer ${this.jwt}`,
+            },
+        });
     }
 
 }

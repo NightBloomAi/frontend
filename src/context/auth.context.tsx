@@ -163,7 +163,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationKey: ["signOut"],
         mutationFn: async () => {
             setIsLoading(true);
-            if (isDevMode === false) return;
+            if (isDevMode === true) return;
             return await API_CLIENT.logout();
         },
         onSettled: () => setIsLoading(false),
