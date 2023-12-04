@@ -95,24 +95,33 @@ const FavoritesPage = () => {
                     <Box
                         className={`w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4`}
                     >
-                        {favoritesQuery.data?.data.assets.map((asset) => {
-                            return (
-                                <ImageComponent
-                                    key={asset.reference_job_id}
-                                    reference_job_id={asset.reference_job_id}
-                                    infiniteScroll={true}
-                                    onClick={() => {
-                                        updateQuery(
-                                            {
-                                                imageId: asset.reference_job_id,
-                                                variant: "0_0",
-                                            },
-                                            "favorites"
-                                        );
-                                    }}
-                                />
-                            );
-                        })}
+                        {favoritesQuery.data?.data.assets
+                            .sort((a, b) => {
+                                return (
+                                    b.favourited_at_unix - a.favourited_at_unix
+                                );
+                            })
+                            .map((asset) => {
+                                return (
+                                    <ImageComponent
+                                        key={asset.reference_job_id}
+                                        reference_job_id={
+                                            asset.reference_job_id
+                                        }
+                                        infiniteScroll={true}
+                                        onClick={() => {
+                                            updateQuery(
+                                                {
+                                                    imageId:
+                                                        asset.reference_job_id,
+                                                    variant: "0_0",
+                                                },
+                                                "favorites"
+                                            );
+                                        }}
+                                    />
+                                );
+                            })}
                     </Box>
                 )}
             </Stack>
