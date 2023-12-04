@@ -18,16 +18,6 @@ export default function protectedRoute<T extends ComponentType<any>>(
 ) {
     const WrappedComponent: React.FC<ComponentProps<T>> = (props) => {
         const router = useRouter();
-        // const { userSession, loading } = useAuthContext();
-        // const { isDevMode } = useStageContext();
-
-        // useEffect(() => {
-        //     if (!loading && !userSession && !isDevMode)
-        //         updateQuery({ view: "login" });
-        // }, [router, loading, userSession, isDevMode]);
-
-        // while checking user session, show "loading" message
-        // if (loading) return <LoadingView />;
 
         // If session exists, display the wrapped component
         return <Component {...props} />;

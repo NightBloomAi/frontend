@@ -21,6 +21,8 @@ const StageProvider = ({ children }: { children: ReactNode }) => {
     const isDevMode =
         Boolean(process.env.NEXT_IS_DEV_MODE) === undefined ? false : true;
 
+    console.log("isDevMode", isDevMode);
+
     return (
         <StageContext.Provider value={{ isDevMode }}>
             {children}

@@ -163,11 +163,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         mutationKey: ["signOut"],
         mutationFn: async () => {
             setIsLoading(true);
-            if (isDevMode) return;
+            if (isDevMode === false) return;
             return await API_CLIENT.logout();
         },
         onSettled: () => setIsLoading(false),
         onSuccess: () => {
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
             toast.success("Successfully logged out!");
             resetUserSession();
         },
