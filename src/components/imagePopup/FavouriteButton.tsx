@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import TopLoadingBar from "../utils/TopLoadingBar";
+import { useAuthContext } from "@/context/auth.context";
 
 type Props = {
     icon: React.ReactNode;
@@ -19,8 +20,9 @@ const FavouriteButton: React.FC<Props> = ({
     snackbarMessage,
     isFavorite,
 }) => {
-    const queryClient = useQueryClient();
     const router = useRouter();
+    const queryClient = useQueryClient();
+    const { userSession } = useAuthContext();
     const imageId = router.query.imageId?.toString() ?? "";
 
     /**
@@ -60,6 +62,11 @@ const FavouriteButton: React.FC<Props> = ({
      * Handle click on favorite button to add/remove from favorites
      */
     const handleClick = () => {
+        if (!userSession) {
+            toast.error("You must be logged in to add to favorites");
+            return;
+        }
+
         if (isFavorite) {
             // Remove from favorites
             removeFavouriteMutation.mutate();

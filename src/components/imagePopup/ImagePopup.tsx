@@ -22,6 +22,9 @@ import SettingsInputCompositeIcon from "@mui/icons-material/SettingsInputComposi
 import DatasetIcon from "@mui/icons-material/Dataset";
 import TopLoadingBar from "../utils/TopLoadingBar";
 import CloseIcon from "@mui/icons-material/Close";
+import toast from "react-hot-toast";
+import { ImageVariants } from "@/models/view.models";
+import { useAuthContext } from "@/context/auth.context";
 
 type Props = {
     imageId: string;
@@ -31,7 +34,9 @@ type Props = {
 
 const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
     const { theme } = useThemeContext();
+    const { userSession } = useAuthContext();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    variant = ImageVariants.includes(variant ?? "") ? variant : "0_0";
 
     const imageQuery = useQuery({
         queryKey: ["imageDetails", imageId],
@@ -40,6 +45,11 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                 asset_id: imageId,
             }),
         enabled: imageId !== "",
+        onError: () => {
+            toast.error("Error fetching image details");
+            updateQuery({ imageId: undefined, variant: undefined }, route);
+        },
+        retry: 1,
     });
 
     const favoriteQuery = useQuery({
@@ -48,7 +58,8 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
             await API_CLIENT.checkFavorite({
                 id: imageId,
             }),
-        enabled: imageId !== "",
+        enabled: imageId !== "" && userSession !== null,
+        retry: 1,
     });
 
     /**
@@ -223,8 +234,10 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                     }}
                                 >
                                     <OpenWithIcon sx={{ mr: 2 }} />{" "}
-                                    {imageQuery.data?.data.asset.height} x{" "}
-                                    {imageQuery.data?.data.asset.width}
+                                    {imageQuery?.data?.data !== undefined &&
+                                        imageQuery.data?.data.asset.height +
+                                            " x " +
+                                            imageQuery.data?.data.asset.width}
                                 </Typography>
 
                                 <Typography

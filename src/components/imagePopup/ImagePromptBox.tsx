@@ -31,6 +31,12 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
     const [showMore, setShowMore] = useState(false);
     const variant = router.query.variant?.toString() ?? "0_0";
 
+    /**
+     * Download image from url
+     *
+     * @param imageUrl The url of the image to download
+     * @param imageName The name of the image to download
+     */
     const downloadImage = async (imageUrl: string, imageName: string) => {
         const response = await fetch(imageUrl);
         const blob = await response.blob();
@@ -41,7 +47,6 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
         link.download = imageName || "download";
         document.body.appendChild(link);
         link.click();
-
         document.body.removeChild(link);
         URL.revokeObjectURL(urlObject);
     };
