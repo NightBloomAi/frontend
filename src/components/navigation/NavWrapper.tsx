@@ -26,10 +26,10 @@ import { Logout } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import AccountMenu from "./AccountMenu";
 import MenuIcon from "@mui/icons-material/Menu";
-import SignInDialog from "../auth/SignInDialog";
-import SignUpDialog from "../auth/SignUpDialog";
+import SignInDialog from "@/components/auth/SignInDialog";
+import SignUpDialog from "@/components/auth/SignUpDialog";
 import StyleIcon from "@mui/icons-material/Style";
-import TopLoadingBar from "../utils/TopLoadingBar";
+import TopLoadingBar from "@/components/utils/TopLoadingBar";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
@@ -37,6 +37,7 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import GradingIcon from "@mui/icons-material/Grading";
+import ForogtPasswordDialog from "../auth/ForgotPasswordDialog";
 
 type Props = {
     children: React.ReactNode;
@@ -347,6 +348,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                         )}
                         <SignInDialog />
                         <SignUpDialog />
+                        <ForogtPasswordDialog />
                     </Box>
                 </Toolbar>
             </AppBar>

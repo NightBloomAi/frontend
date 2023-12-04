@@ -1,19 +1,13 @@
 import { useThemeContext } from "@/context/theme.context";
 import { Views } from "@/models/view.models";
 import { updateQuery } from "@/utils/helperFunctions";
-import {
-    Box,
-    Dialog,
-    DialogTitle,
-    IconButton,
-    useMediaQuery,
-} from "@mui/material";
+import { useMediaQuery, Dialog, DialogTitle, IconButton } from "@mui/material";
+import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import SignUp from "./SignUp";
+import ForgotPassword from "./ForgotPassword";
 
-const SignUpDialog = () => {
+const ForogtPasswordDialog = () => {
     const router = useRouter();
     const view = router.query.view;
     const { theme } = useThemeContext();
@@ -21,7 +15,7 @@ const SignUpDialog = () => {
 
     return (
         <Dialog
-            open={view === "signUp"}
+            open={view === "forgotPassword"}
             onClose={() => updateQuery({ view: Views.NULL })}
             fullWidth
             fullScreen={fullScreen}
@@ -44,7 +38,7 @@ const SignUpDialog = () => {
                     <CloseIcon fontSize="large" />
                 </IconButton>
             </DialogTitle>
-            <SignUp />
+            <ForgotPassword />
             <Box
                 sx={{
                     height: 30,
@@ -55,4 +49,4 @@ const SignUpDialog = () => {
     );
 };
 
-export default SignUpDialog;
+export default ForogtPasswordDialog;

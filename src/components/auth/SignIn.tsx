@@ -165,6 +165,9 @@ const SignIn = () => {
                         sx={{
                             cursor: "pointer",
                         }}
+                        onClick={() => {
+                            updateQuery({ view: Views.FORGOT_PASSWORD });
+                        }}
                     >
                         Forgot password?
                     </Link>

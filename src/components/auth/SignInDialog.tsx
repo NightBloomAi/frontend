@@ -41,7 +41,7 @@ const SignInDialog = () => {
                         color: (theme) => theme.palette.grey[500],
                     }}
                 >
-                    <CloseIcon />
+                    <CloseIcon fontSize="large" />
                 </IconButton>
             </DialogTitle>
             <SignIn />
