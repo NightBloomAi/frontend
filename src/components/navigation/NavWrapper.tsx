@@ -39,6 +39,7 @@ import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import GradingIcon from "@mui/icons-material/Grading";
 import ForogtPasswordDialog from "../auth/ForgotPasswordDialog";
 import ResetPasswordDialog from "../auth/ResetPasswordDialog";
+import AboutMenu from "./AboutMenu";
 
 type Props = {
     children: React.ReactNode;
@@ -314,6 +315,11 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                                 {item.name}
                             </Link>
                         ))}
+
+                        {/***************************************************
+                         * ABOUT OPTIONS
+                         ***************************************************/}
+                        <AboutMenu />
                     </Box>
 
                     {/***************************************************

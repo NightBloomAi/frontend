@@ -9,7 +9,13 @@ interface INavContext {
     setActiveNav: (navItem: INavItem) => void;
 }
 
-export type INavItem = "home" | "favourites" | "style-guide" | "not-found";
+export type INavItem =
+    | "home"
+    | "favourites"
+    | "style-guide"
+    | "privacy-policy"
+    | "terms-of-service"
+    | "not-found";
 
 /******************************************************************************
     INITIALISE CONTEXT
@@ -28,10 +34,26 @@ const NavProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const updateActiveNav = (path: string) => {
-            if (path === "/") setActiveNav("home");
-            else if (path === "/favorites/") setActiveNav("favourites");
-            else if (path === "/style-guide/") setActiveNav("style-guide");
-            else setActiveNav("not-found");
+            switch (path) {
+                case "/":
+                    setActiveNav("home");
+                    break;
+                case "/favorites/":
+                    setActiveNav("favourites");
+                    break;
+                case "/style-guide/":
+                    setActiveNav("style-guide");
+                    break;
+                case "/privacy-policy/":
+                    setActiveNav("privacy-policy");
+                    break;
+                case "/terms-of-service/":
+                    setActiveNav("terms-of-service");
+                    break;
+                default:
+                    setActiveNav("not-found");
+                    break;
+            }
         };
         updateActiveNav(path);
     }, [path]);
