@@ -29,7 +29,7 @@ const LogoAndSlogan: React.FC<Props> = ({
             <Typography
                 component={"div"}
                 variant={"h3"}
-                className="font-museo"
+                fontFamily={"MuseoModerno"}
                 sx={{
                     fontSize: {
                         xs: "2.5rem",

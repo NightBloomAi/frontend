@@ -61,7 +61,8 @@ const InfiniteGallery: React.FC<Props> = ({
                 >
                     <Typography
                         component={"div"}
-                        className="font-museo mt-16 mb-12"
+                        className="mt-16 mb-12"
+                        fontFamily={"MuseoModerno"}
                         variant="h4"
                     >
                         No more results

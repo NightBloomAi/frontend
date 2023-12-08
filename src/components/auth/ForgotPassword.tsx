@@ -59,8 +59,8 @@ const ForgotPassword = () => {
                 <Typography
                     component={"div"}
                     variant="h4"
-                    className="font-museo"
                     textAlign={"center"}
+                    fontFamily={"MuseoModerno"}
                 >
                     Forgot Password
                 </Typography>

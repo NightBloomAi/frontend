@@ -85,7 +85,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                 variant="h6"
                 component={"div"}
                 sx={{ my: 2, fontWeight: 600, cursor: "pointer" }}
-                className="font-museo"
+                fontFamily={"MuseoModerno"}
                 color={theme.palette.primary.main}
             >
                 NightBloom
@@ -275,7 +275,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                     <Typography
                         variant="h6"
                         component="div"
-                        className="font-museo"
+                        fontFamily={"MuseoModerno"}
                         color={"primary"}
                         onClick={() => router.push("/")}
                         sx={{

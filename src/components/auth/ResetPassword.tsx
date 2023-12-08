@@ -72,7 +72,7 @@ const ResetPassword = () => {
                 <Typography
                     component={"div"}
                     variant="h4"
-                    className="font-museo"
+                    fontFamily={"MuseoModerno"}
                     textAlign={"center"}
                 >
                     Reset Password
