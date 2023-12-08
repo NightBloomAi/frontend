@@ -23,23 +23,21 @@ const AboutMenu = () => {
 
     return (
         <React.Fragment>
-            <Tooltip title="About">
-                <Link
-                    onClick={handleClick}
-                    sx={{
-                        textDecoration: "none",
-                        color: theme.palette.text.primary,
-                        mx: 2,
-                        fontSize: 18,
-                        cursor: "pointer",
-                        "&:hover": {
-                            color: theme.palette.primary.dark,
-                        },
-                    }}
-                >
-                    About <ArrowDropDownIcon sx={{ mx: -0.5 }} />
-                </Link>
-            </Tooltip>
+            <Link
+                onClick={handleClick}
+                sx={{
+                    textDecoration: "none",
+                    color: theme.palette.text.primary,
+                    mx: 2,
+                    fontSize: 18,
+                    cursor: "pointer",
+                    "&:hover": {
+                        color: theme.palette.primary.dark,
+                    },
+                }}
+            >
+                About <ArrowDropDownIcon sx={{ mx: -0.5 }} />
+            </Link>
 
             <Menu
                 anchorEl={anchorEl}
