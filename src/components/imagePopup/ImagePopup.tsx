@@ -200,7 +200,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                     }}
                                     href={API_CLIENT.imageEndpointURL({
                                         reference_job_id: imageId ?? "",
-                                        variant: "0_0",
+                                        variant: "grid_0",
                                         infiniteScroll: false,
                                     })}
                                     target="_blank"
