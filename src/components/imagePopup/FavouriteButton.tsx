@@ -6,24 +6,20 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 import TopLoadingBar from "../utils/TopLoadingBar";
 import { useAuthContext } from "@/context/auth.context";
+import { decryptVariant } from "@/utils/helperFunctions";
 
 type Props = {
     icon: React.ReactNode;
     tooltip?: string;
-    snackbarMessage?: string;
     isFavorite?: boolean;
 };
 
-const FavouriteButton: React.FC<Props> = ({
-    icon,
-    tooltip,
-    snackbarMessage,
-    isFavorite,
-}) => {
+const FavouriteButton: React.FC<Props> = ({ icon, tooltip, isFavorite }) => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const { userSession } = useAuthContext();
     const imageId = router.query.imageId?.toString() ?? "";
+    const variant = decryptVariant(router.query.variant?.toString());
 
     /**
      * Mutation to add image to favorites
@@ -32,7 +28,7 @@ const FavouriteButton: React.FC<Props> = ({
         mutationFn: async () => {
             await API_CLIENT.createFavorite({
                 ids: [imageId],
-                variant: null,
+                variant: variant,
             });
         },
         onSuccess: () => {

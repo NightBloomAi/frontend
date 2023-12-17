@@ -8,7 +8,8 @@ type Props = {
     onClick?: () => void;
     fullImagePath?: string;
     variant?: string;
-    infiniteScroll?: boolean; // If true, variant is ignored
+    showDefaultVariant?: boolean; // If true, variant is ignored
+    infiniteScroll?: boolean; // If true, image is not blurred
     blur?: boolean; // If true, image is blurred
     zoomOnHover?: boolean; // If true, image is zoomed on hover
     fullImage?: boolean; // If true, full image is shown
@@ -19,6 +20,7 @@ const ImageComponent: React.FC<Props> = ({
     onClick,
     fullImagePath,
     variant = "0_0",
+    showDefaultVariant = false,
     infiniteScroll = false,
     blur = false,
     zoomOnHover = true,
@@ -32,7 +34,7 @@ const ImageComponent: React.FC<Props> = ({
         : API_CLIENT.imageEndpointURL({
               reference_job_id: reference_job_id ?? "",
               variant: variant,
-              infiniteScroll: infiniteScroll,
+              showDefaultVariant: showDefaultVariant,
           });
 
     useEffect(() => {
@@ -83,7 +85,7 @@ const ImageComponent: React.FC<Props> = ({
                 src={imageUrl}
                 alt={reference_job_id}
                 onLoad={() => setHasLoaded(true)}
-                loading={"eager"}
+                loading={"lazy"}
             />
         </div>
     );

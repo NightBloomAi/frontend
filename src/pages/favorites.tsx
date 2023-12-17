@@ -4,7 +4,7 @@ import ImageComponent from "@/components/gallery/ImageComponent";
 import TopLoadingBar from "@/components/utils/TopLoadingBar";
 import { Box, Stack } from "@mui/system";
 import { Link, Typography } from "@mui/material";
-import { updateQuery } from "@/utils/helperFunctions";
+import { encryptVariant, updateQuery } from "@/utils/helperFunctions";
 import { useAuthContext } from "@/context/auth.context";
 import { useQuery } from "react-query";
 import { API_CLIENT } from "@/services/ApiClient";
@@ -26,7 +26,14 @@ const FavoritesPage = () => {
 
     return (
         <Layout>
-            <Stack justifyContent={"center"} alignItems={"center"} gap={4}>
+            <Stack
+                justifyContent={"center"}
+                alignItems={"center"}
+                gap={4}
+                sx={{
+                    mb: 10,
+                }}
+            >
                 {/***************************************************
                  * HEADER SECTION
                  ***************************************************/}
@@ -82,7 +89,7 @@ const FavoritesPage = () => {
                                         key={i}
                                         reference_job_id={i.toString()}
                                         variant={"0_0"}
-                                        infiniteScroll={true}
+                                        showDefaultVariant
                                     />
                                 );
                             })}
@@ -108,15 +115,17 @@ const FavoritesPage = () => {
                                         reference_job_id={
                                             asset.reference_job_id
                                         }
-                                        infiniteScroll={true}
+                                        variant={encryptVariant(asset.variant)}
                                         onClick={() => {
                                             updateQuery(
                                                 {
                                                     imageId:
                                                         asset.reference_job_id,
-                                                    variant: "0_0",
+                                                    variant: encryptVariant(
+                                                        asset.variant
+                                                    ),
                                                 },
-                                                "favorites"
+                                                router.asPath
                                             );
                                         }}
                                     />

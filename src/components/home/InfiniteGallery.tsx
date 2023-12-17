@@ -38,6 +38,7 @@ const InfiniteGallery: React.FC<Props> = ({
                                 reference_job_id={i.toString()}
                                 variant={variant}
                                 infiniteScroll={true}
+                                showDefaultVariant={true}
                             />
                         );
                     }
@@ -83,6 +84,7 @@ const InfiniteGallery: React.FC<Props> = ({
                                 reference_job_id={hit.reference_job_id}
                                 variant={variant}
                                 infiniteScroll={true}
+                                showDefaultVariant={true}
                                 onClick={() => {
                                     updateQuery(
                                         {

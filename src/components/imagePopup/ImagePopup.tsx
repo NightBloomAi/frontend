@@ -1,6 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
-import { useThemeContext } from "@/context/theme.context";
 import {
     Dialog,
     IconButton,
@@ -8,23 +5,25 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material";
-import { updateQuery } from "@/utils/helperFunctions";
 import { Stack } from "@mui/system";
 import { useQuery } from "react-query";
 import { API_CLIENT } from "@/services/ApiClient";
-import ImageGallery from "./ImageGallery";
-import FingerprintIcon from "@mui/icons-material/Fingerprint";
-import ImagePromptBox from "./ImagePromptBox";
-import ImageComponent from "../gallery/ImageComponent";
-import OpenWithIcon from "@mui/icons-material/OpenWith";
-import EventIcon from "@mui/icons-material/Event";
+import { ImageVariants } from "@/models/view.models";
+import { updateQuery } from "@/utils/helperFunctions";
+import { useAuthContext } from "@/context/auth.context";
+import { useThemeContext } from "@/context/theme.context";
 import SettingsInputCompositeIcon from "@mui/icons-material/SettingsInputComposite";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
+import OpenWithIcon from "@mui/icons-material/OpenWith";
+import ImageComponent from "../gallery/ImageComponent";
 import DatasetIcon from "@mui/icons-material/Dataset";
 import TopLoadingBar from "../utils/TopLoadingBar";
 import CloseIcon from "@mui/icons-material/Close";
+import EventIcon from "@mui/icons-material/Event";
+import ImagePromptBox from "./ImagePromptBox";
+import ImageGallery from "./ImageGallery";
 import toast from "react-hot-toast";
-import { ImageVariants } from "@/models/view.models";
-import { useAuthContext } from "@/context/auth.context";
+import React from "react";
 
 type Props = {
     imageId: string;
@@ -201,7 +200,7 @@ const ImagePopup: React.FC<Props> = ({ imageId, variant, route }) => {
                                     href={API_CLIENT.imageEndpointURL({
                                         reference_job_id: imageId ?? "",
                                         variant: "grid_0",
-                                        infiniteScroll: false,
+                                        showDefaultVariant: false,
                                     })}
                                     target="_blank"
                                 >

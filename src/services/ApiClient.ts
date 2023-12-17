@@ -205,9 +205,9 @@ class ApiClient {
     imageEndpointURL(payload: {
         reference_job_id: string;
         variant: string;
-        infiniteScroll: boolean;
+        showDefaultVariant: boolean;
     }) {
-        return `https://cdn.midjourney.com/${payload.reference_job_id}/${!payload.infiniteScroll ? payload.variant : '0_0'}.png`;
+        return `https://cdn.midjourney.com/${payload.reference_job_id}/${!payload.showDefaultVariant ? payload.variant : '0_0'}.png`;
     }
 
     /**

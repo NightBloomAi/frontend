@@ -47,6 +47,8 @@ type FavImageDetail = {
     reference_job_id: string;
     width: number;
     favourited_at_unix: number;
+    variant: string | null;
+
 };
 
 type FavImageDetailRes = {
