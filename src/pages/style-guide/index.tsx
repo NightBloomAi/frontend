@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useThemeContext } from "@/context/theme.context";
 import { Button, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";

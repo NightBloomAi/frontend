@@ -13,6 +13,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { API_CLIENT } from "@/services/ApiClient";
 import FavouriteButton from "./FavouriteButton";
+import { decryptVariant } from "@/utils/helperFunctions";
 
 type Props = {
     imageQuery: UseQueryResult<
@@ -141,7 +142,6 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
                     <FavouriteButton
                         icon={<FavoriteIcon />}
                         tooltip="Favorite image"
-                        snackbarMessage="Added to favorites"
                         isFavorite={favoriteQuery?.data?.data?.is_favourite}
                     />
 
@@ -157,9 +157,11 @@ const ImagePromptBox: React.FC<Props> = ({ imageQuery, favoriteQuery }) => {
                                             imageQuery.data?.data.asset
                                                 .reference_job_id,
                                         variant: variant,
-                                        infiniteScroll: false,
+                                        showDefaultVariant: false,
                                     }),
-                                    `${imageQuery.data?.data.asset.id}.png`
+                                    `${
+                                        imageQuery.data?.data.asset.id
+                                    }-V${decryptVariant(variant)}.png`
                                 );
                             }
                         }}
