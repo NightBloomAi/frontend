@@ -18,21 +18,8 @@ export default function Document() {
                     href="https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap"
                     rel="stylesheet"
                 ></link>
-                <Script
-                    id="google-analytics"
-                    strategy="beforeInteractive"
-                    src={`https://www.googletagmanager.com/gtag/js?id=G-SKQVC2JL0B`}
-                >
-                    {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-SKQVC2JL0B', {
-                    page_path: window.location.pathname,
-                    });
-                `}
-                </Script>
             </Head>
+
             <body>
                 <Main />
                 <NextScript />
