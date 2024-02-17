@@ -6,7 +6,7 @@ import { AppThemeProvider, useThemeContext } from "@/context/theme.context";
 import { AuthProvider } from "@/context/auth.context";
 import { StageProvider } from "@/context/stage.context";
 import { NavProvider } from "@/context/nav.context";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         <NavProvider>
                             <AuthProvider>
                                 <Component {...pageProps} />
-                                <GoogleTagManager gtmId="G-SKQVC2JL0B" />
+                                <GoogleAnalytics gaId="G-SKQVC2JL0B" />
                             </AuthProvider>
                         </NavProvider>
                     </ThemeWrapper>
