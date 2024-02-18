@@ -13,7 +13,7 @@ import {
     Button,
     Drawer,
     ListItemIcon,
-    Link,
+    Link as MuiLink,
     useScrollTrigger,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -39,7 +39,9 @@ import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import GradingIcon from "@mui/icons-material/Grading";
 import ForogtPasswordDialog from "../auth/ForgotPasswordDialog";
 import ResetPasswordDialog from "../auth/ResetPasswordDialog";
+import BookIcon from "@mui/icons-material/Book";
 import AboutMenu from "./AboutMenu";
+import Link from "next/link";
 
 type Props = {
     children: React.ReactNode;
@@ -295,9 +297,11 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                      ***************************************************/}
                     <Box sx={{ display: { xs: "none", sm: "block" } }}>
                         {navItems.map((item) => (
-                            <Link
+                            <MuiLink
+                                component={Link}
                                 key={item.id}
-                                onClick={() => router.push(item.href)}
+                                href={item.href}
+                                target={item.openInNewTab ? "_blank" : "_self"}
                                 sx={{
                                     textDecoration: "none",
                                     color:
@@ -313,7 +317,7 @@ const NavWrapper: React.FC<Props> = ({ children }) => {
                                 }}
                             >
                                 {item.name}
-                            </Link>
+                            </MuiLink>
                         ))}
 
                         {/***************************************************
@@ -412,6 +416,13 @@ const navItems = [
         name: "Style Guide",
         href: "/style-guide",
         icon: <StyleIcon className="w-7 h-7" />,
+    },
+    {
+        id: "blog",
+        name: "Blog",
+        href: "https://www.blog.nightbloom.ai",
+        openInNewTab: true,
+        icon: <BookIcon className="w-7 h-7" />,
     },
 ];
 
